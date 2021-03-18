@@ -1,6 +1,6 @@
 Identification of member:
-Name: (UID:)
-Name: (UID:)
+Name: Lui Ka On (UID: 3035074610) 
+Name: Ye Zhongzheng(UID:3035782176)
 
 Description:
 這是一個移動格子的遊戲，玩家。然後系統會自動生成一個順序混亂的格子順序，玩家然後需要多次手動輸入想移動的格子編號，直到版面上的所有格子的數字按照順序排列。
