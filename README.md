@@ -32,7 +32,7 @@ Name: Ye Zhongzheng (UID:3035782176)
    preference.
 2. The system takes away the largest number, leaving one empty cell on the
    grid, and then uses a random generator to randomly generate a chaotic board
-   arrangement.  The arrangement generated will always have an empty cell at
+   arrangement. The arrangement generated will always have an empty cell at
    the bottom right. (Requirement 1)
 3. The system awaits input from the player (`W`, `S`, `A`, `D` for Up, Down,
    Left, Right) to move the numbers around. (Requirement 3)
