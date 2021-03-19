@@ -1,17 +1,21 @@
 # MessyGrid
+
 **ENGG1340/COMP2113 Programming Technologies - Group Project**  
 Group: 165
 
 ## Description:
+
 **MessyGrid** is a puzzle game where a player is given with a grid of numbers
 in random order except there is one empty cell with no number. The aim is to
 move the numbers around until the order is restored.
 
 ## Identification of members:
+
 Name: Lui Ka On (UID: 3035074610)  
 Name: Ye Zhongzheng (UID:3035782176)
 
 ## Rules:
+
 1. The player chooses the size of the grid, e.g. 5x5 or 4x6.
 2. After a random board arrangement with one empty cell is generated, the
    player moves one of the number around the empty cell into the empty cell.
@@ -28,6 +32,7 @@ Name: Ye Zhongzheng (UID:3035782176)
    game leaderboard.
 
 ## Features:
+
 1. The system generates a grid of a custom size based on the player's
    preference.
 2. The system takes away the largest number, leaving one empty cell on the
