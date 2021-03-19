@@ -7,7 +7,7 @@ Group: 165
 in random order except there is one empty cell with no number. The aim is to
 move the numbers around until the order is restored.
 
-## Identification of member:
+## Identification of members:
 Name: Lui Ka On (UID: 3035074610)  
 Name: Ye Zhongzheng (UID:3035782176)
 
