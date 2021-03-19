@@ -104,7 +104,7 @@ Unlike other compound statements, in function definition open brace starts at
 the next line.
 
 ```C++
-int IsEven(int i)
+bool IsEven(int i)
 {
   // function body
 }
