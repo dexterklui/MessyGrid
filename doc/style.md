@@ -27,9 +27,11 @@ In mixed case, e.g. `MyFunction()`.
 
 ## Comment Styles
 
-### Comment Operators
+### comment Format
 
 Use `//` rather than `/* */`.
+
+For in-line comment `//` should be separated from the code by two spaces.
 
 ### Function Comments
 
@@ -125,7 +127,7 @@ switch (grade) {
     break;
   case 'C':
     cout << "Not bad." << endl;
-    braek;
+    break;
   case 'D':  // empty body: no need to comment that this case falls through
   case 'E':
     cout << "You can do better." << endl;
