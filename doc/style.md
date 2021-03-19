@@ -39,6 +39,7 @@ For in-line comment `//` should be separated from the code by two spaces.
 comment specifying:
 
 * What the function does (without describing how the function does it)
+* How to use the function
 * What are the inputs (if any)
 * What is the output (if any)
 
