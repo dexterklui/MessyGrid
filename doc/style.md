@@ -33,6 +33,25 @@ Use `//` rather than `/* */`.
 
 For in-line comment `//` should be separated from the code by two spaces.
 
+### File Comments
+
+Add boilerplate and description at the beginning of each file:
+
+```C++
+// Authors: Lui Ka On (3035074610), Ye Zhongzheng (3035782176)
+// Group Project: MessyGrid
+// Group: 165
+//
+// Description:
+// [Descriptions...]
+```
+
+In description, describe briefly the content of the file and how the
+abstractions are related.
+
+Do not duplicate file comments in header `.h` files and source `.cpp` files.
+
+
 ### Function Comments
 
 **Function declarations** are in header files. Before each declaration there is a
