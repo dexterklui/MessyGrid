@@ -1,4 +1,6 @@
-# ENGG1340COMP2113 Project - MessyGrid
+# MessyGrid
+**ENGG1340/COMP2113 Programming Technologies - Group Project**  
+Group: 165
 
 ## Description:
 **MessyGrid** is a puzzle game where a player is given with a grid of numbers
