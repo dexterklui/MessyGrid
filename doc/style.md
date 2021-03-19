@@ -74,6 +74,20 @@ We adopt the commenting styles of the assignments' templates:
 Before **function definition** we may add a comment if it is required to explain
 some nuanced details or tricks in the function implementation.
 
+### Variable Comments
+
+Try to make good variable names to avoid the need for variable comments. If
+needed, add comment before to describe what they mean and what they are used
+for.
+
+In particular describe the meaning of sentinel values when they are not obvious:
+
+```C++
+// 0 for non-member, 1 for regular member, 2 for advanced member, 3 for premium
+// member.
+int membership_type;
+```
+
 ---
 
 ## Formatting Style
