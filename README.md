@@ -1,5 +1,4 @@
 # ENGG1340COMP2113 Project - MessyGrid
-<<<<<<< HEAD
 
 ## Description:
 **MessyGrid** is a puzzle game where a player is given with a grid of numbers in random order except there is one empty cell with no number. The aim of is to move the numbers around until the order is restored.
