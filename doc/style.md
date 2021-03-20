@@ -9,7 +9,6 @@ follow Google C++ styling (as recommended by the course, I guess...)
 
 All letters in lower case with underscore, e.g. `my_code.cpp`.
 
-
 ### Variables
 
 All letters in lower case with underscore, e.g. `my_var`.
@@ -51,7 +50,6 @@ abstractions are related.
 
 Do not duplicate file comments in header `.h` files and source `.cpp` files.
 
-
 ### Function Comments
 
 **Function declarations** are in header files. Before each declaration there is a
@@ -86,6 +84,18 @@ In particular describe the meaning of sentinel values when they are not obvious:
 // 0 for non-member, 1 for regular member, 2 for advanced member, 3 for premium
 // member.
 int membership_type;
+```
+
+### TODO Comments
+
+TODO comments have the string "TODO" in all capital. Use for codes that are:
+
+* Temporary
+* Short-term solutions
+* Good enough but not perfect
+
+```C++
+// TODO: change this to use relations.
 ```
 
 ---
