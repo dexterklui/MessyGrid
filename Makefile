@@ -8,15 +8,19 @@
 #
 ######################################################################
 
-# Define compile flags
+# Define variables
 ######################################################################
 ERROR_FLAGS = -Wall -Wextra -Werror -pedantic-errors
 CPP_FLAGS = -std=c++11
 C_FLAGS = -std=c11
 
+TAR_FILE = messygrid.tar.gz
+TAR_SOURCE = README.md READMEinCHIN.md Makefile *.cpp *.h doc/
+
 
 # Pre-requisites
 ######################################################################
+all: main
 main: main.o clear_screen.o main_menu.o
 main.o: main.cpp main_menu.h
 
@@ -30,5 +34,8 @@ main: ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
 
 # Phony targets
 ######################################################################
-.PHONY: clean
-clean: ; rm -f *.out *.o main
+clean: ; rm -f *.o main ${TAR_FILE}
+tags:  ; ctags *.cpp
+tar:   ; tar -cvzf ${TAR_FILE} ${TAR_SOURCE}
+
+.PHONY: all clean tags tar
