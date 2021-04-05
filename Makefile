@@ -15,8 +15,6 @@ CPP_FLAGS = -std=c++11
 C_FLAGS = -std=c11
 
 
-default: main
-
 # Pre-requisites
 ######################################################################
 main: main.o clear_screen.o main_menu.o
