@@ -14,7 +14,7 @@ using namespace std;
 
 char InitMainMenu()
 {
-  char option;
+  char option;  // to store the option chose by the user
 
   ClearScreen();
   cout << "Welcome to MessyGrid!" << endl << endl;
@@ -22,16 +22,16 @@ char InitMainMenu()
   while (true) {
     PrintMainMenu();
 
-    cin >> option;
+    cin >> option;  // read option from user
     option = toupper(option);
 
     switch (option) {
-      case 'N':
-      case 'L':
-      case 'E':
+      case 'N':  // new game
+      case 'L':  // load game
+      case 'E':  // exit game
         return option;
 
-      case 'A':
+      case 'A':  // about MessyGrid
         ClearScreen();
         PrintAbout();
         break;
