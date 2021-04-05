@@ -25,11 +25,8 @@ main_menu.o: main_menu.cpp main_menu.h clear_screen.h
 
 # Explicit rules to build targets
 ######################################################################
-main:   ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
-main.o: ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} -c $<
-
-clear_screen.o: ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} -c $<
-main_menu.o:    ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} -c $<
+main: ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
+%.o:  ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} -c $<
 
 # Phony targets
 ######################################################################
