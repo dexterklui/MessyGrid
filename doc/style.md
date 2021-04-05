@@ -37,6 +37,7 @@ For in-line comment `//` should be separated from the code by two spaces.
 Add boilerplate and description at the beginning of each file:
 
 ```C++
+// ENGG1340/COMP2113 Programming Technologies - Group Project
 // Authors: Lui Ka On (3035074610), Ye Zhongzheng (3035782176)
 // Group Project: MessyGrid
 // Group: 165
