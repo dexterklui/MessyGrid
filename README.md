@@ -5,9 +5,9 @@ Group: 165
 
 ## Description:
 
-**MessyGrid** is a puzzle game where a player is given with a grid of numbers
-in random order except there is one empty cell with no number. The aim is to
-move the numbers around until the order is restored.
+**MessyGrid** is a puzzle game where a player is with a grid of numbers in
+random order except there is one empty cell with no number. The aim is to move
+the numbers around until the order is restored.
 
 ## Identification of members:
 
