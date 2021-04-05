@@ -10,7 +10,6 @@
 
 #include <iostream>
 #include "main_menu.h"
-#include "clear_screen.h"
 using namespace std;
 
 int main()
