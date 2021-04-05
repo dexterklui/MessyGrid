@@ -17,6 +17,15 @@ int main()
   char option;
   do {
     option = InitMainMenu();
+    switch (option) {
+      case 'N':  // new game
+        // TODO: handle new game option
+
+      case 'L':  // load game
+        // TODO: handle load game option
+
+      default: ;
+    }
   } while (option != 'E');
 
   // farewall message
