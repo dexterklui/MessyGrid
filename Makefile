@@ -32,14 +32,15 @@ main_menu.o: main_menu.cpp main_menu.h clear_screen.h
 main: ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
 %.o:  ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} -c $<
 
-# Temporary targets for testing
+# TODO: Temporary targets for testing
 ######################################################################
-game: game.cpp game.h clear_screen.o
+game: game.cpp game.h clear_screen.o clear_screen.h
 	g++ ${ERROR_FLAGS} ${CPP_FLAGS} game.cpp clear_screen.o -o $@
 
 # Phony targets
 ######################################################################
-clean: ; rm -f *.o main ${TAR_FILE}
+# TODO: remove game from game after incorporating game.cpp into main program
+clean: ; rm -f *.o main game ${TAR_FILE}
 tags:  ; ctags *.cpp
 tar:   ; tar -cvzf ${TAR_FILE} ${TAR_SOURCE}
 
