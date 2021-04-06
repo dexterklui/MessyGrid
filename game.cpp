@@ -32,35 +32,40 @@ void RunGame()
 
   //while ( !GridIsInOrder(grid, ROW, COL) ) {
   while (true) {  // TODO: test: always loop to test moving mechanism
-
     ClearScreen();
-
-    bool valid_cmd = false;
-    char cmd = '\0';
-    while (!valid_cmd) {
-      PrintGrid(grid, ROW, COL);
-
-      cmd = ReadMoveCommand();
-      cmd = toupper(cmd);
-
-      switch (cmd) {
-        case 'W':
-        case 'S':
-        case 'A':
-        case 'D':
-          valid_cmd = true;
-          break;
-        default:
-          cout << endl << "Invalid input!" << endl << endl;
-      }
-    }
-
-    MoveCell(grid, ROW, COL, cmd);
+    LetUserMoveCell(grid, ROW, COL);
   }
 
   ClearScreen();
   PrintGrid(grid, ROW, COL);
   cout << endl << "You reordered the messy grid. Congratulation!" << endl;
+}
+
+void LetUserMoveCell(int grid[][5], int row, int col)
+{
+  bool valid_cmd = false;
+  char cmd;
+
+  while (!valid_cmd) {
+    PrintGrid(grid, row, col);
+
+    cmd = ReadMoveCommand();
+    cmd = toupper(cmd);
+
+    switch (cmd) {
+      case 'W':
+      case 'S':
+      case 'A':
+      case 'D':
+        valid_cmd = true;
+        break;
+      default:
+        ClearScreen();
+        cout << "Invalid input!" << endl << endl;
+    }
+  }
+
+  MoveCell(grid, row, col, cmd);
 }
 
 bool GridIsInOrder(int grid[][5], int row, int col)

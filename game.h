@@ -24,6 +24,12 @@ void InitGrid(int grid[][5], int row, int col);
 // TODO: description
 void PrintGrid(int grid[][5], int row, int col);
 
+// Function: Display grid and respond to user command to move a cell
+// Input: int grid[][5]: a 2D array representing the grid
+//        int row: the number of rows
+//        int col: the number of columns
+void LetUserMoveCell(int grid[][5], int row, int col);
+
 // Function: Accept user input and move the cell in the grid accordingly
 // Input: int grid[][5]: a 2D array representing the grid
 //        int row: the number of rows
