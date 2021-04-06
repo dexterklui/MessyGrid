@@ -23,6 +23,7 @@ char InitMainMenu()
     PrintMainMenu();
 
     cin >> option;  // read option from user
+    cin.ignore(100, '\n');  // clear remaining garbage value in cin, if any
     option = toupper(option);
 
     switch (option) {

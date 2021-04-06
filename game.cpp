@@ -122,7 +122,7 @@ char ReadMoveCommand()
   cout << "A: Left" << endl;
   cout << "D: Right" << endl;
   cin >> input;
-  // TODO: clear all remaining inputs in cin
+  cin.ignore(100, '\n');  // clear remaining garbage value in cin, if any
 
   return input;
 }
