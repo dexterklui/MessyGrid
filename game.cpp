@@ -7,6 +7,7 @@
 // Implementing the game.
 
 #include <iostream>
+#include <string>
 #include "game.h"
 #include "clear_screen.h"
 using namespace std;
@@ -129,4 +130,51 @@ bool IsValidCell(int row, int col, Cell cell)
   if (cell.col < 0 || cell.col >= col)
     return false;
   return true;
+}
+
+void PrintGrid(int grid[][5], int row, int col)
+{
+  int count1 = 0;
+  int count2 = 0;
+  for (int i = 0; i < row; i++){
+    if (count2 != 0) {
+      cout << "---";
+      for (int c = 0; c < col-1; c++){
+        cout << "+----";
+      }/* code */
+      cout << endl;
+    }
+    count2 = 1;
+
+    for (int j = 0; j < col; j++){
+      int a  = grid[i][j];
+      if (count1 % col != 0){
+        cout << "| ";
+      }
+      if (a < 10){
+        cout << " " << a << " ";
+      }
+      else if (a >= 10 && a < 100){
+        cout << a << " ";
+      }
+      count1++;
+    }
+    cout << endl;
+  }
+}
+
+void InitGrid(int grid[][5], int row, int col)
+{
+  int a = 1;
+  for (int i = 0; i < row ; i ++){
+    for (int j = 0; j < col; j++){
+      if (a != row*col){
+      grid[i][j] = a;
+      }
+      else{
+        grid[i][j] = 0;
+      }
+      a++;
+    }
+  }
 }

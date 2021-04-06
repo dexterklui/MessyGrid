@@ -18,6 +18,12 @@ struct Cell {
 // Function: Main function to run the game
 void RunGame();
 
+// TODO: description
+void InitGrid(int grid[][5], int row, int col);
+
+// TODO: description
+void PrintGrid(int grid[][5], int row, int col);
+
 // Function: Accept user input and move the cell in the grid accordingly
 // Input: int grid[][5]: a 2D array representing the grid
 //        int row: the number of rows
