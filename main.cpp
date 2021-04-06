@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include "main_menu.h"
+#include "game.h"
 using namespace std;
 
 int main()
@@ -20,7 +21,8 @@ int main()
     switch (option) {
       case 'N':  // new game
         // TODO: handle new game option
-
+        RunGame();
+        break;
       case 'L':  // load game
         // TODO: handle load game option
 

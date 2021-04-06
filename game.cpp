@@ -15,11 +15,11 @@ using namespace std;
 
 
 // TODO: for testing
-int main()
-{
-  RunGame();
-  return 0;
-}
+//int main()
+//{
+  //RunGame();
+  //return 0;
+//}
 
 void RunGame()
 {
@@ -28,15 +28,21 @@ void RunGame()
 
   int grid[ROW][COL];
   InitGrid(grid, ROW, COL);
-  // TODO: Randomize grid
+  // TODO: Randomize grid (now just move one cell so the game doesn't finish
+  // immediately)
+  Cell empty_cell {ROW-1, COL-1};
+  Cell left_cell {ROW-1, COL-2};
+  SwapCell(grid, empty_cell, left_cell);
 
-  //while ( !GridIsInOrder(grid, ROW, COL) ) {
-  while (true)  // TODO: test: always loop to test moving mechanism
+  while ( !GridIsInOrder(grid, ROW, COL) )
     LetUserMoveCell(grid, ROW, COL);
 
   ClearScreen();
   PrintGrid(grid, ROW, COL);
   cout << endl << "You reordered the messy grid. Congratulation!" << endl;
+  cout << endl << "Press <Enter> to return to main menu...";
+  string dummy;
+  getline(cin, dummy);
 }
 
 void LetUserMoveCell(int grid[][5], int row, int col)

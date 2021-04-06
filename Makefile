@@ -21,11 +21,12 @@ TAR_SOURCE = README.md READMEinCHIN.md Makefile *.cpp *.h doc/
 # Pre-requisites
 ######################################################################
 all: main
-main: main.o clear_screen.o main_menu.o
-main.o: main.cpp main_menu.h
+main: main.o clear_screen.o main_menu.o game.o
+main.o: main.cpp main_menu.h game.h
 
 clear_screen.o: clear_screen.cpp clear_screen.h
 main_menu.o: main_menu.cpp main_menu.h clear_screen.h
+game.o: game.cpp game.h clear_screen.h
 
 # Explicit rules to build targets
 ######################################################################
