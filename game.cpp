@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <string>
+#include <cctype>
 #include "game.h"
 #include "clear_screen.h"
 using namespace std;
@@ -40,6 +41,7 @@ void RunGame()
       PrintGrid(grid, ROW, COL);
 
       cmd = ReadMoveCommand();
+      cmd = toupper(cmd);
 
       switch (cmd) {
         case 'W':
