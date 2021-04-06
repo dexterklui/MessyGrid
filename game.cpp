@@ -31,10 +31,8 @@ void RunGame()
   // TODO: Randomize grid
 
   //while ( !GridIsInOrder(grid, ROW, COL) ) {
-  while (true) {  // TODO: test: always loop to test moving mechanism
-    ClearScreen();
+  while (true)  // TODO: test: always loop to test moving mechanism
     LetUserMoveCell(grid, ROW, COL);
-  }
 
   ClearScreen();
   PrintGrid(grid, ROW, COL);
@@ -45,6 +43,8 @@ void LetUserMoveCell(int grid[][5], int row, int col)
 {
   bool valid_cmd = false;
   char cmd;
+
+  ClearScreen();
 
   while (!valid_cmd) {
     PrintGrid(grid, row, col);
@@ -81,7 +81,9 @@ bool GridIsInOrder(int grid[][5], int row, int col)
 
 void MoveCell(int grid[][5], int row, int col, char cmd)
 {
-  Cell empty_cell;  // store the row and col index of the empty cell
+  Cell empty_cell {-1, -1};  // store the row and col index of the empty cell
+
+  // Find empty cell and fill the row and col indices of empty_cell
   for (int i = 0; i < row; ++i) {
     for (int j = 0; j < col; ++j) {
       if (!grid[i][j]) {
@@ -90,6 +92,8 @@ void MoveCell(int grid[][5], int row, int col, char cmd)
         break;
       }
     }
+    if (empty_cell.row != -1)  // break when found the empty cell
+      break;
   }
 
   Cell move_cell;  // store the row and col index of the cell to be moved
