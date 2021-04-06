@@ -13,24 +13,32 @@
 using namespace std;
 
 
+// TODO: for testing
+int main()
+{
+  RunGame();
+  return 0;
+}
+
 void RunGame()
 {
   const int ROW = 5;
   const int COL = 5;
 
-  // TODO: Init grid
-  int grid[5][5];
+  int grid[ROW][COL];
+  InitGrid(grid, ROW, COL);
+  // TODO: Randomize grid
 
-  while ( !GridIsInOrder(grid, ROW, COL) ) {
+  //while ( !GridIsInOrder(grid, ROW, COL) ) {
+  while (true) {  // TODO: test: always loop to test moving mechanism
 
     ClearScreen();
 
     bool valid_cmd = false;
     char cmd = '\0';
     while (!valid_cmd) {
-      // TODO: print grid
+      PrintGrid(grid, ROW, COL);
 
-      char cmd;
       cmd = ReadMoveCommand();
 
       switch (cmd) {
@@ -48,6 +56,8 @@ void RunGame()
     MoveCell(grid, ROW, COL, cmd);
   }
 
+  ClearScreen();
+  PrintGrid(grid, ROW, COL);
   cout << endl << "You reordered the messy grid. Congratulation!" << endl;
 }
 
@@ -57,7 +67,7 @@ bool GridIsInOrder(int grid[][5], int row, int col)
   for (int i = 0; i < row; ++i)
     for (int j = 0; j < col; ++j)
       // if it is not the last cell and the cell has incorrect value:
-      if ((i != row || j != col) && grid[i][j] != correct_value++)
+      if ((i != row-1 || j != col-1) && grid[i][j] != correct_value++)
         return false;
   return true;
 }

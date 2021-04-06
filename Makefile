@@ -32,6 +32,11 @@ main_menu.o: main_menu.cpp main_menu.h clear_screen.h
 main: ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
 %.o:  ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} -c $<
 
+# Temporary targets for testing
+######################################################################
+game: game.cpp game.h clear_screen.o
+	g++ ${ERROR_FLAGS} ${CPP_FLAGS} game.cpp clear_screen.o -o $@
+
 # Phony targets
 ######################################################################
 clean: ; rm -f *.o main ${TAR_FILE}
