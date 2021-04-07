@@ -47,7 +47,7 @@ void Grid::MovePiece(char cmd)
 {
   Cell empty_cell {-1, -1};  // store the row and col index of the empty cell
 
-  // Find empty cell and fill the row and col indices of empty_cell
+  // Find the empty cell and fill the row and col indices of empty_cell
   for (int i = 0; i < num_row_; ++i) {
     for (int j = 0; j < num_col_; ++j) {
       if (!grid_[i][j]) {
