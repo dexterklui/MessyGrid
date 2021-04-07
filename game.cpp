@@ -29,7 +29,8 @@ void RunGame()
 
   Grid grid;
   grid.InitGrid(row, col);
-  grid.MovePiece('D');  // TODO: use randomize grid instead
+  //grid.MovePiece('D');  // TODO: use randomize grid instead
+  grid.RandomizeGrid();
 
   while ( !grid.IsInOrder() )
     LetUserMovePiece(grid);

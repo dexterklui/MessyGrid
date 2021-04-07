@@ -7,6 +7,8 @@
 // Define the member functions of class Grid.
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "grid.h"
 using namespace std;
 
@@ -127,11 +129,14 @@ void Grid::Print()
       if (count1 % num_col_ != 0){
         cout << "| ";
       }
-      if (a < 10){
+      if (a < 10 && a > 0){
         cout << " " << a << " ";
       }
       else if (a >= 10 && a < 100){
         cout << a << " ";
+      }
+      else if (a == 0){
+        cout << "   ";
       }
       count1++;
     }
@@ -162,4 +167,70 @@ void Grid::SwapPiece(Cell a, Cell b)
   int tmp = grid_[a.row_idx][a.col_idx];
   grid_[a.row_idx][a.col_idx] = grid_[b.row_idx][b.col_idx];
   grid_[b.row_idx][b.col_idx] = tmp;
+}
+
+bool Grid::CanBeMoveOrNot(int MovingNum, int nowrow, int nowcol)
+{
+  if (MovingNum == 1 && (nowrow + 1) > num_row_) return 1;
+  else if (MovingNum == 2 && (nowrow - 1) < 1) return 1;
+  else if (MovingNum == 3 && (nowcol - 1) < 1) return 1;
+  else if (MovingNum == 4 && (nowcol + 1) > num_col_) return 1;
+  return 0;
+}
+
+void Grid::RandomizeGrid()
+{
+  srand((unsigned)time(NULL));
+  int num = num_row_ * num_col_;
+  int MovingTimes = (rand() % (num*num*num - num*num)) + num*num;
+  int nowrow = num_row_, nowcol = num_col_;
+  for (int i = 0; i < MovingTimes; i++)
+  {
+    int MovingNum = (rand() % (4 - 1 + 1)) + 1;
+    if (CanBeMoveOrNot(MovingNum, nowrow, nowcol)) continue;
+    char cmd;
+    if (MovingNum == 1)
+    {
+      cmd = 'W';
+      nowrow += 1;
+    }
+    else if (MovingNum == 2)
+    {
+      cmd = 'S';
+      nowrow -= 1;
+    }
+    else if (MovingNum == 3)
+    {
+      cmd = 'A';
+      nowcol -= 1;
+    }
+    else
+    {
+      cmd = 'D';
+      nowcol += 1;
+    }
+    MovePiece(cmd);
+  }
+
+  int a = 0, b = 0;
+  for  (int i = 0; i < num_row_; i++){
+    for (int j = 0; j < num_col_; j++){
+      if (grid_[i][j] == 0){
+        a = i;
+        b = j;
+        break;
+      }
+    }
+  }
+
+  for (int i = 0; i < (num_row_ - a); i++)
+  {
+    char cmd2 = 'W';
+    MovePiece(cmd2);
+  }
+  for (int i = 0; i < (num_col_ - b); i++)
+  {
+    char cmd3 = 'A';
+    MovePiece(cmd3);
+  }
 }
