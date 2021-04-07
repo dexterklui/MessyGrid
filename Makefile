@@ -21,27 +21,22 @@ TAR_SOURCE = README.md READMEinCHIN.md Makefile *.cpp *.h doc/
 # Pre-requisites
 ######################################################################
 all: main
-main: main.o clear_screen.o main_menu.o game.o
+main: main.o main_menu.o game.o grid.o clear_screen.o
 main.o: main.cpp main_menu.h game.h
 
 clear_screen.o: clear_screen.cpp clear_screen.h
 main_menu.o: main_menu.cpp main_menu.h clear_screen.h
-game.o: game.cpp game.h clear_screen.h
+game.o: game.cpp game.h grid.h clear_screen.h
+grid.o: grid.cpp grid.h
 
 # Explicit rules to build targets
 ######################################################################
 main: ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
 %.o:  ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} -c $<
 
-# TODO: Temporary targets for testing
-######################################################################
-game: game.cpp game.h clear_screen.o clear_screen.h
-	g++ ${ERROR_FLAGS} ${CPP_FLAGS} game.cpp clear_screen.o -o $@
-
 # Phony targets
 ######################################################################
-# TODO: remove game from game after incorporating game.cpp into main program
-clean: ; rm -f *.o main game ${TAR_FILE}
+clean: ; rm -f *.o main ${TAR_FILE}
 tags:  ; ctags *.cpp
 tar:   ; tar -cvzf ${TAR_FILE} ${TAR_SOURCE}
 
