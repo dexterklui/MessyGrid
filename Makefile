@@ -31,10 +31,14 @@ bin/main_menu.o: $(addprefix src/, main_menu.cpp main_menu.h clear_screen.h)
 bin/game.o: $(addprefix src/, game.cpp game.h grid.h clear_screen.h)
 bin/grid.o: $(addprefix src/, grid.cpp grid.h)
 
+${OBJ}: bin/  # The directory to store them
+
 # Explicit rules to build targets
 ######################################################################
 bin/main: ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
 %.o:  ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} -c $< -o $@
+
+bin/: ; mkdir -p bin/
 
 # Phony targets
 ######################################################################
