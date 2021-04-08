@@ -15,15 +15,15 @@ using namespace std;
 
 
 Grid::Grid(int row, int col)
-{
-  num_row_ = row;
-  num_col_ = col;
-
+    : num_row_(row), num_col_(col) {
+  // Initialize a row x col array
   grid_ = new int*[num_row_];
   for (int i = 0; i < num_row_; ++i) {
     grid_[i] = new int[num_col_];
   }
 
+  // Assign values in ascending order starting from 1, except the last element
+  // gets the value 0
   int value = 1;
   for (int i = 0; i < num_row_; ++i) {
     for (int j = 0; j < num_col_; ++j) {
