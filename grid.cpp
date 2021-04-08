@@ -9,16 +9,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <stdexcept>
 #include "grid.h"
 using namespace std;
-
-
-int Grid::get_piece(Cell c)
-{
-  if (!HasValidCell(c))
-    return -1;
-  return grid_[c.row_idx][c.col_idx];
-}
 
 
 Grid::Grid(int row, int col)
@@ -58,25 +51,40 @@ Grid::~Grid() {
 }
 
 
+int Grid::get_piece(Cell c)
+{
+  if (!HasValidCell(c))
+    return -1;
+  return grid_[c.row_idx][c.col_idx];
+}
+
+
+void Grid::set_piece(Cell c, int p)
+{
+  if (HasValidCell(c))
+    *cell_ptr(c) = p;
+}
+
+
+Cell Grid::get_cell(int p)
+{
+  Cell c = {-1, -1};
+
+  for (int i = 0; i < num_row_; ++i)
+    for (int j = 0; j < num_col_; ++j)
+      if (grid_[i][j] == p) {
+        c.row_idx = i;
+        c.col_idx = j;
+        return c;
+      }
+  return c;
+}
+
+
 void Grid::MovePiece(char cmd)
 {
-  Cell empty_cell {-1, -1};  // store the row and col index of the empty cell
-
-  // Find the empty cell and fill the row and col indices of empty_cell
-  for (int i = 0; i < num_row_; ++i) {
-    for (int j = 0; j < num_col_; ++j) {
-      if (!grid_[i][j]) {
-        empty_cell.row_idx = i;
-        empty_cell.col_idx = j;
-        break;
-      }
-    }
-    if (empty_cell.row_idx != -1)  // break when found the empty cell
-      break;
-  }
-
-  Cell move_cell;  // store the row and col index of the cell to be moved
-  move_cell = empty_cell;
+  Cell empty_cell = get_cell(0);  // to store the location of the empty cell
+  Cell move_cell = empty_cell;  // to store the location of the cell to be moved
 
   switch (cmd) {
     case 'W':
@@ -91,9 +99,6 @@ void Grid::MovePiece(char cmd)
     case 'D':
       move_cell.col_idx -= 1;
       break;
-    default:  // should never reach default. This acts as a debug info
-      cout << "game.cpp: MoveCell(): invalid move command" << endl;
-      return;
   }
 
   SwapPiece(empty_cell, move_cell);
@@ -158,14 +163,22 @@ void Grid::Print()
 }
 
 
+int* Grid::cell_ptr(Cell c)
+{
+  if ( !HasValidCell(c) )
+    throw out_of_range("Cell invalid!");
+  return &grid_[c.row_idx][c.col_idx];
+}
+
+
 void Grid::SwapPiece(Cell a, Cell b)
 {
   if (!HasValidCell(a) || !HasValidCell(b) ||  a.EqualCell(b))
     return;
 
-  int tmp = grid_[a.row_idx][a.col_idx];
-  grid_[a.row_idx][a.col_idx] = grid_[b.row_idx][b.col_idx];
-  grid_[b.row_idx][b.col_idx] = tmp;
+  int tmp_piece = get_piece(a);
+  set_piece(a, get_piece(b));
+  set_piece(b, tmp_piece);
 }
 
 bool Grid::CanBeMoveOrNot(int MovingNum, int nowrow, int nowcol)
