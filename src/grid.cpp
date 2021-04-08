@@ -38,7 +38,8 @@ Grid::Grid(int row, int col)
 }
 
 
-Grid::~Grid() {
+Grid::~Grid()
+{
   for (int i = 0; i < num_row_; ++i) {
     delete grid_[i];
     grid_[i] = 0;
@@ -176,9 +177,9 @@ void Grid::SwapPiece(Cell a, Cell b)
   if (!HasValidCell(a) || !HasValidCell(b) ||  a.EqualCell(b))
     return;
 
-  int tmp_piece = get_piece(a);
+  int piece_a = get_piece(a);
   set_piece(a, get_piece(b));
-  set_piece(b, tmp_piece);
+  set_piece(b, piece_a);
 }
 
 bool Grid::CanBeMoveOrNot(int MovingNum, int nowrow, int nowcol)
