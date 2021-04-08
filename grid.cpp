@@ -113,11 +113,11 @@ bool Grid::IsInOrder()
 }
 
 
-bool Grid::HasValidCell(Cell cell)
+bool Grid::HasValidCell(Cell c)
 {
-  if (cell.row_idx < 0 || cell.row_idx >= num_row_)
+  if (c.row_idx < 0 || c.row_idx >= num_row_)
     return false;
-  if (cell.col_idx < 0 || cell.col_idx >= num_col_)
+  if (c.col_idx < 0 || c.col_idx >= num_col_)
     return false;
   return true;
 }

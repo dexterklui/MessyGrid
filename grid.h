@@ -10,10 +10,9 @@
 //
 // Terminology in function description:
 // - Grid: A grid is a 2-D array of cells containing pieces.
-// - Cell: A cell is a place in the grid given by a row and a column index. Each
-//         cell in the grid contains a piece, except for each grid there is one
-//         empty cell which is represented as containing a pseudo-piece with a
-//         value of 0.
+// - Cell: A cell is a place in the grid given by its row and column index. Each
+//         cell contains a piece, except there is one empty cell which is
+//         represented as containing a pseudo-piece with a value of 0.
 // - Piece: Each piece is associated with a unique positive integer, ranging
 //          from 1 to (number of cells - 1), except there is one pseudo-piece
 //          with a value of 0. The pseudo-piece is used to represent that its
@@ -44,10 +43,9 @@ class Grid {
  public:
   // Constructor: Initialize the grid of a given dimension and assign pieces to
   //              the cells in ascending order (left to right, up to bottom)
-  //              starting from 1, except the last cell has a pseudo-piece with
-  //              a value of 0.
-  // Input: int row: the number of rows of the grid.
-  //        int col: the number of columns of the grid.
+  //              starting from 1, except the last (bottom right) cell has a
+  //              pseudo-piece with a value of 0.
+  // Input: int row, int col: The number of rows and columns of the grid.
   Grid(int row, int col);
 
   // Destructor: Release memory space of the dynamic array representing the
@@ -88,9 +86,9 @@ class Grid {
   bool IsInOrder();
 
   // Function: Check if a cell is within the dimension of the grid.
-  // Input: Cell cell: The cell to be checked
+  // Input: Cell c: The cell to be checked.
   // Output: bool: true if the cell is within the dimension; false otherwise.
-  bool HasValidCell(Cell cell);
+  bool HasValidCell(Cell c);
 
   // Function: Print the current grid status on the screen
   void Print();
