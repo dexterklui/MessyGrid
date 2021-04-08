@@ -21,7 +21,7 @@ int Grid::get_piece(Cell c)
 }
 
 
-void Grid::InitGrid(int row, int col)
+Grid::Grid(int row, int col)
 {
   num_row_ = row;
   num_col_ = col;
@@ -42,6 +42,19 @@ void Grid::InitGrid(int row, int col)
       }
     }
   }
+}
+
+
+Grid::~Grid() {
+  for (int i = 0; i < num_row_; ++i) {
+    delete grid_[i];
+    grid_[i] = 0;
+  }
+  delete grid_;
+  grid_ = 0;
+
+  num_row_ = 0;
+  num_col_ = 0;
 }
 
 
@@ -142,20 +155,6 @@ void Grid::Print()
     }
     cout << endl;
   }
-}
-
-
-void Grid::Clean()
-{
-  for (int i = 0; i < num_row_; ++i) {
-    delete grid_[i];
-    grid_[i] = 0;
-  }
-  delete grid_;
-  grid_ = 0;
-
-  num_row_ = 0;
-  num_col_ = 0;
 }
 
 

@@ -27,9 +27,7 @@ void RunGame()
   cin >> col;
   cin.ignore(100, '\n');
 
-  Grid grid;
-  grid.InitGrid(row, col);
-  //grid.MovePiece('D');  // TODO: use randomize grid instead
+  Grid grid(row, col);
   grid.RandomizeGrid();
 
   while ( !grid.IsInOrder() )
@@ -41,8 +39,6 @@ void RunGame()
   cout << endl << "Press <Enter> to return to main menu...";
   string dummy;
   getline(cin, dummy);
-
-  grid.Clean();  // release memory space of dynamic array storing the grid
 }
 
 void LetUserMovePiece(Grid& grid)
