@@ -29,7 +29,7 @@ struct Cell {
 
   // Function: Check if this cell is equal to another cell, i.e. having the same
   //           row and column index.
-  bool EqualCell(Cell c)
+  bool EqualCell(Cell c) const
   {
     if (row_idx == c.row_idx && col_idx == c.col_idx)
       return true;
@@ -52,14 +52,14 @@ class Grid {
   //             grid.
   ~Grid();
 
-  int num_row() { return num_row_; }  // get number of rows
-  int num_col() { return num_col_; }  // get number of columns
+  int num_row() const { return num_row_; }  // get number of rows
+  int num_col() const { return num_col_; }  // get number of columns
 
   // Function: Get the value of a piece in a given cell.
   // Input: Cell c: The target cell containing the piece.
   // Output: int: The value of the piece in the target cell; or -1 if the cell
   //              is invalid (beyond the dimension of the grid).
-  int get_piece(Cell c);
+  int get_piece(Cell c) const;
 
   // Function: Set the piece in a cell to be the given piece, if the cell given
   //           is valid.
@@ -72,7 +72,7 @@ class Grid {
   // Output: Cell: The cell where the target piece is in. If the target piece
   //               is not found in the grid, the cell returned has its row and
   //               col index set to -1.
-  Cell get_cell(int p);
+  Cell get_cell(int p) const;
 
   // TODO: the function description is not accurate
   // Function: Starting from current piece arrangement, randomize the pieces
@@ -97,15 +97,15 @@ class Grid {
   // Function: Check whether all the pieces in the grid are in ascending order
   //           except the last cell at the bottom right is empty.
   // Output: bool: true if pieces are in ascending order; false otherwise.
-  bool IsInOrder();
+  bool IsInOrder() const;
 
   // Function: Check if a cell is within the dimension of the grid.
   // Input: Cell c: The cell to be checked.
   // Output: bool: true if the cell is within the dimension; false otherwise.
-  bool HasValidCell(Cell c);
+  bool HasValidCell(Cell c) const;
 
   // Function: Print the current grid status on the screen
-  void Print();
+  void Print() const;
 
  private:
   int num_row_;  // number of rows of the grid

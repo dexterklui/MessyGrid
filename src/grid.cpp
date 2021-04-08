@@ -52,7 +52,7 @@ Grid::~Grid()
 }
 
 
-int Grid::get_piece(Cell c)
+int Grid::get_piece(Cell c) const
 {
   if (!HasValidCell(c))
     return -1;
@@ -67,7 +67,7 @@ void Grid::set_piece(Cell c, int p)
 }
 
 
-Cell Grid::get_cell(int p)
+Cell Grid::get_cell(int p) const
 {
   Cell c = {-1, -1};
 
@@ -106,7 +106,7 @@ void Grid::MovePiece(char cmd)
 }
 
 
-bool Grid::IsInOrder()
+bool Grid::IsInOrder() const
 {
   int correct_value = 1;
   for (int i = 0; i < num_row_; ++i)
@@ -119,7 +119,7 @@ bool Grid::IsInOrder()
 }
 
 
-bool Grid::HasValidCell(Cell c)
+bool Grid::HasValidCell(Cell c) const
 {
   if (c.row_idx < 0 || c.row_idx >= num_row_)
     return false;
@@ -129,7 +129,7 @@ bool Grid::HasValidCell(Cell c)
 }
 
 
-void Grid::Print()
+void Grid::Print() const
 {
   int count1 = 0;
   int count2 = 0;
