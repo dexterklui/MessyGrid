@@ -42,3 +42,7 @@ main
 *.tar
 *.tgz
 *.tar.gz
+
+# Test files
+test/*
+!test/*.cpp

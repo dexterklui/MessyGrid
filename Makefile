@@ -49,3 +49,8 @@ tags:  ; ctags --kinds-c++=+p --fields=+iaS --extras=+q --language-force=c++ \
 tar:   ; tar -cvzf messygrid.tgz README*.md Makefile src/ doc/
 
 .PHONY: all run clean tags tar
+
+# Unit tests
+######################################################################
+test/test_grid: test/test_grid.cpp src/grid.h bin/grid.o
+	g++ ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
