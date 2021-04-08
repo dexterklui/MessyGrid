@@ -43,7 +43,8 @@ bin/: ; mkdir -p bin/
 # Phony targets
 ######################################################################
 clean: ; rm -f bin/*.o bin/main ${TAR_FILE}
-tags:  ; ctags src/*.cpp
+tags:  ; ctags --kinds-c++=+p --fields=+iaS --extras=+q --language-force=c++ \
+         -R src/
 tar:   ; tar -cvzf ${TAR_FILE} ${TAR_SOURCE}
 
 .PHONY: all clean tags tar
