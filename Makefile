@@ -48,7 +48,8 @@ run:   ; bin/main
 clean: ; rm -f bin/*.o bin/main ${TAR_FILE} ${TEST_EXE} test/*.o
 tags:  ; ctags --kinds-c++=+p --fields=+iaS --extras=+q --language-force=c++ \
          -R src/
-tar:   ; tar -cvzf messygrid.tgz README*.md Makefile src/ doc/
+tar:   ; tar -cvzf messygrid.tgz README*.md Makefile src/ doc/ test/test_*.cpp \
+         test/test.sh test/acutest.hpp
 
 .PHONY: all run clean tags tar
 
