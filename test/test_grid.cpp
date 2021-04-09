@@ -90,8 +90,8 @@ void test_grid_get_cell(void) {
       for (int n = 0; n < vec->expected_col; ++n) {
         value = (m == vec->expected_row-1 && n == vec->expected_col-1 ?
             0 : m*vec->expected_col + n+1);
-        expected_cell = {m, n};
         output_cell = grid.get_cell(value);
+        expected_cell = {m, n};
 
         TEST_CHECK(output_cell.row_idx == expected_cell.row_idx);
         TEST_MSG("Expected: %d", expected_cell.row_idx);
@@ -101,6 +101,21 @@ void test_grid_get_cell(void) {
         TEST_MSG("Expected: %d", expected_cell.col_idx);
         TEST_MSG("Produced: %d", output_cell.col_idx);
       }
+    }
+
+    // The expected_cell of all following tests should be the same
+    expected_cell = {-1, -1};
+    int values[4] = {-27, -1, vec->expected_row * vec->expected_col, 2384};
+
+    for (int j = 0; j < 4; ++j) {
+      output_cell = grid.get_cell(values[j]);
+      TEST_CHECK(output_cell.row_idx == expected_cell.row_idx);
+      TEST_MSG("Expected: %d", expected_cell.row_idx);
+      TEST_MSG("Produced: %d", output_cell.row_idx);
+
+      TEST_CHECK(output_cell.col_idx == expected_cell.col_idx);
+      TEST_MSG("Expected: %d", expected_cell.col_idx);
+      TEST_MSG("Produced: %d", output_cell.col_idx);
     }
   }
 }
