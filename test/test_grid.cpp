@@ -93,29 +93,26 @@ void test_grid_get_cell(void) {
         output_cell = grid.get_cell(value);
         expected_cell = {m, n};
 
-        TEST_CHECK(output_cell.row_idx == expected_cell.row_idx);
-        TEST_MSG("Expected: %d", expected_cell.row_idx);
-        TEST_MSG("Produced: %d", output_cell.row_idx);
-
-        TEST_CHECK(output_cell.col_idx == expected_cell.col_idx);
-        TEST_MSG("Expected: %d", expected_cell.col_idx);
-        TEST_MSG("Produced: %d", output_cell.col_idx);
+        TEST_CHECK(output_cell.row_idx == expected_cell.row_idx
+            && output_cell.col_idx == expected_cell.col_idx);
+        TEST_MSG("Expected row/col idx: %d %d",
+            expected_cell.row_idx, expected_cell.col_idx);
+        TEST_MSG("Produced row/col idx: %d %d",
+            output_cell.row_idx, output_cell.col_idx);
       }
     }
 
-    // The expected_cell of all following tests should be the same
     expected_cell = {-1, -1};
     int values[4] = {-27, -1, vec->expected_row * vec->expected_col, 2384};
 
     for (int j = 0; j < 4; ++j) {
       output_cell = grid.get_cell(values[j]);
-      TEST_CHECK(output_cell.row_idx == expected_cell.row_idx);
-      TEST_MSG("Expected: %d", expected_cell.row_idx);
-      TEST_MSG("Produced: %d", output_cell.row_idx);
-
-      TEST_CHECK(output_cell.col_idx == expected_cell.col_idx);
-      TEST_MSG("Expected: %d", expected_cell.col_idx);
-      TEST_MSG("Produced: %d", output_cell.col_idx);
+      TEST_CHECK(output_cell.row_idx == expected_cell.row_idx
+          && output_cell.col_idx == expected_cell.col_idx);
+      TEST_MSG("Expected row/col idx: %d %d",
+          expected_cell.row_idx, expected_cell.col_idx);
+      TEST_MSG("Produced row/col idx: %d %d",
+          output_cell.row_idx, output_cell.col_idx);
     }
   }
 }
