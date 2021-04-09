@@ -50,10 +50,10 @@ Grid::Grid(int row, int col) {
 Grid::~Grid()
 {
   for (int i = 0; i < num_row_; ++i) {
-    delete grid_[i];
+    delete [] grid_[i];
     grid_[i] = 0;
   }
-  delete grid_;
+  delete [] grid_;
   grid_ = 0;
 
   num_row_ = 0;
