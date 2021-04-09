@@ -14,8 +14,17 @@
 using namespace std;
 
 
-Grid::Grid(int row, int col)
-    : num_row_(row), num_col_(col) {
+Grid::Grid(int row, int col) {
+  // create zero-size grid when any dimension is less than or equal to zero
+  if (row <= 0 || col <= 0) {
+    num_row_ = num_col_ = 0;
+    grid_ = 0;
+    return;
+  }
+
+  num_row_ = row;
+  num_col_ = col;
+
   // Initialize a row x col array
   grid_ = new int*[num_row_];
   for (int i = 0; i < num_row_; ++i) {
