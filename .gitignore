@@ -43,6 +43,9 @@ main
 *.tgz
 *.tar.gz
 
-# Test files
+# Test files (object files and executables)
 test/*
 !test/*.cpp
+!test/*.hpp
+!test/*.h
+!test/*.sh

@@ -16,6 +16,8 @@ CPP_FLAGS = -std=c++11
 CPP_SRC_NAMES = $(notdir $(wildcard src/*.cpp))
 CPP_OBJ = $(addprefix bin/,$(patsubst %.cpp, %.o, ${CPP_SRC_NAMES}))
 
+TEST_EXE = $(basename $(wildcard test/test_*.cpp))
+
 # Pre-requisites
 ######################################################################
 # PHONY targets
@@ -43,7 +45,7 @@ bin/:       ; mkdir -p bin/
 # Phony targets
 ######################################################################
 run:   ; bin/main
-clean: ; rm -f bin/*.o bin/main ${TAR_FILE}
+clean: ; rm -f bin/*.o bin/main ${TAR_FILE} ${TEST_EXE} test/*.o
 tags:  ; ctags --kinds-c++=+p --fields=+iaS --extras=+q --language-force=c++ \
          -R src/
 tar:   ; tar -cvzf messygrid.tgz README*.md Makefile src/ doc/
@@ -52,5 +54,11 @@ tar:   ; tar -cvzf messygrid.tgz README*.md Makefile src/ doc/
 
 # Unit tests
 ######################################################################
-test/test_grid: test/test_grid.cpp src/grid.h bin/grid.o
+.PHONY: test
+test: ${TEST_EXE}
+	test/test.sh
+
+test/test_grid.o: test/test_grid.cpp test/acutest.hpp src/grid.h
+	g++ ${ERROR_FLAGS} ${CPP_FLAGS} -c $< -o $@
+test/test_grid: test/test_grid.o bin/grid.o
 	g++ ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
