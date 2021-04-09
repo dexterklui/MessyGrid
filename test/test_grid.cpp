@@ -65,9 +65,8 @@ void test_grid_initial_order(void) {
         output_value = grid.get_piece(target_cell);
 
         TEST_CHECK(output_value == expected_value);
-        TEST_MSG("Value in cell[%d][%d]:", m, n);
-        TEST_MSG("Expected: %d", expected_value);
-        TEST_MSG("Produced: %d", output_value);
+        TEST_MSG("Value in cell[%d][%d] should be %d but got %d",
+            m, n, expected_value, output_value);
       }
     }
   }
@@ -95,9 +94,8 @@ void test_grid_get_cell(void) {
 
         TEST_CHECK(output_cell.row_idx == expected_cell.row_idx
             && output_cell.col_idx == expected_cell.col_idx);
-        TEST_MSG("Expected row/col idx: %d %d",
-            expected_cell.row_idx, expected_cell.col_idx);
-        TEST_MSG("Produced row/col idx: %d %d",
+        TEST_MSG("Value %d should at [%d][%d] but got [%d][%d]", value,
+            expected_cell.row_idx, expected_cell.col_idx,
             output_cell.row_idx, output_cell.col_idx);
       }
     }
@@ -109,9 +107,8 @@ void test_grid_get_cell(void) {
       output_cell = grid.get_cell(values[j]);
       TEST_CHECK(output_cell.row_idx == expected_cell.row_idx
           && output_cell.col_idx == expected_cell.col_idx);
-      TEST_MSG("Expected row/col idx: %d %d",
-          expected_cell.row_idx, expected_cell.col_idx);
-      TEST_MSG("Produced row/col idx: %d %d",
+      TEST_MSG("Value %d should at [%d][%d] but got [%d][%d]", values[j],
+          expected_cell.row_idx, expected_cell.col_idx,
           output_cell.row_idx, output_cell.col_idx);
     }
   }
