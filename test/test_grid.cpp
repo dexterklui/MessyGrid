@@ -2,7 +2,7 @@
 #include "../src/grid.h"
 
 // General test cases
-struct TestVector
+struct RowColTestVector
 {
   const char* name;
   const int input_row;
@@ -11,7 +11,7 @@ struct TestVector
   const int expected_col;
 };
 
-TestVector test_vectors[] = {
+RowColTestVector test_vectors[] = {
   {"3x2"   ,3  ,2  ,3  ,2}  ,
   {"4x7"   ,4  ,7  ,4  ,7}  ,
   {"10x10" ,10 ,10 ,10 ,10} ,
@@ -27,7 +27,7 @@ void test_grid_row_col(void)
   int output_col;
 
   for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
-    TestVector* vec = &test_vectors[i];
+    RowColTestVector* vec = &test_vectors[i];
 
     TEST_CASE_("%s grid should have %d rows and %d cols",
         vec->name, vec->expected_row, vec->expected_col);
@@ -95,7 +95,7 @@ void test_grid_initial_order_and_get_piece(void)
   int output_value;
 
   for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
-    TestVector* vec = &test_vectors[i];
+    RowColTestVector* vec = &test_vectors[i];
 
     TEST_CASE(vec->name);
 
@@ -127,7 +127,7 @@ void test_grid_get_cell(void)
   Cell output_cell;
 
   for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
-    TestVector* vec = &test_vectors[i];
+    RowColTestVector* vec = &test_vectors[i];
 
     TEST_CASE(vec->name);
 
@@ -169,7 +169,7 @@ void test_grid_is_in_order_method(void)
   int output_value;
 
   for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
-    TestVector* vec = &test_vectors[i];
+    RowColTestVector* vec = &test_vectors[i];
 
     TEST_CASE_("Should return true after initializing %s grid",
         vec->name);
@@ -181,7 +181,7 @@ void test_grid_is_in_order_method(void)
 
   }
 
-  struct TestVector2
+  struct TestVector
   {
     const char* name;
     const int row;
@@ -191,7 +191,7 @@ void test_grid_is_in_order_method(void)
     const int expected_value;
   };
 
-  TestVector2 test_vectors2[] = {
+  TestVector test_vectors[] = {
     {"should return false after set 0 at [0][0] of 3x2 grid",
       3, 2, {0, 0}, 0, 0},
     {"should return true after set 0 at [2][1] of 3x2 grid",
@@ -214,8 +214,8 @@ void test_grid_is_in_order_method(void)
       -1, -1, {0, 0}, -1, 1},
   };
 
-  for (i = 0; i < sizeof(test_vectors2) / sizeof(test_vectors2[0]); ++i) {
-    TestVector2* vec = &test_vectors2[i];
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    TestVector* vec = &test_vectors[i];
 
     TEST_CASE(vec->name);
 
