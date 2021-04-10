@@ -29,19 +29,15 @@ void test_grid_row_col(void)
   for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
     TestVector* vec = &test_vectors[i];
 
-    TEST_CASE(vec->name);
+    TEST_CASE_("%s grid should have %d rows and %d cols",
+        vec->name, vec->expected_row, vec->expected_col);
 
     Grid grid(vec->input_row, vec->input_col);
 
     output_row = grid.num_row();
-    TEST_CHECK(output_row == vec->expected_row);
-    TEST_MSG("Expected: %d", vec->expected_row);
-    TEST_MSG("Produced: %d", output_row);
-
+    TEST_CHECK_(output_row == vec->expected_row, "output row: %d", output_row);
     output_col = grid.num_col();
-    TEST_CHECK(output_col == vec->expected_col);
-    TEST_MSG("Expected: %d", vec->expected_col);
-    TEST_MSG("Produced: %d", output_col);
+    TEST_CHECK_(output_col == vec->expected_col, "output col: %d", output_col);
   }
 }
 
@@ -92,7 +88,7 @@ void test_grid_has_valid_cell(void)
 }
 
 // correctness of this tests also depends on correctness of Grid::get_piece()
-void test_grid_initial_order(void)
+void test_grid_initial_order_and_get_piece(void)
 {
   unsigned long int i;
   int expected_value;
@@ -153,13 +149,14 @@ void test_grid_get_cell(void)
     }
 
     expected_cell = {-1, -1};
-    int values[4] = {-27, -1, vec->expected_row * vec->expected_col, 2384};
+    int input_values[4] = {
+      -27, -1, vec->expected_row * vec->expected_col, 2384};
 
     for (int j = 0; j < 4; ++j) {
-      output_cell = grid.get_cell(values[j]);
+      output_cell = grid.get_cell(input_values[j]);
       TEST_CHECK(output_cell.row_idx == expected_cell.row_idx
           && output_cell.col_idx == expected_cell.col_idx);
-      TEST_MSG("Value %d should at [%d][%d] but got [%d][%d]", values[j],
+      TEST_MSG("Value %d should at [%d][%d] but got [%d][%d]", input_values[j],
           expected_cell.row_idx, expected_cell.col_idx,
           output_cell.row_idx, output_cell.col_idx);
     }
@@ -169,7 +166,7 @@ void test_grid_get_cell(void)
 TEST_LIST = {
   {"grid_row_col", test_grid_row_col},
   {"grid_has_valid_cell", test_grid_has_valid_cell},
-  {"grid_initial_order", test_grid_initial_order},
+  {"grid_initial_order_and_get_piece", test_grid_initial_order_and_get_piece},
   {"grid_get_cell", test_grid_get_cell},
   {NULL, NULL}
 };
