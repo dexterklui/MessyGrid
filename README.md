@@ -1,4 +1,4 @@
-[![C/C++ CI](https://github.com/WilliamYEhku/MessyGrid/actions/workflows/c-cpp.yml/badge.svg?event=push)](https://github.com/WilliamYEhku/MessyGrid/actions/workflows/c-cpp.yml)
+[![C/C++ CI](https://github.com/WilliamYEhku/MessyGrid/actions/workflows/c-cpp.yml/badge.svg?branch=master&event=push)](https://github.com/WilliamYEhku/MessyGrid/actions/workflows/c-cpp.yml)
 
 # MessyGrid
 

@@ -121,8 +121,8 @@ bool Grid::IsInOrder() const
   for (int i = 0; i < num_row_; ++i) {
     for (int j = 0; j < num_col_; ++j) {
       if (i == num_row_ -1 && j == num_col_ -1) {  // for the last cell
-        if (grid_[i][j])  // if piece in last cell is not empty
-          return false;
+        //if (grid_[i][j])  // if piece in last cell is not empty
+          //return false;
       }
       else if (grid_[i][j] != correct_value++) {  // for other cells
         return false;
