@@ -1,4 +1,7 @@
+Default branch:
 [![C/C++ CI](https://github.com/WilliamYEhku/MessyGrid/actions/workflows/c-cpp.yml/badge.svg?event=push)](https://github.com/WilliamYEhku/MessyGrid/actions/workflows/c-cpp.yml)
+Master branch:
+[![C/C++ CI](https://github.com/WilliamYEhku/MessyGrid/actions/workflows/c-cpp.yml/badge.svg?branch=master&event=push)](https://github.com/WilliamYEhku/MessyGrid/actions/workflows/c-cpp.yml)
 
 Identification of member:
 Name: Lui Ka On (UID: 3035074610) 
