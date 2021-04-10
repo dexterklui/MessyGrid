@@ -1,3 +1,5 @@
+[![C/C++ CI](https://github.com/WilliamYEhku/MessyGrid/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/WilliamYEhku/MessyGrid/actions/workflows/c-cpp.yml)
+
 # MessyGrid
 
 **ENGG1340/COMP2113 Programming Technologies - Group Project**  
@@ -12,7 +14,7 @@ the numbers around until the order is restored.
 ## Identification of members:
 
 Name: Lui Ka On (UID: 3035074610)  
-Name: Ye Zhongzheng (UID:3035782176)
+Name: Ye Zhongzheng (UID: 3035782176)
 
 ## Rules:
 
