@@ -87,7 +87,6 @@ void test_grid_has_valid_cell(void)
   }
 }
 
-// correctness of this tests also depends on correctness of Grid::get_piece()
 void test_grid_initial_order_and_get_piece(void)
 {
   unsigned long int i;
@@ -163,6 +162,74 @@ void test_grid_get_cell(void)
   }
 }
 
+
+void test_grid_set_piece(void)
+{
+  struct TestVector
+  {
+    const char* name;
+    const int row;
+    const int col;
+    const int expected_row;
+    const int expected_col;
+    const Cell cell;
+    const int piece;
+    const int expected_value;
+  };
+
+  TestVector test_vectors[] = {
+    {"set 4 at [2][2] in 3x5 grid should get 4", 3, 5, 3, 5, {2, 2}, 4, 4},
+    {"set -1 at [2][3] in 3x5 grid should get -1", 3, 5, 3, 5, {2, 3}, -1, -1},
+    {"set 0 at [0][0] in 4x3 grid should get 0", 4, 3, 4, 3, {0, 0}, 0, 0},
+    {"set 2 at [-1][0] in 3x3 grid should get -1", 3, 3, 3, 3, {-1, 0}, 2, -1},
+    {"set 7 at [0][0] in -3x3 grid should get -1", -3, 3, 0, 0, {0, 0}, 7, -1},
+    {"set 9 at [9][8] in 10x9 grid should get 9", 10, 9, 10, 9, {9, 8}, 9, 9},
+  };
+
+  unsigned long int i;
+
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    TestVector* vec = &test_vectors[i];
+
+    TEST_CASE(vec->name);
+
+    Grid grid(vec->row, vec->col);
+    grid.set_piece(vec->cell, vec->piece);
+
+    // check value of the cell that has been set: value should be updated if the
+    // cell is valid, otherwise the result should be -1
+    int output_value = grid.get_piece(vec->cell);
+    TEST_CHECK(output_value == vec->expected_value);
+    TEST_MSG("grid.get_piece() produced: %d", output_value);
+
+    // the values of all other cells should remained unchanged
+    for (int m = 0; m < vec->expected_row; ++m) {
+      for (int n = 0; n < vec->expected_col; ++n) {
+        Cell current_cell = {m, n};
+        output_value = grid.get_piece(current_cell);
+        int expected_value;
+
+        // If it is the cell that has been set a piece, skip because we already
+        // tested it before the loop.
+        if (current_cell.row_idx == vec->cell.row_idx
+            && current_cell.col_idx == vec->cell.col_idx) {
+          continue;
+        }
+
+        // initially (without being changed by set_piece), value should be in
+        // ascending order starting from 1 except last cell should be 0
+        expected_value = (m == vec->expected_row-1 && n == vec->expected_col-1 ?
+          0 : m * vec->expected_col + n + 1);
+
+        TEST_CHECK(output_value == expected_value);
+        TEST_MSG("[%d][%d] has not changed and should be %d but got %d",
+            m, n, expected_value, output_value);
+      }
+    }
+  }
+}
+
+
 void test_grid_is_in_order_method(void)
 {
   unsigned long int i;
@@ -231,6 +298,7 @@ TEST_LIST = {
   {"grid_has_valid_cell", test_grid_has_valid_cell},
   {"grid_initial_order_and_get_piece", test_grid_initial_order_and_get_piece},
   {"grid_get_cell", test_grid_get_cell},
+  {"grid_set_piece", test_grid_set_piece},
   {"grid_IsInOrder_method", test_grid_is_in_order_method},
   {NULL, NULL}
 };
