@@ -163,10 +163,74 @@ void test_grid_get_cell(void)
   }
 }
 
+void test_grid_is_in_order_method(void)
+{
+  unsigned long int i;
+  int output_value;
+
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    TestVector* vec = &test_vectors[i];
+
+    TEST_CASE_("Should return true after initializing %s grid",
+        vec->name);
+
+    Grid grid(vec->input_row, vec->input_col);
+    output_value = grid.IsInOrder();
+    TEST_CHECK(output_value = 1);
+    TEST_MSG("The grid should be in order initially");
+
+  }
+
+  struct TestVector2
+  {
+    const char* name;
+    const int row;
+    const int col;
+    const Cell cell;
+    const int piece;
+    const int expected_value;
+  };
+
+  TestVector2 test_vectors2[] = {
+    {"should return false after set 0 at [0][0] of 3x2 grid",
+      3, 2, {0, 0}, 0, 0},
+    {"should return true after set 0 at [2][1] of 3x2 grid",
+      3, 2, {2, 1}, 0, 1},
+    {"should return true after set 0 at [3][0] of 3x2 grid",
+      3, 2, {3, 0}, 0, 1},
+    {"should return true after set 0 at [2][2] of 3x2 grid",
+      3, 2, {2, 2}, 0, 1},
+    {"should return true after set 4 at [1][1] of 3x2 grid",
+      3, 2, {1, 1}, 4, 1},
+    {"should return true after set 4 at [-1][1] of 3x2 grid",
+      3, 2, {-1, 1}, 4, 1},
+    {"should return false after set 4 at [1][0] of 3x2 grid",
+      3, 2, {1, 0}, 4, 0},
+    {"should return false after set 12 at [2][3] of 3x4 grid",
+      3, 4, {2, 3}, 12, 0},
+    {"should return false after set -1 at [9][9] of 10x10 grid",
+      10, 10, {9, 9}, -1, 0},
+    {"should return true after set -1 at [0][0] of -1x-1 grid",
+      -1, -1, {0, 0}, -1, 1},
+  };
+
+  for (i = 0; i < sizeof(test_vectors2) / sizeof(test_vectors2[0]); ++i) {
+    TestVector2* vec = &test_vectors2[i];
+
+    TEST_CASE(vec->name);
+
+    Grid grid(vec->row, vec->col);
+    grid.set_piece(vec->cell, vec->piece);
+    TEST_CHECK(grid.IsInOrder() == vec->expected_value);
+  }
+}
+
+
 TEST_LIST = {
   {"grid_row_col", test_grid_row_col},
   {"grid_has_valid_cell", test_grid_has_valid_cell},
   {"grid_initial_order_and_get_piece", test_grid_initial_order_and_get_piece},
   {"grid_get_cell", test_grid_get_cell},
+  {"grid_IsInOrder_method", test_grid_is_in_order_method},
   {NULL, NULL}
 };
