@@ -1,6 +1,7 @@
 #include "acutest.hpp"
 #include "../src/grid.h"
 
+// General test cases
 struct TestVector {
   const char* name;
   const int input_row;
@@ -9,8 +10,8 @@ struct TestVector {
   const int expected_col;
 };
 
-struct TestVector test_vectors[] = {
-  {"3x3"   ,3  ,2  ,3  ,2}  ,
+TestVector test_vectors[] = {
+  {"3x2"   ,3  ,2  ,3  ,2}  ,
   {"4x7"   ,4  ,7  ,4  ,7}  ,
   {"10x10" ,10 ,10 ,10 ,10} ,
   {"0x0"   ,0  ,0  ,0  ,0}  ,
@@ -24,7 +25,7 @@ void test_grid_row_col(void) {
   int output_col;
 
   for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
-    struct TestVector* vec = &test_vectors[i];
+    TestVector* vec = &test_vectors[i];
 
     TEST_CASE(vec->name);
 
@@ -42,13 +43,60 @@ void test_grid_row_col(void) {
   }
 }
 
+void test_grid_has_valid_cell(void)
+{
+  struct TestVector
+  {
+    const char* name;
+    const int row;
+    const int col;
+    const Cell check_cell;
+    const int expected_value;
+  };
+
+  TestVector test_vectors[] = {
+    {"3x2 grid should have (0, 0) cell"        , 3 , 2 , {0 , 0}  , 1},
+    {"3x2 grid should have (1, 0) cell"        , 3 , 2 , {1 , 0}  , 1},
+    {"3x2 grid should have (2, 1) cell"        , 3 , 2 , {2 , 1}  , 1},
+    {"3x2 grid should not have (3, 1) cell"    , 3 , 2 , {3 , 1}  , 0},
+    {"3x2 grid should not have (2, 2) cell"    , 3 , 2 , {2 , 2}  , 0},
+    {"3x2 grid should not have (3, 2) cell"    , 3 , 2 , {3 , 2}  , 0},
+    {"3x7 grid should not have (-1, -1) cell"  , 3 , 7 , {-1, -1} , 0},
+    {"3x2 grid should not have (-1, 1) cell"   , 3 , 2 , {-1, 1}  , 0},
+    {"4x4 grid should not have (2, -1) cell"   , 4 , 4 , {2 , -1} , 0},
+    {"0x0 grid should not have (0, 0) cell"    , 0 , 0 , {0 , 0}  , 0},
+    {"0x0 grid should not have (1, 2) cell"    , 0 , 0 , {1 , 2}  , 0},
+    {"0x0 grid should not have (-1, -1) cell"  , 0 , 0 , {-1, -1} , 0},
+    {"-1x-2 grid should not have (0, 0) cell"  , -1, -2, {0 , 0}  , 0},
+    {"-1x-2 grid should not have (2, 100) cell", -1, -2, {2 , 100}, 0},
+    {"-1x-2 grid should not have (-1, -2) cell", -1, -2, {-1, -2} , 0},
+    {"10x10 grid should have (5, 7) cell"      , 10, 10, {5 , 7}  , 1},
+    {"10x10 grid should have (9, 9) cell"      , 10, 10, {9 , 9}  , 1},
+    {"1x1 grid should have (0, 0) cell"        , 1 , 1 , {0 , 0}  , 1},
+  };
+
+  unsigned long int i;
+  int output_value;
+
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    TestVector* vec = &test_vectors[i];
+    TEST_CASE(vec->name);
+
+    Grid grid(vec->row, vec->col);
+    output_value = grid.HasValidCell(vec->check_cell);
+
+    TEST_CHECK(output_value == vec->expected_value);
+  }
+}
+
+// correctness of this tests also depends on correctness of Grid::get_piece()
 void test_grid_initial_order(void) {
   unsigned long int i;
   int expected_value;
   int output_value;
 
   for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
-    struct TestVector* vec = &test_vectors[i];
+    TestVector* vec = &test_vectors[i];
 
     TEST_CASE(vec->name);
 
@@ -79,7 +127,7 @@ void test_grid_get_cell(void) {
   Cell output_cell;
 
   for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
-    struct TestVector* vec = &test_vectors[i];
+    TestVector* vec = &test_vectors[i];
 
     TEST_CASE(vec->name);
 
@@ -116,6 +164,7 @@ void test_grid_get_cell(void) {
 
 TEST_LIST = {
   {"grid_row_col", test_grid_row_col},
+  {"grid_has_valid_cell", test_grid_has_valid_cell},
   {"grid_initial_order", test_grid_initial_order},
   {"grid_get_cell", test_grid_get_cell},
   {NULL, NULL}
