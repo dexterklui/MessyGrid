@@ -2,7 +2,8 @@
 #include "../src/grid.h"
 
 // General test cases
-struct TestVector {
+struct TestVector
+{
   const char* name;
   const int input_row;
   const int input_col;
@@ -19,7 +20,8 @@ TestVector test_vectors[] = {
   {"-3x-5" ,-3 ,-5 ,0  ,0}  ,
 };
 
-void test_grid_row_col(void) {
+void test_grid_row_col(void)
+{
   unsigned long int i;
   int output_row;
   int output_col;
@@ -90,7 +92,8 @@ void test_grid_has_valid_cell(void)
 }
 
 // correctness of this tests also depends on correctness of Grid::get_piece()
-void test_grid_initial_order(void) {
+void test_grid_initial_order(void)
+{
   unsigned long int i;
   int expected_value;
   int output_value;
@@ -120,7 +123,8 @@ void test_grid_initial_order(void) {
   }
 }
 
-void test_grid_get_cell(void) {
+void test_grid_get_cell(void)
+{
   unsigned long int i;
   int value;
   Cell expected_cell;
