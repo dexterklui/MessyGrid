@@ -10,13 +10,14 @@
 
 # Define variables
 ######################################################################
+CC = g++
 ERROR_FLAGS = -Wall -Wextra -Werror -pedantic-errors
 CPP_FLAGS = -std=c++11
 
 CPP_SRC_NAMES = $(notdir $(wildcard src/*.cpp))
 CPP_OBJ = $(addprefix bin/,$(patsubst %.cpp, %.o, ${CPP_SRC_NAMES}))
 
-TEST_EXE = $(basename $(wildcard test/test_*.cpp))
+TEST_OBJ = $(patsubst %.cpp, %.o, $(wildcard test/test_*.cpp))
 
 # Pre-requisites
 ######################################################################
@@ -37,15 +38,15 @@ ${CPP_OBJ}: | bin/  # The directory to store them
 
 # Explicit rules to build targets
 ######################################################################
-bin/main:   ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
-${CPP_OBJ}: ; g++ ${ERROR_FLAGS} ${CPP_FLAGS} -c $< -o $@
+bin/main:   ; ${CC} ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
+${CPP_OBJ}: ; ${CC} ${ERROR_FLAGS} ${CPP_FLAGS} -c $< -o $@
 
 bin/:       ; mkdir -p bin/
 
 # Phony targets
 ######################################################################
 run:   ; bin/main
-clean: ; rm -f bin/*.o bin/main ${TAR_FILE} ${TEST_EXE} test/*.o
+clean: ; rm -f bin/*.o bin/main ${TAR_FILE} test/*.o test/test_main
 tags:  ; ctags --kinds-c++=+p --fields=+iaS --extras=+q --language-force=c++ \
          -R src/
 tar:   ; tar -cvzf messygrid.tgz README*.md Makefile src/ doc/ test/test_*.cpp \
@@ -56,10 +57,15 @@ tar:   ; tar -cvzf messygrid.tgz README*.md Makefile src/ doc/ test/test_*.cpp \
 # Unit tests
 ######################################################################
 .PHONY: test
-test: ${TEST_EXE}
-	test/test.sh
+test: test/test_main
+	test/test_main
 
-test/test_grid.o: test/test_grid.cpp test/acutest.hpp src/grid.h
-	g++ ${ERROR_FLAGS} ${CPP_FLAGS} -c $< -o $@
-test/test_grid: test/test_grid.o bin/grid.o
-	g++ ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
+# Pre-requisites
+test/test_main: test/test_main.o test/test_grid.o bin/grid.o
+test/test_main.o: $(addprefix test/, test_main.cpp acutest.hpp test_grid.h)
+test/test_grid.o: $(addprefix test/, test_grid.cpp acutest.hpp test_grid.h) \
+    src/grid.h
+
+# Explcit rules
+test/test_main: ; ${CC} ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
+${TEST_OBJ}: ; ${CC} ${ERROR_FLAGS} ${CPP_FLAGS} -c $< -o $@
