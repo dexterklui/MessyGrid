@@ -13,4 +13,4 @@ void test_grid_set_piece(void);
 
 void test_grid_is_in_order_method(void);
 
-#endif // ifndef TESTGRID_H
+#endif  // ifndef TESTGRID_H

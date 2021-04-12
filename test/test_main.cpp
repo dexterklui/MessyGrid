@@ -1,5 +1,6 @@
 #include "acutest.hpp"
 #include "test_grid.h"
+#include "test_game.h"
 
 TEST_LIST = {
   {"grid_row_col", test_grid_row_col},
@@ -8,5 +9,6 @@ TEST_LIST = {
   {"grid_get_cell", test_grid_get_cell},
   {"grid_set_piece", test_grid_set_piece},
   {"grid_IsInOrder_method", test_grid_is_in_order_method},
+  {"game_read_move_command", TestReadMoveCommand},
   {NULL, NULL}
 };

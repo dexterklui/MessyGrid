@@ -9,7 +9,9 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <iostream>
 #include "grid.h"
+using namespace std;
 
 // Function: Main function to run the game
 void RunGame();
@@ -20,8 +22,12 @@ void RunGame();
 void LetUserMovePiece(Grid& grid);
 
 // Function: Prompt user to enter a character as a move command. It does not
-//           check whether it is a valid command.
+//           check whether it is a valid command but return the input character
+//           faithfully.
+// Input: istream &ins: the input stream from which the input is extracted
+//        ostream &outs: the output stream to which the prompt message is
+//                       printed
 // Output: Return the character read from the user
-char ReadMoveCommand();
+char ReadMoveCommand(istream &ins, ostream &outs);
 
 #endif  // ifndef GAME_H

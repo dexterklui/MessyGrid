@@ -51,7 +51,7 @@ void LetUserMovePiece(Grid& grid)
   while (!valid_cmd) {
     grid.Print();
 
-    cmd = ReadMoveCommand();
+    cmd = ReadMoveCommand(cin, cout);
     cmd = toupper(cmd);  // to allow user input command in lower case
 
     switch (cmd) {
@@ -70,17 +70,21 @@ void LetUserMovePiece(Grid& grid)
   grid.MovePiece(cmd);
 }
 
-char ReadMoveCommand()
+char ReadMoveCommand(istream &ins, ostream &outs)
 {
   char input;
 
-  cout << "Please move the cell." << endl;
-  cout << "W: Up" << endl;
-  cout << "S: Down" << endl;
-  cout << "A: Left" << endl;
-  cout << "D: Right" << endl;
-  cin >> input;
-  cin.ignore(100, '\n');  // clear remaining garbage value in cin, if any
+  outs << "Please move the cell." << endl;
+  outs << "W: Up" << endl;
+  outs << "S: Down" << endl;
+  outs << "A: Left" << endl;
+  outs << "D: Right" << endl;
+  ins >> input;
+  if (cin.eof()) {
+    cerr << "Received EOF from cin" << endl;
+    exit(1);
+  }
+  ins.ignore(100, '\n');  // clear remaining garbage value in cin, if any
 
   return input;
 }

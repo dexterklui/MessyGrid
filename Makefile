@@ -17,7 +17,10 @@ CPP_FLAGS = -std=c++11
 CPP_SRC_NAMES = $(notdir $(wildcard src/*.cpp))
 CPP_OBJ = $(addprefix bin/,$(patsubst %.cpp, %.o, ${CPP_SRC_NAMES}))
 
-TEST_OBJ = $(patsubst %.cpp, %.o, $(wildcard test/test_*.cpp))
+TEST_DIR = test
+TEST_OBJ = $(patsubst %.cpp, %.o, $(wildcard ${TEST_DIR}/test_*.cpp))
+
+TAR_FILE = messygrid.tgz
 
 # Pre-requisites
 ######################################################################
@@ -46,26 +49,46 @@ bin/:       ; mkdir -p bin/
 # Phony targets
 ######################################################################
 run:   ; bin/main
-clean: ; rm -f bin/*.o bin/main ${TAR_FILE} test/*.o test/test_main
+
+clean: ; @ rm -f \
+         bin/main \
+         bin/*.o \
+         ${TAR_FILE} \
+         ${TEST_DIR}/test_main \
+         ${TEST_DIR}/*.o
+
 tags:  ; ctags --kinds-c++=+p --fields=+iaS --extras=+q --language-force=c++ \
          -R src/
-tar:   ; tar -cvzf messygrid.tgz README*.md Makefile src/ doc/ test/test_*.cpp \
-         test/test.sh test/acutest.hpp
+
+tar:   ; tar -cvzf ${TAR_FILE} README*.md Makefile src/ doc/ \
+	 $(addprefix ${TEST_DIR}/, test_*.h test_*.cpp acutest.hpp)
 
 .PHONY: all run clean tags tar
 
 # Unit tests
 ######################################################################
 .PHONY: test
-test: test/test_main
-	test/test_main
+test: ${TEST_DIR}/test_main
+	${TEST_DIR}/test_main
 
 # Pre-requisites
-test/test_main: test/test_main.o test/test_grid.o bin/grid.o
-test/test_main.o: $(addprefix test/, test_main.cpp acutest.hpp test_grid.h)
-test/test_grid.o: $(addprefix test/, test_grid.cpp acutest.hpp test_grid.h) \
+${TEST_DIR}/test_main: ${TEST_OBJ} \
+    $(addprefix bin/, grid.o game.o clear_screen.o)
+
+${TEST_DIR}/test_main.o: \
+    ${TEST_DIR}/test_main.cpp \
+    ${TEST_DIR}/acutest.hpp \
+    ${TEST_DIR}/test_grid.h \
+    ${TEST_DIR}/test_game.h \
+
+${TEST_DIR}/test_grid.o: \
+    $(addprefix ${TEST_DIR}/, test_grid.cpp test_grid.h acutest.hpp) \
     src/grid.h
 
+${TEST_DIR}/test_game.o: \
+    $(addprefix ${TEST_DIR}/, test_game.cpp test_game.h acutest.hpp) \
+    src/game.h
+
 # Explcit rules
-test/test_main: ; ${CC} ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
+${TEST_DIR}/test_main: ; ${CC} ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
 ${TEST_OBJ}: ; ${CC} ${ERROR_FLAGS} ${CPP_FLAGS} -c $< -o $@
