@@ -23,7 +23,7 @@ RowColTestVector test_vectors[] = {
   {"-3x-5" ,-3 ,-5 ,0  ,0}  ,
 };
 
-void test_grid_row_col(void)
+void TestGridRowCol(void)
 {
   unsigned long int i;
   int output_row;
@@ -44,7 +44,7 @@ void test_grid_row_col(void)
   }
 }
 
-void test_grid_has_valid_cell(void)
+void TestGridHasValidCell(void)
 {
   struct TestVector
   {
@@ -90,7 +90,7 @@ void test_grid_has_valid_cell(void)
   }
 }
 
-void test_grid_initial_order_and_get_piece(void)
+void TestGridGetPieceAndInitialOrder(void)
 {
   unsigned long int i;
   int expected_value;
@@ -121,7 +121,7 @@ void test_grid_initial_order_and_get_piece(void)
   }
 }
 
-void test_grid_get_cell(void)
+void TestGridGetCell(void)
 {
   unsigned long int i;
   int value;
@@ -166,7 +166,7 @@ void test_grid_get_cell(void)
 }
 
 
-void test_grid_set_piece(void)
+void TestGridSetPiece(void)
 {
   struct TestVector
   {
@@ -233,7 +233,7 @@ void test_grid_set_piece(void)
 }
 
 
-void test_grid_is_in_order_method(void)
+void TestGridIsInOrder(void)
 {
   unsigned long int i;
   int output_value;

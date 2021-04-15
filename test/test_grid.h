@@ -1,16 +1,16 @@
 #ifndef TESTGRID_H
 #define TESTGRID_H
 
-void test_grid_row_col(void);
+void TestGridRowCol(void);
 
-void test_grid_has_valid_cell(void);
+void TestGridHasValidCell(void);
 
-void test_grid_initial_order_and_get_piece(void);
+void TestGridGetPieceAndInitialOrder(void);
 
-void test_grid_get_cell(void);
+void TestGridGetCell(void);
 
-void test_grid_set_piece(void);
+void TestGridSetPiece(void);
 
-void test_grid_is_in_order_method(void);
+void TestGridIsInOrder(void);
 
 #endif  // ifndef TESTGRID_H
