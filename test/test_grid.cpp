@@ -299,7 +299,6 @@ void TestGridSwapPiece(void)
 {
   struct TestVector
   {
-    //const char* name;
     const int row;
     const int col;
     const int expected_row;
@@ -381,6 +380,163 @@ void TestGridSwapPiece(void)
         TEST_MSG("[%d][%d] has not changed and should be %d but got %d",
             m, n, expected_value, result_cell_val);
       }
+    }
+  }
+}
+
+void TestGridMovePiece(void)
+{
+  struct TestVector
+  {
+    const int row;
+    const int col;
+    const int expected_row;
+    const int expected_col;
+    const char* cmd_str;
+    const int cmd_len;
+    const int expected_return_val;  // only for the last command in cmd_str
+    const int expected_grid[5][5];
+  };
+
+  TestVector test_vectors[] = {
+    {3, 3, 3, 3, "W", 1, 0, {
+      {1 , 2 , 3 , -1, -1},
+      {4 , 5 , 6 , -1, -1},
+      {7 , 8 , 0 , -1, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {3, 3, 3, 3, "S", 1, 1, {
+      {1 , 2 , 3 , -1, -1},
+      {4 , 5 , 0 , -1, -1},
+      {7 , 8 , 6 , -1, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {3, 3, 3, 3, "A", 1, 0, {
+      {1 , 2 , 3 , -1, -1},
+      {4 , 5 , 6 , -1, -1},
+      {7 , 8 , 0 , -1, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {3, 3, 3, 3, "D", 1, 1, {
+      {1 , 2 , 3 , -1, -1},
+      {4 , 5 , 6 , -1, -1},
+      {7 , 0 , 8 , -1, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {3, 3, 3, 3, "w", 1, 0, {
+      {1 , 2 , 3 , -1, -1},
+      {4 , 5 , 6 , -1, -1},
+      {7 , 8 , 0 , -1, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {3, 3, 3, 3, "q", 1, 0, {
+      {1 , 2 , 3 , -1, -1},
+      {4 , 5 , 6 , -1, -1},
+      {7 , 8 , 0 , -1, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {3, 3, 3, 3, "WS", 2, 1, {
+      {1 , 2 , 3 , -1, -1},
+      {4 , 5 , 0 , -1, -1},
+      {7 , 8 , 6 , -1, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {3, 4, 3, 4, "sD", 2, 1, {
+      {1 , 2 , 3 , 4 , -1},
+      {5 , 6 , 7 , 8 , -1},
+      {9 , 10, 0 , 11, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {3, 4, 3, 4, "cKdQ", 4, 0, {
+      {1 , 2 , 3 , 4 , -1},
+      {5 , 6 , 7 , 8 , -1},
+      {9 , 10, 11, 0 , -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {3, 4, 3, 4, "SSSS", 4, 0, {
+      {1 , 2 , 3 , 0 , -1},
+      {5 , 6 , 7 , 4 , -1},
+      {9 , 10, 11, 8 , -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {3, 4, 3, 4, "DDDDSSSS", 8, 0, {
+      {0 , 2 , 3 , 4 , -1},
+      {1 , 6 , 7 , 8 , -1},
+      {5 , 9 , 10, 11, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {3, 4, 3, 4, "DDDDSSSSAW", 10, 1, {
+      {2 , 6 , 3 , 4 , -1},
+      {1 , 0 , 7 , 8 , -1},
+      {5 , 9 , 10, 11, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+    {5, 5, 5, 5, "ASSWDQDWSDS", 11, 1, {
+      {1 , 2 , 3 , 4 , 5 },
+      {6 , 7 , 8 , 9 , 10},
+      {11, 0 , 13, 14, 15},
+      {16, 12, 17, 18, 19},
+      {21, 22, 23, 24, 20},
+    }},
+    {0, 2, 0, 0, "SSDD", 4, 0, {
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+      {-1, -1, -1, -1, -1},
+    }},
+  };
+
+  unsigned long int i;
+
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    TestVector* vec = &test_vectors[i];
+    char cmd;
+    int output_return_val;
+
+    TEST_CASE_("Move pieces with %d commands '%s' in %dx%d grid",
+        vec->cmd_len, vec->cmd_str, vec->row, vec->col);
+
+    Grid grid(vec->row, vec->col);
+
+    for (int j = 0; j < vec->cmd_len; ++j) {
+      cmd = vec->cmd_str[j];
+      output_return_val = grid.MovePiece(cmd);
+    }
+
+    // check return value for last move command
+    TEST_CHECK(output_return_val == vec->expected_return_val);
+    TEST_MSG("MovePiece() for last command should return %d but got %d",
+        vec->expected_return_val, output_return_val);
+
+    // check if the values in the grid are correct
+    for (int m = 0; m < vec->expected_row; ++m) {
+      for (int n = 0; n < vec->expected_col; ++n) {
+        Cell current_cell = {m, n};
+        int current_val = grid.get_piece(current_cell);
+        TEST_CHECK(current_val == vec->expected_grid[m][n]);
+        TEST_MSG("[%d][%d] should be %d but got %d",
+            m, n, vec->expected_grid[m][n], current_val);
+      }
+    }
+
+    // check [0][0] for grid with resultant dimension 0x0
+    if (vec->expected_row == 0 || vec->expected_col == 0) {
+      Cell cell = {0, 0};
+      TEST_CHECK(grid.get_piece(cell) == -1);
+      TEST_MSG("The resultant dimension should be 0x0 so [0][0] should be -1");
     }
   }
 }

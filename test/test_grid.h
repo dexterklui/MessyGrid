@@ -15,4 +15,6 @@ void TestGridIsInOrder(void);
 
 void TestGridSwapPiece(void);
 
+void TestGridMovePiece(void);
+
 #endif  // ifndef TESTGRID_H
