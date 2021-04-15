@@ -54,8 +54,8 @@ class Grid {
   //             grid.
   ~Grid();
 
-  bool operator==(Grid& grid) const;  // return true if two grids are the same
-  bool operator!=(Grid& grid) const;  // return true if two grids are different
+  bool operator==(const Grid& grid) const;  // return true if two grids are the same
+  bool operator!=(const Grid& grid) const;  // return true if two grids are different
 
   int num_row() const { return num_row_; }  // get number of rows
   int num_col() const { return num_col_; }  // get number of columns

@@ -61,7 +61,7 @@ Grid::~Grid()
 }
 
 
-bool Grid::operator==(Grid& grid) const
+bool Grid::operator==(const Grid& grid) const
 {
   if (num_row_ != grid.num_row_ || num_col_ != grid.num_col_)
     return false;
@@ -75,7 +75,7 @@ bool Grid::operator==(Grid& grid) const
 }
 
 
-bool Grid::operator!=(Grid& grid) const
+bool Grid::operator!=(const Grid& grid) const
 {
   return ( !(*this == grid) );
 }
