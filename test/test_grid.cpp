@@ -247,14 +247,14 @@ void TestGridEqualOperator(void)
 
     TEST_CASE_("Two %s initialized grid should equal", vec->name);
     TEST_CHECK(grid_1 == grid_2);
-    TEST_CHECK(! (grid_1 != grid_2));
+    TEST_CHECK( !(grid_1 != grid_2) );
 
     TEST_CASE_("%s ordered grid should not equal grid with different piece",
         vec->name);
     Cell cell = {0, 0};
     grid_2.set_piece(cell, -5);
     if (vec->expected_row != 0 && vec->expected_col != 0) {  // not 0x0 grid
-      TEST_CHECK_(! (grid_1 == grid_2), "Should be different at 1st cell");
+      TEST_CHECK_( !(grid_1 == grid_2), "Should be different at 1st cell");
       TEST_CHECK_(grid_1 != grid_2, "Should be different at 1st cell");
     }
 
@@ -262,13 +262,13 @@ void TestGridEqualOperator(void)
     cell = {vec->expected_row - 1, vec->expected_col - 1};  // last cell
     grid_2.set_piece(cell, -5);
     if (vec->expected_row != 0 && vec->expected_col != 0) {  // not 0x0 grid
-      TEST_CHECK_(! (grid_1 == grid_2), "Should be different at the last cell");
+      TEST_CHECK_( !(grid_1 == grid_2), "Should be different at the last cell");
       TEST_CHECK_(grid_1 != grid_2, "Should be different at the last cell");
     }
 
     TEST_CASE_("%s ordered grid should not equal 1x8 ordered grid", vec->name);
     Grid grid_3(1,8);
-    TEST_CHECK(! (grid_1 == grid_3));
+    TEST_CHECK( !(grid_1 == grid_3) );
     TEST_CHECK(grid_1 != grid_3);
   }
 }
