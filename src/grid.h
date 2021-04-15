@@ -79,20 +79,24 @@ class Grid {
   //         inside the grid by randomly moving around the pieces.
   void RandomizeGrid();
 
-  // Function: Swap the pieces of two cells, if the cells are valid and not
-  //           equal to each other.
-  void SwapPiece(Cell a, Cell b);
+  // Function: Swap the pieces of two cells if the cells are valid and not equal
+  //           to each other. Return if the swap is successful.
+  //  Input: Cell a, Cell b: two two cells whose pieces are swapped
+  //  Output: int: 1 if piece swapped, 0 otherwise
+  int SwapPiece(Cell a, Cell b);
 
   // Function: Move an adjacent piece into the empty cell of the grid according
   //           to the command. If there is no required adjacent piece (when the
   //           empty cell is at the bottom and no more piece below), do nothing.
-  //           Also do nothing if the command is invalid.
+  //           Also do nothing if the command is invalid. Return if the move is
+  //           succesful.
   // Input: char cmd: The command to move the piece. Valid values are:
   //                  W: move up the piece below the empty cell
   //                  S: move down the piece above the empty cell
   //                  A: move left the piece on the right of the empty cell
   //                  D: move right the piece on the left of the empty cell
-  void MovePiece(char cmd);
+  // Output: int: 1 if a piece is moved, 0 otherwise
+  int MovePiece(char cmd);
 
   // Function: Check whether all the pieces in the grid are in ascending order
   //           except the last cell at the bottom right is empty.

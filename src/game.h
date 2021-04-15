@@ -16,8 +16,8 @@ using namespace std;
 // Function: Main function to run the game
 void RunGame();
 
-// Function: Handles displaying of the grid and dealing with valid and invalid
-//           user input to move a piece.
+// Function: Handles displaying of the grid and dealing with user input for
+//           moving a piece.
 // Input: Grid& grid: A class Grid storing the grid of the current game.
 void LetUserMovePiece(Grid& grid);
 

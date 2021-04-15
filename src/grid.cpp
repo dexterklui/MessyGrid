@@ -91,7 +91,7 @@ Cell Grid::get_cell(int p) const
 }
 
 
-void Grid::MovePiece(char cmd)
+int Grid::MovePiece(char cmd)
 {
   Cell empty_cell = get_cell(0);  // to store the location of the empty cell
   Cell move_cell = empty_cell;  // to store the location of the cell to be moved
@@ -111,7 +111,7 @@ void Grid::MovePiece(char cmd)
       break;
   }
 
-  SwapPiece(empty_cell, move_cell);
+  return SwapPiece(empty_cell, move_cell);
 }
 
 
@@ -186,14 +186,15 @@ int* Grid::cell_ptr(Cell c)
 }
 
 
-void Grid::SwapPiece(Cell a, Cell b)
+int Grid::SwapPiece(Cell a, Cell b)
 {
   if (!HasValidCell(a) || !HasValidCell(b) ||  a.EqualCell(b))
-    return;
+    return 0;
 
   int piece_a = get_piece(a);
   set_piece(a, get_piece(b));
   set_piece(b, piece_a);
+  return 1;
 }
 
 bool Grid::CanBeMoveOrNot(int MovingNum, int nowrow, int nowcol)
