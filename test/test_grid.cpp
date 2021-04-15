@@ -647,7 +647,7 @@ void TestGridRandomizeGrid(void)
 
     int trial_count = 0;
     int size = vec->expected_row * vec->expected_col;
-    bool did_randomized = size <= 0 ? true : false;
+    bool did_randomized = size <= 1 ? true : false;
 
     // note that the case of size==0 will also enter the loop, but will break
     for (int j = 0; j < 2 + 200/(size+1); ++j) {
