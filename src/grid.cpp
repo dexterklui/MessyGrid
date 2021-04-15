@@ -230,6 +230,9 @@ bool Grid::CanBeMoveOrNot(int MovingNum, int nowrow, int nowcol)
 
 void Grid::RandomizeGrid()
 {
+  if (num_row_ <= 0 || num_col_ <= 0)
+    return;
+
   srand((unsigned)time(NULL));
   int num = num_row_ * num_col_;
   int MovingTimes = (rand() % (num*num*num - num*num)) + num*num;
