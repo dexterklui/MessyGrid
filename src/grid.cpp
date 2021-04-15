@@ -143,37 +143,37 @@ bool Grid::HasValidCell(Cell c) const
 }
 
 
-void Grid::Print() const
+void Grid::Print(ostream& outs) const
 {
   int count1 = 0;
   int count2 = 0;
   for (int i = 0; i < num_row_; i++) {
     if (count2 != 0) {
-      cout << "---";
+      outs << "---";
       for (int c = 0; c < num_col_-1; c++){
-        cout << "+----";
+        outs << "+----";
       }
-      cout << endl;
+      outs << endl;
     }
     count2 = 1;
 
     for (int j = 0; j < num_col_; j++) {
       int a  = grid_[i][j];
       if (count1 % num_col_ != 0){
-        cout << "| ";
+        outs << "| ";
       }
       if (a < 10 && a > 0){
-        cout << " " << a << " ";
+        outs << " " << a << " ";
       }
       else if (a >= 10 && a < 100){
-        cout << a << " ";
+        outs << a << " ";
       }
       else if (a == 0){
-        cout << "   ";
+        outs << "   ";
       }
       count1++;
     }
-    cout << endl;
+    outs << endl;
   }
 }
 

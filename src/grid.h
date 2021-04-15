@@ -22,6 +22,8 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include <iostream>
+
 // To represent a cell in the grid with the row and column index.
 struct Cell {
   int row_idx;
@@ -109,7 +111,8 @@ class Grid {
   bool HasValidCell(Cell c) const;
 
   // Function: Print the current grid status on the screen
-  void Print() const;
+  // Input: std::ostream& outs: the stream to which the output goes
+  void Print(std::ostream& outs) const;
 
  private:
   int num_row_;  // number of rows of the grid

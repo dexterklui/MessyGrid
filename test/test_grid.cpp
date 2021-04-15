@@ -3,6 +3,9 @@
 #include "acutest.hpp"
 #include "test_grid.h"
 #include "../src/grid.h"
+#include <cstring>
+#include <sstream>
+using namespace std;
 
 // General test cases
 struct RowColTestVector
@@ -538,5 +541,52 @@ void TestGridMovePiece(void)
       TEST_CHECK(grid.get_piece(cell) == -1);
       TEST_MSG("The resultant dimension should be 0x0 so [0][0] should be -1");
     }
+  }
+}
+
+
+void TestGridPrint(void)
+{
+  struct TestVector
+  {
+    const char* name;
+    const int row;
+    const int col;
+    const char* cmd_str;
+    const int cmd_len;
+    const char* expected_output;
+  };
+
+  TestVector test_vectors[] = {
+    {"Print 2x3 grid", 2, 3, "", 0,
+      " 1 |  2 |  3 \n---+----+----\n 4 |  5 |    \n"
+    },
+    {"Print 3x2 grid", 3, 2, "SDDWASDS", 8,
+      "   |  2 \n---+----\n 1 |  5 \n---+----\n 4 |  3 \n"
+    },
+    {"2x0 grid", 2, 0, "SDD", 3,
+      ""
+    },
+  };
+
+  unsigned long int i;
+
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    TestVector* vec = &test_vectors[i];
+    stringstream iostr("");
+    char print_output[256] = "";  // Remember increase size if needed
+
+    TEST_CASE(vec->name);
+
+    Grid grid(vec->row, vec->col);
+    for (int j = 0; j < vec->cmd_len; ++j)
+      grid.MovePiece(vec->cmd_str[j]);
+
+    grid.Print(iostr);
+    iostr.get(print_output, 256, '\0');
+    
+    TEST_CHECK(strcmp(print_output, vec->expected_output) == 0);
+    TEST_MSG("Expected:\n%s", vec->expected_output);
+    TEST_MSG("Produced:\n%s", print_output);
   }
 }

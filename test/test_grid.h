@@ -17,4 +17,6 @@ void TestGridSwapPiece(void);
 
 void TestGridMovePiece(void);
 
+void TestGridPrint(void);
+
 #endif  // ifndef TESTGRID_H

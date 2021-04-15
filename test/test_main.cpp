@@ -11,6 +11,7 @@ TEST_LIST = {
   {"grid_is_in_order", TestGridIsInOrder},
   {"grid_swap_piece", TestGridSwapPiece},
   {"grid_move_piece", TestGridMovePiece},
+  {"grid_print", TestGridPrint},
 
   {"game_read_move_command", TestReadMoveCommand},
   {NULL, NULL}
