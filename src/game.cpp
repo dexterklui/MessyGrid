@@ -34,7 +34,7 @@ void RunGame()
     LetUserMovePiece(grid);
 
   ClearScreen();
-  grid.Print();
+  grid.Print(cout);
   cout << endl << "You reordered the messy grid. Congratulation!" << endl;
   cout << endl << "Press <Enter> to return to main menu...";
   string dummy;
@@ -49,7 +49,7 @@ void LetUserMovePiece(Grid& grid)
   ClearScreen();
 
   while (!moved) {
-    grid.Print();
+    grid.Print(cout);
 
     cmd = ReadMoveCommand(cin, cout);
     cmd = toupper(cmd);  // to allow user input command in lower case

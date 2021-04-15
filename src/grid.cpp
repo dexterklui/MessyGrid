@@ -61,6 +61,26 @@ Grid::~Grid()
 }
 
 
+bool Grid::operator==(const Grid& grid) const
+{
+  if (num_row_ != grid.num_row_ || num_col_ != grid.num_col_)
+    return false;
+
+  for (int i = 0; i < num_row_; ++i)
+    for (int j = 0; j < num_col_; ++j)
+      if (grid_[i][j] != grid.grid_[i][j])
+        return false;
+
+  return true;
+}
+
+
+bool Grid::operator!=(const Grid& grid) const
+{
+  return ( !(*this == grid) );
+}
+
+
 int Grid::get_piece(Cell c) const
 {
   if (!HasValidCell(c))
@@ -143,37 +163,37 @@ bool Grid::HasValidCell(Cell c) const
 }
 
 
-void Grid::Print() const
+void Grid::Print(ostream& outs) const
 {
   int count1 = 0;
   int count2 = 0;
   for (int i = 0; i < num_row_; i++) {
     if (count2 != 0) {
-      cout << "---";
+      outs << "---";
       for (int c = 0; c < num_col_-1; c++){
-        cout << "+----";
+        outs << "+----";
       }
-      cout << endl;
+      outs << endl;
     }
     count2 = 1;
 
     for (int j = 0; j < num_col_; j++) {
       int a  = grid_[i][j];
       if (count1 % num_col_ != 0){
-        cout << "| ";
+        outs << "| ";
       }
       if (a < 10 && a > 0){
-        cout << " " << a << " ";
+        outs << " " << a << " ";
       }
       else if (a >= 10 && a < 100){
-        cout << a << " ";
+        outs << a << " ";
       }
       else if (a == 0){
-        cout << "   ";
+        outs << "   ";
       }
       count1++;
     }
-    cout << endl;
+    outs << endl;
   }
 }
 
@@ -208,6 +228,9 @@ bool Grid::CanBeMoveOrNot(int MovingNum, int nowrow, int nowcol)
 
 void Grid::RandomizeGrid()
 {
+  if (num_row_ <= 0 || num_col_ <= 0)
+    return;
+
   srand((unsigned)time(NULL));
   int num = num_row_ * num_col_;
   int MovingTimes = (rand() % (num*num*num - num*num)) + num*num;

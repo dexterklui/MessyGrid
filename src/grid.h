@@ -22,6 +22,8 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include <iostream>
+
 // To represent a cell in the grid with the row and column index.
 struct Cell {
   int row_idx;
@@ -51,6 +53,9 @@ class Grid {
   // Destructor: Release memory space of the dynamic array representing the
   //             grid.
   ~Grid();
+
+  bool operator==(const Grid& grid) const;  // return true if two grids are the same
+  bool operator!=(const Grid& grid) const;  // return true if two grids are different
 
   int num_row() const { return num_row_; }  // get number of rows
   int num_col() const { return num_col_; }  // get number of columns
@@ -109,7 +114,8 @@ class Grid {
   bool HasValidCell(Cell c) const;
 
   // Function: Print the current grid status on the screen
-  void Print() const;
+  // Input: std::ostream& outs: the stream to which the output goes
+  void Print(std::ostream& outs) const;
 
  private:
   int num_row_;  // number of rows of the grid

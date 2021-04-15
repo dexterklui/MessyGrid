@@ -3,6 +3,9 @@
 #include "acutest.hpp"
 #include "test_grid.h"
 #include "../src/grid.h"
+#include <cstring>
+#include <sstream>
+using namespace std;
 
 // General test cases
 struct RowColTestVector
@@ -22,6 +25,7 @@ RowColTestVector test_vectors[] = {
   {"-1x-1" ,-1 ,-1 ,0  ,0}  ,
   {"-3x-5" ,-3 ,-5 ,0  ,0}  ,
 };
+
 
 void TestGridRowCol(void)
 {
@@ -233,6 +237,43 @@ void TestGridSetPiece(void)
 }
 
 
+void TestGridEqualOperator(void)
+{
+  unsigned long int i;
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    RowColTestVector* vec = &test_vectors[i];
+    Grid grid_1(vec->input_row, vec->input_col);
+    Grid grid_2(vec->input_row, vec->input_col);
+
+    TEST_CASE_("Two %s initialized grid should equal", vec->name);
+    TEST_CHECK(grid_1 == grid_2);
+    TEST_CHECK( !(grid_1 != grid_2) );
+
+    TEST_CASE_("%s ordered grid should not equal grid with different piece",
+        vec->name);
+    Cell cell = {0, 0};
+    grid_2.set_piece(cell, -5);
+    if (vec->expected_row != 0 && vec->expected_col != 0) {  // not 0x0 grid
+      TEST_CHECK_( !(grid_1 == grid_2), "Should be different at 1st cell");
+      TEST_CHECK_(grid_1 != grid_2, "Should be different at 1st cell");
+    }
+
+    grid_2.set_piece(cell, 1);  // undo previous change
+    cell = {vec->expected_row - 1, vec->expected_col - 1};  // last cell
+    grid_2.set_piece(cell, -5);
+    if (vec->expected_row != 0 && vec->expected_col != 0) {  // not 0x0 grid
+      TEST_CHECK_( !(grid_1 == grid_2), "Should be different at the last cell");
+      TEST_CHECK_(grid_1 != grid_2, "Should be different at the last cell");
+    }
+
+    TEST_CASE_("%s ordered grid should not equal 1x8 ordered grid", vec->name);
+    Grid grid_3(1,8);
+    TEST_CHECK( !(grid_1 == grid_3) );
+    TEST_CHECK(grid_1 != grid_3);
+  }
+}
+
+
 void TestGridIsInOrder(void)
 {
   unsigned long int i;
@@ -331,7 +372,7 @@ void TestGridSwapPiece(void)
 
     TEST_CASE_("Swap [%d][%d] & [%d][%d] in %dx%d grid should %s",
         vec->cell_a.row_idx, vec->cell_a.col_idx,
-        vec->cell_b.row_idx, vec->cell_b.col_idx, 
+        vec->cell_b.row_idx, vec->cell_b.col_idx,
         vec->row, vec->col,
         vec->expected_return_val ? "succeed" : "fail");
 
@@ -538,5 +579,87 @@ void TestGridMovePiece(void)
       TEST_CHECK(grid.get_piece(cell) == -1);
       TEST_MSG("The resultant dimension should be 0x0 so [0][0] should be -1");
     }
+  }
+}
+
+
+void TestGridPrint(void)
+{
+  struct TestVector
+  {
+    const char* name;
+    const int row;
+    const int col;
+    const char* cmd_str;
+    const int cmd_len;
+    const char* expected_output;
+  };
+
+  TestVector test_vectors[] = {
+    {"Print 2x3 grid", 2, 3, "", 0,
+      " 1 |  2 |  3 \n---+----+----\n 4 |  5 |    \n"
+    },
+    {"Print 3x2 grid", 3, 2, "SDDWASDS", 8,
+      "   |  2 \n---+----\n 1 |  5 \n---+----\n 4 |  3 \n"
+    },
+    {"2x0 grid", 2, 0, "SDD", 3,
+      ""
+    },
+    {"4x4 grid", 4, 4, "WDDQ", 4,
+      " 1 |  2 |  3 |  4 \n---+----+----+----\n 5 |  6 |  7 |  8 \n---+----+----+----\n 9 | 10 | 11 | 12 \n---+----+----+----\n13 |    | 14 | 15 \n"
+    },
+  };
+
+  unsigned long int i;
+
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    TestVector* vec = &test_vectors[i];
+    stringstream iostr("");
+    char print_output[256] = "";  // Remember increase size if needed
+
+    TEST_CASE(vec->name);
+
+    Grid grid(vec->row, vec->col);
+    for (int j = 0; j < vec->cmd_len; ++j)
+      grid.MovePiece(vec->cmd_str[j]);
+
+    grid.Print(iostr);
+    iostr.get(print_output, 256, '\0');
+
+    TEST_CHECK(strcmp(print_output, vec->expected_output) == 0);
+    TEST_MSG("Expected:\n%s", vec->expected_output);
+    TEST_MSG("Produced:\n%s", print_output);
+  }
+}
+
+
+void TestGridRandomizeGrid(void)
+{
+  unsigned long int i;
+
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    RowColTestVector* vec = &test_vectors[i];
+
+    TEST_CASE_("Randomize %s grid", vec->name);
+
+    Grid grid(vec->input_row, vec->input_col);
+    Grid order_grid(vec->input_row, vec->input_col);
+
+    int trial_count = 0;
+    int size = vec->expected_row * vec->expected_col;
+    bool did_randomized = size <= 1 ? true : false;
+
+    // note that the case of size==0 will also enter the loop, but will break
+    for (int j = 0; j < 2 + 200/(size+1); ++j) {
+      ++trial_count;
+      grid.RandomizeGrid();
+      if (grid != order_grid)
+        did_randomized = true;
+      if (did_randomized)
+        break;
+    }
+
+    TEST_CHECK(did_randomized);
+    TEST_MSG("Grid's still not randomized after %d trials", trial_count);
   }
 }
