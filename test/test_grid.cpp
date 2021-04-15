@@ -631,3 +631,35 @@ void TestGridPrint(void)
     TEST_MSG("Produced:\n%s", print_output);
   }
 }
+
+
+void TestGridRandomizeGrid(void)
+{
+  unsigned long int i;
+
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    RowColTestVector* vec = &test_vectors[i];
+
+    TEST_CASE_("Randomize %s grid", vec->name);
+
+    Grid grid(vec->input_row, vec->input_col);
+    Grid order_grid(vec->input_row, vec->input_col);
+
+    int trial_count = 0;
+    int size = vec->expected_row * vec->expected_col;
+    bool did_randomized = size <= 0 ? true : false;
+
+    // note that the case of size==0 will also enter the loop, but will break
+    for (int j = 0; j < 2 + 200/(size+1); ++j) {
+      ++trial_count;
+      grid.RandomizeGrid();
+      if (grid != order_grid)
+        did_randomized = true;
+      if (did_randomized)
+        break;
+    }
+
+    TEST_CHECK(did_randomized);
+    TEST_MSG("Grid's still not randomized after %d trials", trial_count);
+  }
+}

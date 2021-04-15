@@ -21,4 +21,6 @@ void TestGridMovePiece(void);
 
 void TestGridPrint(void);
 
+void TestGridRandomizeGrid(void);
+
 #endif  // ifndef TESTGRID_H
