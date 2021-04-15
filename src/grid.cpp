@@ -61,6 +61,28 @@ Grid::~Grid()
 }
 
 
+bool Grid::operator==(Grid& grid)
+{
+  if (num_row_ != grid.num_row_ || num_col_ != grid.num_col_)
+    return false;
+
+  for (int i = 0; i < num_row_; ++i)
+    for (int j = 0; j < num_col_; ++j)
+      if (grid_[i][j] != grid.grid_[i][j])
+        return false;
+
+  return true;
+}
+
+
+bool Grid::operator!=(Grid& grid)
+{
+  if (*this == grid)
+    return false;
+  return true;
+}
+
+
 int Grid::get_piece(Cell c) const
 {
   if (!HasValidCell(c))

@@ -26,6 +26,7 @@ RowColTestVector test_vectors[] = {
   {"-3x-5" ,-3 ,-5 ,0  ,0}  ,
 };
 
+
 void TestGridRowCol(void)
 {
   unsigned long int i;
@@ -236,6 +237,43 @@ void TestGridSetPiece(void)
 }
 
 
+void TestGridEqualOperator(void)
+{
+  unsigned long int i;
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    RowColTestVector* vec = &test_vectors[i];
+    Grid grid_1(vec->input_row, vec->input_col);
+    Grid grid_2(vec->input_row, vec->input_col);
+
+    TEST_CASE_("Two %s initialized grid should equal", vec->name);
+    TEST_CHECK(grid_1 == grid_2);
+    TEST_CHECK(! (grid_1 != grid_2));
+
+    TEST_CASE_("%s ordered grid should not equal grid with different piece",
+        vec->name);
+    Cell cell = {0, 0};
+    grid_2.set_piece(cell, -5);
+    if (vec->expected_row != 0 && vec->expected_col != 0) {  // not 0x0 grid
+      TEST_CHECK_(! (grid_1 == grid_2), "Should be different at 1st cell");
+      TEST_CHECK_(grid_1 != grid_2, "Should be different at 1st cell");
+    }
+
+    grid_2.set_piece(cell, 1);  // undo previous change
+    cell = {vec->expected_row - 1, vec->expected_col - 1};  // last cell
+    grid_2.set_piece(cell, -5);
+    if (vec->expected_row != 0 && vec->expected_col != 0) {  // not 0x0 grid
+      TEST_CHECK_(! (grid_1 == grid_2), "Should be different at the last cell");
+      TEST_CHECK_(grid_1 != grid_2, "Should be different at the last cell");
+    }
+
+    TEST_CASE_("%s ordered grid should not equal 1x8 ordered grid", vec->name);
+    Grid grid_3(1,8);
+    TEST_CHECK(! (grid_1 == grid_3));
+    TEST_CHECK(grid_1 != grid_3);
+  }
+}
+
+
 void TestGridIsInOrder(void)
 {
   unsigned long int i;
@@ -334,7 +372,7 @@ void TestGridSwapPiece(void)
 
     TEST_CASE_("Swap [%d][%d] & [%d][%d] in %dx%d grid should %s",
         vec->cell_a.row_idx, vec->cell_a.col_idx,
-        vec->cell_b.row_idx, vec->cell_b.col_idx, 
+        vec->cell_b.row_idx, vec->cell_b.col_idx,
         vec->row, vec->col,
         vec->expected_return_val ? "succeed" : "fail");
 
@@ -587,7 +625,7 @@ void TestGridPrint(void)
 
     grid.Print(iostr);
     iostr.get(print_output, 256, '\0');
-    
+
     TEST_CHECK(strcmp(print_output, vec->expected_output) == 0);
     TEST_MSG("Expected:\n%s", vec->expected_output);
     TEST_MSG("Produced:\n%s", print_output);

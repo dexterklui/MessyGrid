@@ -11,6 +11,8 @@ void TestGridGetCell(void);
 
 void TestGridSetPiece(void);
 
+void TestGridEqualOperator(void);
+
 void TestGridIsInOrder(void);
 
 void TestGridSwapPiece(void);
