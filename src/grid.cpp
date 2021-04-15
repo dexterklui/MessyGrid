@@ -188,7 +188,7 @@ int* Grid::cell_ptr(Cell c)
 
 int Grid::SwapPiece(Cell a, Cell b)
 {
-  if (!HasValidCell(a) || !HasValidCell(b) ||  a.EqualCell(b))
+  if (!HasValidCell(a) || !HasValidCell(b) || a.EqualCell(b))
     return 0;
 
   int piece_a = get_piece(a);

@@ -294,3 +294,93 @@ void TestGridIsInOrder(void)
     TEST_CHECK(grid.IsInOrder() == vec->expected_value);
   }
 }
+
+void TestGridSwapPiece(void)
+{
+  struct TestVector
+  {
+    //const char* name;
+    const int row;
+    const int col;
+    const int expected_row;
+    const int expected_col;
+    const Cell cell_a;
+    const Cell cell_b;
+    const int expected_val_a;
+    const int expected_val_b;
+    const int expected_return_val;
+  };
+
+  TestVector test_vectors[] = {
+    {3, 2, 3, 2, {0, 0}, {2, 1}, 0, 1, 1},
+    {3, 2, 3, 2, {0, 1}, {3, 2}, 2, -1, 0},
+    {3, 2, 3, 2, {0, 2}, {2, 0}, -1, 5, 0},
+    {3, 2, 3, 2, {3, 0}, {1, 1}, -1, 4, 0},
+    {5, 4, 5, 4, {1, 2}, {3, 1}, 14, 7, 1},
+    {9, 9, 9, 9, {1, 2}, {1, 2}, 12, 12, 0},
+    {3, 4, 3, 4, {1, 2}, {2, 2}, 11, 7, 1},
+    {0, 0, 0, 0, {0, 0}, {0, 0}, -1, -1, 0},
+    {-1, 4, 0, 0, {0, 0}, {0, 1}, -1, -1, 0},
+  };
+
+  unsigned long int i;
+  int output_return_val;
+  int result_cell_val;
+
+  for (i = 0; i < sizeof(test_vectors) / sizeof(test_vectors[0]); ++i) {
+    TestVector* vec = &test_vectors[i];
+
+    TEST_CASE_("Swap [%d][%d] & [%d][%d] in %dx%d grid should %s",
+        vec->cell_a.row_idx, vec->cell_a.col_idx,
+        vec->cell_b.row_idx, vec->cell_b.col_idx, 
+        vec->row, vec->col,
+        vec->expected_return_val ? "succeed" : "fail");
+
+    Grid grid(vec->row, vec->col);
+
+    // check return value
+    output_return_val = grid.SwapPiece(vec->cell_a, vec->cell_b);
+    TEST_CHECK(output_return_val == vec->expected_return_val);
+    TEST_MSG("SwapPiece() should return %d but got %d",
+        vec->expected_return_val, output_return_val);
+
+    // check the values of the two swapped cells
+    result_cell_val = grid.get_piece(vec->cell_a);
+    TEST_CHECK(result_cell_val == vec->expected_val_a);
+    TEST_MSG("[%d][%d] should be %d but got %d",
+        vec->cell_a.row_idx, vec->cell_a.col_idx,
+        vec->expected_val_a, result_cell_val);
+
+    result_cell_val = grid.get_piece(vec->cell_b);
+    TEST_CHECK(result_cell_val == vec->expected_val_b);
+    TEST_MSG("[%d][%d] should be %d but got %d",
+        vec->cell_b.row_idx, vec->cell_b.col_idx,
+        vec->expected_val_b, result_cell_val);
+
+    // the values of all other cells should remained unchanged
+    for (int m = 0; m < vec->expected_row; ++m) {
+      for (int n = 0; n < vec->expected_col; ++n) {
+        Cell current_cell = {m, n};
+        result_cell_val = grid.get_piece(current_cell);
+        int expected_value;
+
+        // If it is a swapped cell, skip because we already tested it
+        if ((current_cell.row_idx == vec->cell_a.row_idx
+            && current_cell.col_idx == vec->cell_a.col_idx)
+            || (current_cell.row_idx == vec->cell_b.row_idx
+            && current_cell.col_idx == vec->cell_b.col_idx)) {
+          continue;
+        }
+
+        // initially (without being changed by set_piece), value should be in
+        // ascending order starting from 1 except last cell should be 0
+        expected_value = (m == vec->expected_row-1 && n == vec->expected_col-1 ?
+          0 : m * vec->expected_col + n + 1);
+
+        TEST_CHECK(result_cell_val == expected_value);
+        TEST_MSG("[%d][%d] has not changed and should be %d but got %d",
+            m, n, expected_value, result_cell_val);
+      }
+    }
+  }
+}

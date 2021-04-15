@@ -8,7 +8,9 @@ TEST_LIST = {
   {"grid_initial_order_and_get_piece", TestGridGetPieceAndInitialOrder},
   {"grid_get_cell", TestGridGetCell},
   {"grid_set_piece", TestGridSetPiece},
-  {"grid_IsInOrder_method", TestGridIsInOrder},
+  {"grid_is_in_order", TestGridIsInOrder},
+  {"grid_swap_piece", TestGridSwapPiece},
+
   {"game_read_move_command", TestReadMoveCommand},
   {NULL, NULL}
 };

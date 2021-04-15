@@ -13,4 +13,6 @@ void TestGridSetPiece(void);
 
 void TestGridIsInOrder(void);
 
+void TestGridSwapPiece(void);
+
 #endif  // ifndef TESTGRID_H
