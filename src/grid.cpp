@@ -77,9 +77,7 @@ bool Grid::operator==(Grid& grid) const
 
 bool Grid::operator!=(Grid& grid) const
 {
-  if (*this == grid)
-    return false;
-  return true;
+  return ( !(*this == grid) );
 }
 
 
