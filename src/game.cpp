@@ -14,6 +14,16 @@
 #include "clear_screen.h"
 using namespace std;
 
+void NewGame()
+{
+  ClearScreen(cout);
+  Dimension dimension = NewGameMenu(cin, cout);
+
+  Grid grid(dimension.row, dimension.col);
+  grid.RandomizeGrid();
+  RunGame(grid, 0);
+}
+
 Dimension NewGameMenu(istream& ins, ostream& outs)
 {
   Dimension dimension = {0, 0};

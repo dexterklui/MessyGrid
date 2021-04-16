@@ -20,6 +20,9 @@ struct Dimension
   int col;
 };
 
+// Function: Prepare a new game environment then call main RunGame function
+void NewGame();
+
 // Function: Prompt user for a grid dimension (from 2x2 to 10x10) and return it
 // Input: istream &ins: The input stream that provides input
 //        ostream &outs: The output stream that prompt message goes
