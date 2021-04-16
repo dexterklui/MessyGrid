@@ -42,6 +42,7 @@ Dimension NewGameMenu(istream& ins, ostream& outs)
     outs << "Please input the number of columns (2-10):" << endl;
     ins >> dimension.col;
   }
+  ins.ignore(256, '\n');
 
   return dimension;
 }
