@@ -69,7 +69,7 @@ tar:   ; tar -cvzf ${TAR_FILE} README*.md Makefile src/ doc/ \
 ######################################################################
 .PHONY: test
 test: ${TEST_DIR}/test_main
-	${TEST_DIR}/test_main
+	timeout 5s ${TEST_DIR}/test_main
 
 # Pre-requisites
 ${TEST_DIR}/test_main: ${TEST_OBJ} \
