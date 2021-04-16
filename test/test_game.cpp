@@ -14,8 +14,6 @@ void TestReadMoveCommand(void)
     const char expected_output;
   };
 
-  string str = "W";
-
   TestVector test_vectors[] = {
     {"W should return W", "W", 'W'},
     {"S should return S", "S", 'S'},
