@@ -14,6 +14,35 @@
 #include "clear_screen.h"
 using namespace std;
 
+Dimension NewGameMenu(istream& ins, ostream& outs)
+{
+  Dimension dimension = {0, 0};
+
+  if (!ins)
+    return dimension;  // return immediately if istream is fail or bad
+
+  outs << "Please input the number of rows: ";
+  ins >> dimension.row;
+  while (!ins) {
+    ins.clear();
+    ins.ignore(256, '\n');
+    ClearScreen(outs);
+    outs << "Invalid input!\nPlease input the number of rows: ";
+    ins >> dimension.row;
+  }
+
+  outs << "Please input the number of columns: ";
+  ins >> dimension.col;
+  while (!ins) {
+    ins.clear();
+    ins.ignore(256, '\n');
+    ClearScreen(outs);
+    outs << "Invalid input!\nPlease input the number of columns: ";
+    ins >> dimension.col;
+  }
+
+  return dimension;
+}
 
 void RunGame()
 {
@@ -22,10 +51,10 @@ void RunGame()
   // input
   cout << "Please enter the number of rows of the grid: ";
   cin >> row;
-  cin.ignore(100, '\n');
+  cin.ignore(256, '\n');
   cout << "Please enter the number of columns of the grid: ";
   cin >> col;
-  cin.ignore(100, '\n');
+  cin.ignore(256, '\n');
 
   Grid grid(row, col);
   grid.RandomizeGrid();
@@ -33,7 +62,7 @@ void RunGame()
   while ( !grid.IsInOrder() )
     LetUserMovePiece(grid);
 
-  ClearScreen();
+  ClearScreen(cout);
   grid.Print(cout);
   cout << endl << "You reordered the messy grid. Congratulation!" << endl;
   cout << endl << "Press <Enter> to return to main menu...";
@@ -43,14 +72,14 @@ void RunGame()
 
 void LetUserMovePiece(Grid& grid)
 {
-  ClearScreen();
+  ClearScreen(cout);
   grid.Print(cout);
 
   char cmd = ReadMoveCommand(cin, cout);
   cmd = toupper(cmd);  // to allow user input command in lower case
 
   while(!grid.MovePiece(cmd)) {
-      ClearScreen();
+      ClearScreen(cout);
       cout << "Invalid move!" << endl << endl;
       grid.Print(cout);
 
@@ -73,7 +102,7 @@ char ReadMoveCommand(istream &ins, ostream &outs)
     cerr << "Received EOF from cin" << endl;
     exit(1);
   }
-  ins.ignore(100, '\n');  // clear remaining garbage value in cin, if any
+  ins.ignore(256, '\n');  // clear remaining garbage value in cin, if any
 
   return input;
 }

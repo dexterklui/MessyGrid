@@ -11,9 +11,9 @@
 #include "clear_screen.h"
 using namespace std;
 
-void ClearScreen()
+void ClearScreen(ostream& outs)
 {
   // pathetic but does the job (cplusplus.com)
   // but no need to use the bad system() which is resource heavy and unsecure
-  cout << string(100, '\n');
+  outs << string(100, '\n');
 }

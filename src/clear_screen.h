@@ -9,6 +9,8 @@
 #ifndef CLEARSCREEN_H
 #define CLEARSCREEN_H value
 
-void ClearScreen();
+#include <iostream>
+
+void ClearScreen(std::ostream& outs);
 
 #endif /* ifndef CLEARSCREEN_H */
