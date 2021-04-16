@@ -43,22 +43,19 @@ void RunGame()
 
 void LetUserMovePiece(Grid& grid)
 {
-  bool moved = false;
-  char cmd;
-
   ClearScreen();
+  grid.Print(cout);
 
-  while (!moved) {
-    grid.Print(cout);
+  char cmd = ReadMoveCommand(cin, cout);
+  cmd = toupper(cmd);  // to allow user input command in lower case
 
-    cmd = ReadMoveCommand(cin, cout);
-    cmd = toupper(cmd);  // to allow user input command in lower case
-
-    moved = grid.MovePiece(cmd);
-    if (!moved) {
+  while(!grid.MovePiece(cmd)) {
       ClearScreen();
       cout << "Invalid move!" << endl << endl;
-    }
+      grid.Print(cout);
+
+      cmd = ReadMoveCommand(cin, cout);
+      cmd = toupper(cmd);
   }
 }
 
