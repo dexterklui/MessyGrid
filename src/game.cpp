@@ -19,9 +19,12 @@ void NewGame()
   ClearScreen(cout);
   Dimension dimension = NewGameMenu(cin, cout);
 
-  Grid grid(dimension.row, dimension.col);
-  grid.RandomizeGrid();
-  RunGame(grid, 0);
+  Grid grid(dimension.row, dimension.col);  // Create a grid
+  do {
+    grid.RandomizeGrid();
+  } while (grid.IsInOrder());
+
+  RunGame(grid, 0);  // inital move count is 0
 }
 
 Dimension NewGameMenu(istream& ins, ostream& outs)
