@@ -20,8 +20,7 @@ int main()
     option = InitMainMenu();
     switch (option) {
       case 'N':  // new game
-        // TODO: handle new game option
-        RunGame();
+        NewGame();
         break;
       case 'L':  // load game
         // TODO: handle load game option

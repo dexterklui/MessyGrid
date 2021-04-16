@@ -16,7 +16,7 @@ char InitMainMenu()
 {
   char option;  // to store the option chose by the user
 
-  ClearScreen();
+  ClearScreen(cout);
   cout << "Welcome to MessyGrid!" << endl << endl;
 
   while (true) {
@@ -33,12 +33,12 @@ char InitMainMenu()
         return option;
 
       case 'A':  // about MessyGrid
-        ClearScreen();
+        ClearScreen(cout);
         PrintAbout();
         break;
 
       default:
-        ClearScreen();
+        ClearScreen(cout);
         cout << "Invalid option!" << endl << endl;
     }
   }

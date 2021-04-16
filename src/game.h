@@ -13,8 +13,26 @@
 #include "grid.h"
 using namespace std;
 
-// Function: Main function to run the game
-void RunGame();
+// Struct: Specify a grid dimension with the number of rows and columns
+struct Dimension
+{
+  int row;
+  int col;
+};
+
+// Function: Prepare a new grid then call RunGame() to start a game
+void NewGame();
+
+// Function: Prompt user for a grid dimension (from 2x2 to 10x10) and return it
+// Input: istream &ins: The input stream that provides input
+//        ostream &outs: The output stream that prompt message goes
+// Output: Dimension: The struct that stores the dimension of the grid
+Dimension NewGameMenu(istream& ins, ostream& outs);
+
+// Function: Run the game until quit or game over (when grid is re-ordered)
+// Input: Grid& grid: the grid to start playing with
+//        int move_count: the initial move counter to start playing with
+void RunGame(Grid &grid, int move_count);
 
 // Function: Handles displaying of the grid and dealing with user input for
 //           moving a piece.
