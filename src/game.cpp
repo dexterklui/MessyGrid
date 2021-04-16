@@ -57,32 +57,6 @@ Dimension NewGameMenu(istream& ins, ostream& outs)
   return dimension;
 }
 
-void RunGame()
-{
-  int row, col;
-  // TODO: encapsulate reading input to a function and check validity of the
-  // input
-  cout << "Please enter the number of rows of the grid: ";
-  cin >> row;
-  cin.ignore(256, '\n');
-  cout << "Please enter the number of columns of the grid: ";
-  cin >> col;
-  cin.ignore(256, '\n');
-
-  Grid grid(row, col);
-  grid.RandomizeGrid();
-
-  while ( !grid.IsInOrder() )
-    LetUserMovePiece(grid);
-
-  ClearScreen(cout);
-  grid.Print(cout);
-  cout << endl << "You reordered the messy grid. Congratulation!" << endl;
-  cout << endl << "Press <Enter> to return to main menu...";
-  string dummy;
-  getline(cin, dummy);
-}
-
 
 void RunGame(Grid &grid, int move_count)
 {

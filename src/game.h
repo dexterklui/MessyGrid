@@ -29,9 +29,6 @@ void NewGame();
 // Output: Dimension: The dimension of the grid
 Dimension NewGameMenu(istream& ins, ostream& outs);
 
-// Function: Main function to run the game
-void RunGame();
-
 // Function: run the game until quit or game over (when grid is re-ordered)
 // Input: Grid& grid: the grid to start playing with
 //        int move_count: the initial move counter to start playing with
