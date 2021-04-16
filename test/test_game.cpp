@@ -15,14 +15,18 @@ void TestNewGameMenu(void)
   };
 
   TestVector test_vectors[] = {
-    {"Input '2\\n3' should return 2x3 dimension", "2\n3", {2, 3}},
+    {"Input '4\\n5' should return 4x5 dimension", "4\n5", {4, 5}},
+    {"Input '2\\n1\\n2' should return 2x2 dimension", "2\n2", {2, 2}},
     {"Input '7 5' should return 7x5 dimension", "7 5", {7, 5}},
-    {"Input '0 3' should return 0x3 dimension", "0 3", {0, 3}},
-    {"Input '0 -3' should return 0x3 dimension", "0 -3", {0, -3}},
+    {"Input '0\\n3\\n3' should return 3x3 dimension", "0\n3\n3", {3, 3}},
+    {"Input '0\\n-3 2\\n5 4' should return 5x4 dimension",
+      "0\n-3 2\n5 4", {5, 4}},
     {"Input 'l\\n4 3' should return 4x3 dimension",
       "l\n4 3", {4, 3}},
     {"Input 'l\\napp 5 10\\n4up 6\\n10' should return 4x10 dimension",
       "l\napp 5 10\n4up 6\n10", {4, 10}},
+    {"Input '11\\n10\\n12\\n10' should return 10x10 dimension",
+      "11\n10\n12\n10", {10, 10}},
   };
 
   unsigned long int i;

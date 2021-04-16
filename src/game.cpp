@@ -21,23 +21,25 @@ Dimension NewGameMenu(istream& ins, ostream& outs)
   if (!ins)
     return dimension;  // return immediately if istream is fail or bad
 
-  outs << "Please input the number of rows: ";
+  outs << "Please input the number of rows (2-10):" << endl;
   ins >> dimension.row;
-  while (!ins) {
+  while (!ins || dimension.row < 2 || dimension.row > 10) {
     ins.clear();
     ins.ignore(256, '\n');
     ClearScreen(outs);
-    outs << "Invalid input!\nPlease input the number of rows: ";
+    outs << "Invalid input!" << endl;
+    outs << "Please input the number of rows (2-10):" << endl;
     ins >> dimension.row;
   }
 
-  outs << "Please input the number of columns: ";
+  outs << "Please input the number of columns (2-10):" << endl;;
   ins >> dimension.col;
-  while (!ins) {
+  while (!ins || dimension.col < 2 || dimension.col > 10) {
     ins.clear();
     ins.ignore(256, '\n');
     ClearScreen(outs);
-    outs << "Invalid input!\nPlease input the number of columns: ";
+    outs << "Invalid input!" << endl;
+    outs << "Please input the number of columns (2-10):" << endl;
     ins >> dimension.col;
   }
 
