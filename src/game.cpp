@@ -72,6 +72,25 @@ void RunGame()
   getline(cin, dummy);
 }
 
+
+void RunGame(Grid &grid, int move_count)
+{
+  while ( !grid.IsInOrder() ) {
+    LetUserMovePiece(grid);  // TODO: re-write to handle save and quit cmd
+    ++move_count;
+  }
+
+  // TODO: will pass this to a function handling congratulate event
+  ClearScreen(cout);
+  grid.Print(cout);
+  cout << endl << "You reordered the messy grid. Congratulation!" << endl;
+  cout << "Total number of moves: " << move_count << endl;
+  cout << endl << "Press <Enter> to return to main menu...";
+  string dummy;
+  getline(cin, dummy);
+}
+
+
 void LetUserMovePiece(Grid& grid)
 {
   ClearScreen(cout);
