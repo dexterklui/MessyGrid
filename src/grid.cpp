@@ -226,12 +226,12 @@ bool Grid::CanBeMoveOrNot(int MovingNum, int nowrow, int nowcol)
   return 0;
 }
 
-void Grid::RandomizeGrid()
+void Grid::RandomizeGrid(unsigned int n)
 {
   if (num_row_ <= 0 || num_col_ <= 0)
     return;
 
-  srand((unsigned)time(NULL));
+  srand((unsigned)time(NULL) + n);
   int num = num_row_ * num_col_;
   int MovingTimes = (rand() % (num*num*num - num*num)) + num*num;
   int nowrow = num_row_, nowcol = num_col_;
