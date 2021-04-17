@@ -82,7 +82,11 @@ class Grid {
   // TODO: the function description is not accurate
   // Function: Starting from current piece arrangement, randomize the pieces
   //         inside the grid by randomly moving around the pieces.
-  void RandomizeGrid();
+  // Input: unsigned int n: An increment to the RNG seed. The purpose is to use
+  //                        a different seed without waiting for another second
+  //                        when the previous seed failed to randomize a grid
+  //                        (which happens sometimes for a small grid).
+  void RandomizeGrid(unsigned int n);
 
   // Function: Swap the pieces of two cells if the cells are valid and not equal
   //           to each other. Return if the swap is successful.

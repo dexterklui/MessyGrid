@@ -18,10 +18,11 @@ void NewGame()
 {
   ClearScreen(cout);
   Dimension dimension = NewGameMenu(cin, cout);
+  unsigned int rng_seed_increment = 0;
 
   Grid grid(dimension.row, dimension.col);  // Create a grid
   do {
-    grid.RandomizeGrid();
+    grid.RandomizeGrid(rng_seed_increment++);
   } while (grid.IsInOrder());
 
   RunGame(grid, 0);  // inital move count is 0

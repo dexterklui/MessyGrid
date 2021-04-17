@@ -648,11 +648,12 @@ void TestGridRandomizeGrid(void)
     int trial_count = 0;
     int size = vec->expected_row * vec->expected_col;
     bool did_randomized = size <= 1 ? true : false;
+    unsigned int rng_seed_increment = 0;
 
     // note that the case of size==0 will also enter the loop, but will break
-    for (int j = 0; j < 2 + 200/(size+1); ++j) {
+    for (int j = 0; j < 1 + 30/(size+1); ++j) {
       ++trial_count;
-      grid.RandomizeGrid();
+      grid.RandomizeGrid(rng_seed_increment++);
       if (grid != order_grid)
         did_randomized = true;
       if (did_randomized)
