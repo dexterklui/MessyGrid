@@ -653,7 +653,6 @@ void TestGridRandomizeGrid(void)
     // note that the case of size==0 will also enter the loop, but will break
     for (int j = 0; j < 1 + 30/(size+1); ++j) {
       ++trial_count;
-      cout << trial_count << endl;
       grid.RandomizeGrid(rng_seed_increment++);
       if (grid != order_grid)
         did_randomized = true;
