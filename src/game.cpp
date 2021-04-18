@@ -7,6 +7,7 @@
 // Implementing the game.
 
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <cctype>
 #include "game.h"
@@ -89,33 +90,36 @@ void LetUserMovePiece(Grid& grid, int& QuitControlNum)
 
   char cmd = ReadMoveCommand(cin, cout);
   cmd = toupper(cmd);  // to allow user input command in lower case
-  if (cmd == 'B'){
-    QuitControlNum = 1;
-    cout << endl;
-    cout << "You have now successfully quit the game." << endl;
-    cout << endl;
-    cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
-    char QuitOrNot;
-    cin >> QuitOrNot; // User enters "Y" means Save the game, "N" means not Save the game.
-    QuitOrNot = toupper(QuitOrNot);
-    while (QuitOrNot != 'Y' && QuitOrNot != 'N'){
-      ClearScreen(cout);
-      cout << "Invalid input!" << endl;
-      cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
-      cin >> QuitOrNot;
-      QuitOrNot = toupper(QuitOrNot);
-    }
-  }
 
-  else {
-    while(!grid.MovePiece(cmd)) {
+  while(!grid.MovePiece(cmd)) {
+    if (cmd == 'B'){
+      QuitControlNum = 1;
+      cout << endl;
+      cout << "You have now successfully quit the game." << endl;
+      cout << endl;
+      cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
+      char QuitOrNot;
+      cin >> QuitOrNot; // User enters "Y" means Save the game, "N" means not Save the game.
+      QuitOrNot = toupper(QuitOrNot);
+      while (QuitOrNot != 'Y' && QuitOrNot != 'N'){
+        ClearScreen(cout);
+        cout << "Invalid input!" << endl;
+        cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
+        cin >> QuitOrNot;
+        QuitOrNot = toupper(QuitOrNot);
+      }
+      if (QuitOrNot == 'Y'){
+        //SaveToFile(RunGame.move_count(), grid);
+      }
+      return;
+    }
+
       ClearScreen(cout);
       cout << "Invalid move!" << endl << endl;
       grid.Print(cout);
 
       cmd = ReadMoveCommand(cin, cout);
       cmd = toupper(cmd);
-    }
   }
 }
 
@@ -138,3 +142,24 @@ char ReadMoveCommand(istream &ins, ostream &outs)
 
   return input;
 }
+
+/*
+void SaveToFile(int& move_count, const Grid grid)
+{
+  ofstream fout;
+  fout.open("User_Save_Progress.txt");
+  if (fout.fail()){
+    cout << "Error in file opening!" << endl;
+    exit(1);
+  }
+  fout << grid.row() << endl;
+  fout << grid.col() << endl;
+  fout << move_count << endl;
+  for (int i = 0; i < grid.row(); i++){
+    for (int j = 0; j < grid.col(); j++){
+      fout << grid[i][j] << endl;
+    }
+  }
+  fout.close();
+}
+*/

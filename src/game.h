@@ -52,4 +52,9 @@ void LetUserMovePiece(Grid& grid, int& QuitControlNum);
 // Output: Return the character read from the user
 char ReadMoveCommand(istream &ins, ostream &outs);
 
+// Function: Save user current game data into the file "User_Save_Progress.txt".
+// Input:  int step:
+//         const Grid grid:
+// Output: Add the data into file "User_Save_Progress.txt".
+void SaveToFile(int step, const Grid grid);
 #endif  // ifndef GAME_H
