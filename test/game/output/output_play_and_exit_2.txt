@@ -1,0 +1,4 @@
+Please input the number of rows (2-10):
+Please input the number of columns (2-10):
+Please move the cell.
+Thank you for playing MessyGrid. Bye bye!
