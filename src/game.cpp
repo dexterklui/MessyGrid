@@ -64,8 +64,10 @@ Dimension NewGameMenu(istream& ins, ostream& outs)
 
 void RunGame(Grid &grid, int move_count)
 {
+  int QuitControlNum = 0; // If QuitControlNum == 1, it means that we should end this while loop.
   while ( !grid.IsInOrder() ) {
-    LetUserMovePiece(grid);  // TODO: re-write to handle save and quit cmd
+    LetUserMovePiece(grid, QuitControlNum);  // TODO: re-write to handle save and quit cmd
+    if (QuitControlNum == 1){break;}
     ++move_count;
   }
 
@@ -80,21 +82,32 @@ void RunGame(Grid &grid, int move_count)
 }
 
 
-void LetUserMovePiece(Grid& grid)
+void LetUserMovePiece(Grid& grid, int& QuitControlNum)
 {
   ClearScreen(cout);
   grid.Print(cout);
 
   char cmd = ReadMoveCommand(cin, cout);
   cmd = toupper(cmd);  // to allow user input command in lower case
+  if (cmd == 'B'){
+    QuitControlNum = 1;
+    cout << endl;
+    cout << "You have now successfully quit the game." << endl;
+    cout << endl;
+    cout << "Do you want to save your progress ([Y]es. [N]o.): ";
+    char QuitOrNot;
+    cin >> QuitOrNot; // User enters "Y" means Quit the game, "N" means not Quit the game.
+  }
 
-  while(!grid.MovePiece(cmd)) {
+  else {
+    while(!grid.MovePiece(cmd)) {
       ClearScreen(cout);
       cout << "Invalid move!" << endl << endl;
       grid.Print(cout);
 
       cmd = ReadMoveCommand(cin, cout);
       cmd = toupper(cmd);
+    }
   }
 }
 

@@ -41,7 +41,7 @@ void RunGame(Grid &grid, int move_count);
 // Function: Handles displaying of the grid and dealing with user input for
 //           moving a piece.
 // Input: Grid& grid: A class Grid storing the grid of the current game.
-void LetUserMovePiece(Grid& grid);
+void LetUserMovePiece(Grid& grid, int& QuitControlNum);
 
 // Function: Prompt user to enter a character as a move command. It does not
 //           check whether it is a valid command but return the input character
