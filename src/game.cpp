@@ -72,7 +72,7 @@ void RunGame(Grid &grid, int move_count)
   // TODO: will pass this to a function handling congratulate event
   ClearScreen(cout);
   grid.Print(cout);
-  cout << endl << "You reordered the messy grid. Congratulation!" << endl;
+  cout << endl << "Congratulation! You reordered the messy grid." << endl;
   cout << "Total number of moves: " << move_count << endl;
   cout << endl << "Press <Enter> to return to main menu...";
   string dummy;
