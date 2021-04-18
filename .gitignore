@@ -43,6 +43,8 @@ main
 *.tgz
 *.tar.gz
 
-# Test files (object files and executables)
+# Test files
 test/unit/test_main
 test/unit/*.o
+test/game/output.txt
+test/game/tmp.txt

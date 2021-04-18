@@ -20,6 +20,7 @@ CPP_OBJ = $(addprefix bin/,$(patsubst %.cpp, %.o, ${CPP_SRC_NAMES}))
 TEST_DIR = test
 UNIT_DIR = ${TEST_DIR}/unit
 UNIT_OBJ = $(patsubst %.cpp, %.o, $(wildcard ${UNIT_DIR}/test_*.cpp))
+TEST_GAME_DIR = ${TEST_DIR}/game
 
 TAR_FILE = messygrid.tgz
 
@@ -62,15 +63,18 @@ tags:  ; ctags --kinds-c++=+p --fields=+iaS --extras=+q --language-force=c++ \
          -R src/
 
 tar:   ; tar -cvzf ${TAR_FILE} README*.md Makefile src/ doc/ \
-	 $(addprefix ${UNIT_DIR}/, test_*.h test_*.cpp acutest.hpp)
+	 $(addprefix ${UNIT_DIR}/, test_*.h test_*.cpp acutest.hpp) \
+	 $(addprefix ${TEST_GAME_DIR}/, input output post test.sh)
 
 .PHONY: all run clean tags tar
 
 # Tests
 ######################################################################
-.PHONY: test test_unit
-test: test_unit
+.PHONY: test test_unit test_game
+test: test_unit test_game
 
+# Unit tests
+########################################
 test_unit: ${UNIT_DIR}/test_main
 	timeout 5s ${UNIT_DIR}/test_main -t
 
@@ -95,3 +99,8 @@ ${UNIT_DIR}/test_game.o: \
 # Explcit rules
 ${UNIT_DIR}/test_main: ; ${CC} ${ERROR_FLAGS} ${CPP_FLAGS} $^ -o $@
 ${UNIT_OBJ}: ; ${CC} ${ERROR_FLAGS} ${CPP_FLAGS} -c $< -o $@
+
+# Game tests
+########################################
+test_game: ${TEST_GAME_DIR}/test.sh bin/main
+	timeout 5s ${TEST_GAME_DIR}/test.sh
