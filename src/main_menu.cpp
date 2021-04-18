@@ -9,46 +9,26 @@
 #include <iostream>
 #include <cctype>
 #include "main_menu.h"
-#include "clear_screen.h"
 using namespace std;
 
 char InitMainMenu()
 {
   char option;  // to store the option chose by the user
 
-  ClearScreen(cout);
-  cout << "Welcome to MessyGrid!" << endl << endl;
+  PrintMainMenu();
 
-  while (true) {
-    PrintMainMenu();
-
-    cin >> option;  // read option from user
-    cin.ignore(100, '\n');  // clear remaining garbage value in cin, if any
-    option = toupper(option);
-
-    switch (option) {
-      case 'N':  // new game
-      case 'L':  // load game
-      case 'E':  // exit game
-        return option;
-
-      case 'A':  // about MessyGrid
-        ClearScreen(cout);
-        PrintAbout();
-        break;
-
-      default:
-        ClearScreen(cout);
-        cout << "Invalid option!" << endl << endl;
-    }
-  }
+  cin >> option;  // read option from user
+  cin.ignore(100, '\n');  // clear remaining garbage value in cin, if any
+  option = toupper(option);
+  return option;
 }
 
 void PrintMainMenu()
 {
-  cout << "Please choose an option:" << endl;
+  cout << "Game options:" << endl;
   cout << "- [N]ew game" << endl;
   cout << "- [L]oad game" << endl;
+  cout << "- [V]iew leaderboard" << endl;
   cout << "- [A]bout MessyGrid" << endl;
   cout << "- [E]xit game" << endl;
   cout << endl;

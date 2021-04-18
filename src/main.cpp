@@ -11,21 +11,45 @@
 #include <iostream>
 #include "main_menu.h"
 #include "game.h"
+#include "clear_screen.h"
 using namespace std;
 
 int main()
 {
-  char option;
+  char option = '1';
+  ClearScreen(cout);
   do {
+    switch (option) {  // Only print welcoming message in certain scenarios
+      case '1':
+      case 'N':
+      case 'L':
+      case 'V':
+        cout << "Welcome to MessyGrid!" << endl << endl;
+    }
+
     option = InitMainMenu();
     switch (option) {
-      case 'N':  // new game
+      case 'N':  // New Game
         NewGame();
+        ClearScreen(cout);
         break;
-      case 'L':  // load game
-        // TODO: handle load game option
-
-      default: ;
+      case 'L':  // TODO: Load Game
+        ClearScreen(cout);
+        cout << "Load game feature coming soon!" << endl << endl;
+        break;
+      case 'V':  // TODO: View Leaderboard
+        ClearScreen(cout);
+        cout << "View leaderboard feature coming soon!" << endl << endl;
+        break;
+      case 'A':  // About MessyGrid
+        ClearScreen(cout);
+        PrintAbout();
+        break;
+      case 'E':  // Exit Game
+        break;
+      default:
+        ClearScreen(cout);
+        cout << "Invalid option!" << endl << endl;
     }
   } while (option != 'E');
 

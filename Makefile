@@ -31,9 +31,9 @@ all run: bin/main
 bin/main: ${CPP_OBJ}
 
 # Objects
-bin/main.o: $(addprefix src/, main.cpp main_menu.h game.h)
+bin/main.o: $(addprefix src/, main.cpp main_menu.h game.h clear_screen.h)
 bin/clear_screen.o: $(addprefix src/, clear_screen.cpp clear_screen.h)
-bin/main_menu.o: $(addprefix src/, main_menu.cpp main_menu.h clear_screen.h)
+bin/main_menu.o: $(addprefix src/, main_menu.cpp main_menu.h)
 bin/game.o: $(addprefix src/, game.cpp game.h grid.h clear_screen.h)
 bin/grid.o: $(addprefix src/, grid.cpp grid.h)
 
