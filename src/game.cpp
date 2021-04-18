@@ -107,6 +107,7 @@ char ReadMoveCommand(istream &ins, ostream &outs)
   outs << "S: Down" << endl;
   outs << "A: Left" << endl;
   outs << "D: Right" << endl;
+  outs << "B: Quit the game" << endl;
   ins >> input;
   if (cin.eof()) {
     cerr << "Received EOF from cin" << endl;
