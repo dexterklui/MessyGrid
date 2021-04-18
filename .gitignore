@@ -44,8 +44,5 @@ main
 *.tar.gz
 
 # Test files (object files and executables)
-test/*
-!test/*.cpp
-!test/*.hpp
-!test/*.h
-!test/*.sh
+test/unit/test_main
+test/unit/*.o

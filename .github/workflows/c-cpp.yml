@@ -9,7 +9,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: make
+    - name: compile main program
       run: make
-    - name: make test
-      run: make test
+    - name: unit tests
+      run: make test_unit
