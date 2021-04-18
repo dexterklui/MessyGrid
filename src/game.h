@@ -56,5 +56,5 @@ char ReadMoveCommand(istream &ins, ostream &outs);
 // Input:  int step:
 //         const Grid grid:
 // Output: Add the data into file "User_Save_Progress.txt".
-void SaveToFile(int step, const Grid grid);
+void SaveToFile(int move_count, const Grid grid);
 #endif  // ifndef GAME_H

@@ -68,9 +68,15 @@ void RunGame(Grid &grid, int move_count)
   int QuitControlNum = 0; // If QuitControlNum == 1, it means that we should end this while loop.
   while ( !grid.IsInOrder() ) {
     LetUserMovePiece(grid, QuitControlNum);  // TODO: re-write to handle save and quit cmd
-    if (QuitControlNum == 1){break;}
+    if (QuitControlNum > 0){
+      if (QuitControlNum == 2){
+        SaveToFile(move_count, grid);
+      }
+      break;
+    }
     ++move_count;
   }
+
 
   // TODO: will pass this to a function handling congratulate event
   ClearScreen(cout);
@@ -109,7 +115,7 @@ void LetUserMovePiece(Grid& grid, int& QuitControlNum)
         SaveOrNot = toupper(SaveOrNot);
       }
       if (SaveOrNot == 'Y'){
-        //SaveToFile(RunGame.move_count(), grid);
+        QuitControlNum = 2;
       }
       return;
     }
@@ -143,8 +149,8 @@ char ReadMoveCommand(istream &ins, ostream &outs)
   return input;
 }
 
-/*
-void SaveToFile(int& move_count, const Grid grid)
+
+void SaveToFile(int move_count, const Grid grid)
 {
   ofstream fout;
   fout.open("User_Save_Progress.txt");
@@ -152,14 +158,15 @@ void SaveToFile(int& move_count, const Grid grid)
     cout << "Error in file opening!" << endl;
     exit(1);
   }
-  fout << grid.row() << endl;
-  fout << grid.col() << endl;
+  fout << grid.num_row() << endl;
+  fout << grid.num_col() << endl;
   fout << move_count << endl;
-  for (int i = 0; i < grid.row(); i++){
-    for (int j = 0; j < grid.col(); j++){
-      fout << grid[i][j] << endl;
+  for (int i = 0; i < grid.num_row(); i++){
+    for (int j = 0; j < grid.num_col(); j++){
+      Cell c = {i, j};
+      fout << grid.get_piece(c) << endl;
     }
   }
+
   fout.close();
 }
-*/
