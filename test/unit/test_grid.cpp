@@ -2,7 +2,7 @@
 
 #include "acutest.hpp"
 #include "test_grid.h"
-#include "../src/grid.h"
+#include "../../src/grid.h"
 #include <cstring>
 #include <sstream>
 using namespace std;
