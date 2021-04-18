@@ -98,17 +98,17 @@ void LetUserMovePiece(Grid& grid, int& QuitControlNum)
       cout << "You have now successfully quit the game." << endl;
       cout << endl;
       cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
-      char QuitOrNot;
-      cin >> QuitOrNot; // User enters "Y" means Save the game, "N" means not Save the game.
-      QuitOrNot = toupper(QuitOrNot);
-      while (QuitOrNot != 'Y' && QuitOrNot != 'N'){
+      char SaveOrNot;
+      cin >> SaveOrNot; // User enters "Y" means Save the game, "N" means not Save the game.
+      SaveOrNot = toupper(SaveOrNot);
+      while (SaveOrNot != 'Y' && SaveOrNot != 'N'){
         ClearScreen(cout);
         cout << "Invalid input!" << endl;
         cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
-        cin >> QuitOrNot;
-        QuitOrNot = toupper(QuitOrNot);
+        cin >> SaveOrNot;
+        SaveOrNot = toupper(SaveOrNot);
       }
-      if (QuitOrNot == 'Y'){
+      if (SaveOrNot == 'Y'){
         //SaveToFile(RunGame.move_count(), grid);
       }
       return;
