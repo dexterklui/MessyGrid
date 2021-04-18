@@ -86,7 +86,7 @@ for input_file in $(ls $input_dir/input_*.txt); do
 done
 
 # clean up temporary files
-rm $output_file $tmp_file
+rm -f $output_file $tmp_file
 
 echo
 echo "$num_fail of $num_test tests have failed."
