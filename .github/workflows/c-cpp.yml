@@ -13,3 +13,5 @@ jobs:
       run: make
     - name: unit tests
       run: make test_unit
+    - name: game tests
+      run: make test_game
