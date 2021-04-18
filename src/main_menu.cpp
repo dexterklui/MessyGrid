@@ -60,8 +60,8 @@ void PrintAbout()
   // Max columns is 80 (i.e. for each line output no more than 80 characters)
   // This is easier for reading.
   cout << "MessyGrid is a puzzle game where a player is given a grid of numbers"
-    << " in" << endl
-    << "random order except there is one empty cell with no number. The aim is"
-    << " to move" << endl
-    << "the numbers around until the order is restored." << endl << endl;
+    << " in random" << endl
+    << "order except there is one empty cell with no number. The aim is to move"
+    << " the" << endl
+    << "numbers around until the order is restored." << endl << endl;
 }
