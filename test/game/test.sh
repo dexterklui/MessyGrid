@@ -47,6 +47,12 @@ export test_dir="test/game" # game testing directory
 export input_dir="$test_dir/input" # directory storing sample input
 export output_dir="$test_dir/output" # directory storing sample output
 export script_dir="$test_dir/post" # directory storing scripts of each test
+export input_file_prefix="input_" # the prefix in sample input files' name
+export output_file_prefix="output_" # the prefix in sample output files' name
+export script_file_prefix="post_" # the prefix in script files' name
+export input_file_suffix=".txt" # the suffix in sample input files' name
+export output_file_suffix=".txt" # the suffix in sample output files' name
+export script_file_suffix=".sh" # the suffix in script files' name
 # temporary files
 export output_file="$test_dir/output.txt" # to store the output of each test
 export tmp_file="$test_dir/tmp.txt" # for storing error or post-processing
@@ -72,12 +78,16 @@ if [[ ! -x $prg ]]; then
 fi
 
 # loop all test case (for each prepared input file)
-for input_file in $(ls $input_dir/input_*.txt); do
+for input_file in $(ls $input_dir/$input_file_prefix*$input_file_suffix); do
     # set the name of sample output file and script file for this test case
-    sample_output=$(echo $input_file | sed "s+$input_dir/+$output_dir/+" | \
-        sed "s+/input_+/output_+")
-    post_script=$(echo $input_file | sed "s+$input_dir/+$script_dir/+" | \
-        sed "s+/input_+/post_+" | sed 's+txt$+sh+')
+    sample_output=$(echo $input_file | \
+        sed "s+$input_dir/+$output_dir/+" | \
+        sed "s+/$input_file_prefix+/$output_file_prefix+" | \
+        sed "s+$input_file_suffix\$+$output_file_suffix+")
+    post_script=$(echo $input_file | \
+        sed "s+$input_dir/+$script_dir/+" | \
+        sed "s+/$input_file_prefix+/$script_file_prefix+" | \
+        sed "s+$input_file_suffix\$+$script_file_suffix+")
 
     # check if corresponding sample output file and script file is present
     if [[ ! -f $sample_output || ! -x $post_script ]]; then
