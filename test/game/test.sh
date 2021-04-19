@@ -11,6 +11,8 @@
 #           2. A function name post_process() to store any post-processing
 #              scripts that has to run before checking the output result.
 #              If no post-processing is needed, use post_process() { :; }
+#           3. [OPTIONAL] a variable named timeout to specify the timeout
+#              duration for this specfic test case.
 #
 #        Put the three files in three corresponding directories respectively:
 #        input/, output/ and post/.
@@ -33,16 +35,18 @@
 
 # Set variables
 ######################################################################
-timeout=0.05 # timeout duration for each test (float with the unit second)
-
-# print at most this number of characters in title (don't exceed 100)
+# default timeout duration for each test (float point measured in unit second)
+default_timeout=0.05
+# print at most this number of characters of the title (don't exceed 100)
 max_title_len=50
 
+# essential files
 export prg="bin/main" # programe path
 export test_dir="test/game" # game testing directory
 export input_dir="$test_dir/input" # directory storing sample input
 export output_dir="$test_dir/output" # directory storing sample output
 export script_dir="$test_dir/post" # directory storing scripts of each test
+# temporary files
 export output_file="$test_dir/output.txt" # to store the output of each test
 export tmp_file="$test_dir/tmp.txt" # for storing error or post-processing
 
@@ -53,7 +57,6 @@ NRM='\033[0m' # normal: reset the style
 BLD='\033[1m' # bold
 HUNDRED_SPACES="                                                                                                    "
 
-fail_type=0 # as a temporary variable to store the result of each test
 num_test=0 # count total number of tests
 num_fail=0 # count total number of failed tests
 
@@ -81,8 +84,10 @@ for input_file in $(ls $input_dir/input_*.txt); do
         exit 3
     fi
 
-    # increment number of test run by 1
-    num_test=$(($num_test + 1))
+    # reset or update variables
+    fail_type=0 # as a temporary variable to store the result of each test
+    timeout=$default_timeout # reset the timeout duraction to default
+    num_test=$(($num_test + 1)) # increment number of test run by 1
 
     # Run script of this test case to define the title and post-process function
     . $post_script
@@ -126,8 +131,6 @@ for input_file in $(ls $input_dir/input_*.txt); do
         echo -n "Input file of this test: $input_file"
     fi
     echo
-
-    fail_type=0 # reset fail_type to 0 for next test case
 done
 
 # clean up temporary files
