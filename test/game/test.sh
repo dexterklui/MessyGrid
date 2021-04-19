@@ -10,7 +10,7 @@
 #           1. A variable named test_title to store the test title.
 #           2. A function name post_process() to store any post-processing
 #              scripts that has to run before checking the output result.
-#              If no post-processing is needed, add one command 'echo -n'.
+#              If no post-processing is needed, use post_process() { :; }
 #
 #        Put the three files in three corresponding directories respectively:
 #        input/, output/ and post/.
@@ -34,6 +34,7 @@
 # Set variables
 ######################################################################
 timeout=0.05 # timeout duration for each test (float with the unit second)
+max_title_len=50 # the maximum length of the title to be printed (don't > 100)
 
 export prg="bin/main" # programe path
 export test_dir="test/game" # game testing directory
@@ -48,6 +49,7 @@ export RED='\033[31;1m' # red
 export GRN='\033[32;1m' # green
 export NRM='\033[0m' # normal: reset the style
 export BLD='\033[1m' # bold
+HUNDRED_SPACES="                                                                                                    "
 
 fail_type=0 # as a temporary variable to store the result of each test
 num_test=0 # count total number of tests
@@ -84,7 +86,15 @@ for input_file in $(ls $input_dir/input_*.txt); do
     . $post_script
 
     # echo the title of this test case
-    echo -ne "${BLD}${test_title}${NRM}"
+    title_length=$(echo "$test_title" | wc -c)
+    if [[ $title_length -gt $max_title_len ]]; then
+        test_title=$(echo "$test_title" | grep -o "^.\\{${max_title_len}\\}")
+        space=""
+    else
+        space_length=$(($max_title_len - $title_length + 1))
+        space=$(echo "$HUNDRED_SPACES" | grep -o "^ \\{${space_length}\\}")
+    fi
+    echo -ne "${BLD}TEST ${test_title}...${space}${NRM}"
 
     # Set a timeout duration and run the program with prepared input
     timeout ${timeout}s $prg < $input_file > $output_file 2> $tmp_file

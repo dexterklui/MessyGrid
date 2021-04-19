@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-test_title="Test start new game, invalid cmd then exit game...          "
+test_title="Start new game, input invalid command, then exit"
 
 post_process() {
     cat $output_file > $tmp_file

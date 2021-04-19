@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-test_title="Test playing 2x2 grid...                                    "
+test_title="Play 2x2 grid and finish the game"
 
 post_process() {
     cat $output_file > $tmp_file

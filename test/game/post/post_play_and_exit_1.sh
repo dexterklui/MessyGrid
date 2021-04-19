@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-test_title="Test start new game and exit in the middle...               "
+test_title="Start new game and exit"
 
 post_process() {
     cat $output_file > $tmp_file
