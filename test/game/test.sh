@@ -106,7 +106,8 @@ for input_file in $(ls $input_dir/$input_file_prefix*$input_file_suffix); do
     fi
 
     # reset or update variables
-    fail_type=0 # as a temporary variable to store the result of each test
+    test_exit_value=-1 # to store the exit value of running the test
+    diff_exit_value=-1 # to store the exit value of diff (compare output)
     timeout=$default_timeout # reset the timeout duraction to default
     num_test=$(($num_test + 1)) # increment number of test run by 1
 
@@ -126,30 +127,40 @@ for input_file in $(ls $input_dir/$input_file_prefix*$input_file_suffix); do
 
     # Set a timeout duration and run the program with prepared input
     timeout ${timeout} $prg < $input_file > $output_file 2> $tmp_file
-    if [[ ! $? -eq 0 ]]; then fail_type=1; fi
+    test_exit_value=$?
 
     # post-process and compare outputs, if there wasn't error or timeout
-    if [[ $fail_type -eq 0 ]]; then
+    if [[ $test_exit_value -eq 0 ]]; then
         post_process
-        diff $output_file $sample_output > /dev/null
-        if [[ ! $? -eq 0 ]]; then fail_type=2; fi
+        diff $output_file $sample_output > $tmp_file
+        diff_exit_value=$?
     fi
 
     # echo test result
-    if [[ $fail_type -eq 0 ]]; then
+    if [[ $diff_exit_value -eq 0 ]]; then
         echo -e "[ ${GRN}OK${NRM} ]"
     else
         num_fail=$(($num_fail + 1))
         echo -e "[ ${RED}FAIL${NRM} ]"
 
-        if [[ $fail_type -eq 1 ]]; then
-            echo "Error during test or timeout. Error message (if any):"
-            test -s $tmp_file && cat $tmp_file
-        elif [[ $fail_type -eq 2 ]]; then
+        if [[ $test_exit_value -eq 0 ]]; then
             echo "Output does not match desired result"
             if [[ $1 == "-v" || $1 == "--verbose" ]]; then
                 echo "diff $output_file $sample_output"
-                diff $output_file $sample_output
+                cat $tmp_file
+            fi
+        elif [[ $test_exit_value -eq 124 ]]; then
+            echo "Test case timeout."
+            if [[ -s $tmp_file ]]; then # if there is error message
+                echo -n "Error messages "
+                echo "prepended with the number of consecutive occurences:"
+                cat $tmp_file | uniq -c # prevent repeating msg flooding screen
+            fi
+        else
+            echo -e "Encountered error with exit code $RED$test_exit_value$NRM."
+            if [[ -s $tmp_file ]]; then # if there is error message
+                echo "Error messages:"
+                cat $tmp_file
             fi
         fi
 
