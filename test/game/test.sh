@@ -58,8 +58,9 @@ export output_file="$test_dir/output.txt" # to store the output of each test
 export tmp_file="$test_dir/tmp.txt" # for storing error or post-processing
 
 # escape sequences to change the style of echo -e message
-RED='\033[31;1m' # red
-GRN='\033[32;1m' # green
+RED='\033[31;1m' # red and bold
+GRN='\033[32;1m' # green and bold
+BLE='\033[34m' # blue
 NRM='\033[0m' # normal: reset the style
 BLD='\033[1m' # bold
 HUNDRED_SPACES="                                                                                                    "
@@ -127,7 +128,7 @@ for input_file in $(ls $input_dir/$input_file_prefix*$input_file_suffix); do
 
     # echo test result
     if [[ $fail_type -eq 0 ]]; then
-        echo -ne "[ ${GRN}OK${NRM} ]"
+        echo -e "[ ${GRN}OK${NRM} ]"
     else
         num_fail=$(($num_fail + 1))
         echo -e "[ ${RED}FAIL${NRM} ]"
@@ -139,9 +140,8 @@ for input_file in $(ls $input_dir/$input_file_prefix*$input_file_suffix); do
             echo "Output does not match desired result"
         fi
 
-        echo -n "Input file of this test: $input_file"
+        echo -e "=> Test case input file: ${BLE}$input_file${NRM}"
     fi
-    echo
 done
 
 # clean up temporary files
