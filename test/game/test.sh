@@ -6,9 +6,11 @@
 # Usage: It requires three files for each test case:
 #        1) An input file whose content is passed to the program as input
 #        2) An output file that prepares the result to be checked against
-#        3) An executable bash script that echos the test case name and does any
-#           post-processing if needed (e.g. post-processing the output of the
-#           program before checking them against the content of the output file)
+#        3) An executable bash script that defines a variable and a function:
+#           1. A variable named test_title to store the test title.
+#           2. A function name post_process() to store any post-processing
+#              scripts that has to run before checking the output result.
+#              If no post-processing is needed, add one command 'echo -n'.
 #
 #        Put the three files in three corresponding directories respectively:
 #        input/, output/ and post/.
@@ -45,10 +47,15 @@ failed=0 # as a temporary variable to store the result of each test
 num_test=0 # count total number of tests
 num_fail=0 # count total number of failed tests
 
+export RED='\033[31;1m'
+export GRN='\033[32;1m'
+export NRM='\033[0m'
+export BLD='\033[1m'
 
-# Being the test
+
+# Begin the test
 ######################################################################
-echo "### Testing the game as a whole ###"
+echo -e "${BLD}### Start game testing ###${NRM}"
 
 if [[ ! -x $prg ]]; then
     echo "Main program $prg not executable!"
@@ -63,6 +70,9 @@ for input_file in $(ls $input_dir/input_*.txt); do
     post_script=$(echo $input_file | \
         sed 's+input/+post/+' | sed 's+/input_+/post_+' | sed 's+txt$+sh+')
 
+    . $post_script
+    echo -ne "${BLD}${test_title}${NRM}"
+
     if [[ ! -f $sample_output || ! -x $post_script ]]; then
         echo "$sample_output or $post_script not found!"
         exit 3
@@ -71,13 +81,15 @@ for input_file in $(ls $input_dir/input_*.txt); do
     timeout ${timeout}s $prg < $input_file > $output_file
     if [[ ! $? -eq 0 ]]; then failed=1; fi
 
-    $post_script
+    post_process
     diff $output_file $sample_output > /dev/null
     if [[ ! $? -eq 0 ]]; then failed=1; fi
 
-    if [[ ! $failed -eq 0 ]]; then
+    if [[ $failed -eq 0 ]]; then
+        echo -ne "[ ${GRN}OK${NRM} ]"
+    else
         num_fail=$(($num_fail + 1))
-        echo "[FAIL]"
+        echo -e "[ ${RED}FAIL${NRM} ]"
         echo -n "    Input file using: $input_file"
     fi
 

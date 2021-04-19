@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-echo -n "Test exiting game immediately...                            "
+test_title="Test exiting game immediately...                            "
+
+post_process() {
+    echo -n
+}
