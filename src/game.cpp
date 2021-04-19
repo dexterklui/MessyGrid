@@ -133,11 +133,12 @@ char ReadMoveCommand(istream &ins, ostream &outs)
 {
   char input;
 
-  outs << "Please move the cell." << endl;
+  outs << "Please move a piece:" << endl;
   outs << "W: Up" << endl;
   outs << "S: Down" << endl;
   outs << "A: Left" << endl;
   outs << "D: Right" << endl;
+  outs << endl;
   outs << "B: Quit the game" << endl;
   ins >> input;
   if (cin.eof()) {
