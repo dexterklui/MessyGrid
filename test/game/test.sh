@@ -35,8 +35,9 @@
 
 # Set variables
 ######################################################################
-# default timeout duration for each test (float point measured in unit second)
-default_timeout=0.05
+# Default timeout duration for each test (float point meassured in s, m, h, d)
+# E.g. 0.03s. Set it to 0 (without unit) to disable timeout. See timeout manpage
+default_timeout="0.05s"
 # print at most this number of characters of the title (don't exceed 100)
 max_title_len=50
 
@@ -104,7 +105,7 @@ for input_file in $(ls $input_dir/input_*.txt); do
     echo -ne "${BLD}TEST ${test_title}...${space}${NRM}"
 
     # Set a timeout duration and run the program with prepared input
-    timeout ${timeout}s $prg < $input_file > $output_file 2> $tmp_file
+    timeout ${timeout} $prg < $input_file > $output_file 2> $tmp_file
     if [[ ! $? -eq 0 ]]; then fail_type=1; fi
 
     # post-process and compare outputs, if there wasn't error or timeout
