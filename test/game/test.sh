@@ -3,7 +3,16 @@
 # This is a script that provides a very primitive automation for testing the
 # game by feeding in input and checking against the output.
 #
-# Usage: It requires three files for each test case:
+# Usage: ./test.sh [-v]
+#
+#        * Note that you may not want to run at the directory where this script
+#          is located. For the project of MessyGrid, run:
+#          test/game/test.sh [-v]
+#        * With the flag -v, it will show the difference between the output and
+#          the sample output in case there is a mismatch
+#
+# Preparation:
+#        It requires three files for each test case:
 #        1) An input file whose content is passed to the program as input
 #        2) An output file that prepares the result to be checked against
 #        3) An executable bash script that defines a variable and a function:
@@ -138,6 +147,10 @@ for input_file in $(ls $input_dir/$input_file_prefix*$input_file_suffix); do
             test -s $tmp_file && cat $tmp_file
         elif [[ $fail_type -eq 2 ]]; then
             echo "Output does not match desired result"
+            if [[ $1 == "-v" || $1 == "--verbose" ]]; then
+                echo "diff $output_file $sample_output"
+                diff $output_file $sample_output
+            fi
         fi
 
         echo -e "=> Test case input file: ${BLE}$input_file${NRM}"
