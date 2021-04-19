@@ -143,7 +143,7 @@ char ReadMoveCommand(istream &ins, ostream &outs)
   ins >> input;
   if (cin.eof()) {
     cerr << "Received EOF from cin" << endl;
-    exit(1);
+    exit(5);
   }
   ins.ignore(256, '\n');  // clear remaining garbage value in cin, if any
 
