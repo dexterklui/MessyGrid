@@ -25,81 +25,107 @@
 #        There is a timeout duration for each test case, exceeding it will
 #        result as a failure for that test case. You can change the timeout
 #        duration in thie file below.
+#
+# Exit value: 0: all test passed
+#             1: at least one test failed
+#             2: main program (to be tested) not found or not executable
+#             3: there were missing files for a test case
 
-# set timeout duration for each test
-timeout=0.05
+# Set variables
+######################################################################
+timeout=0.05 # timeout duration for each test (float with the unit second)
 
-export prg="bin/main"
-export test_dir="test/game"
-export input_dir="$test_dir/input" # storing the input of each tests
-# store the result to be checked against for each test
-export output_dir="$test_dir/output"
-# store post script that echo the title of this test and post process the output
-# before checking it agsint the sameple output (because sometimes we don't want
-# to check the whole output but only a part of it)
-export post_script_dir="$test_dir/post"
+export prg="bin/main" # programe path
+export test_dir="test/game" # game testing directory
+export input_dir="$test_dir/input" # directory storing sample input
+export output_dir="$test_dir/output" # directory storing sample output
+export script_dir="$test_dir/post" # directory storing scripts of each test
+export output_file="$test_dir/output.txt" # to store the output of each test
+export tmp_file="$test_dir/tmp.txt" # tmp file for storing error and processing
 
-export output_file="$test_dir/output.txt" # to store the output
-# as an intermediate file for post processing of the output file
-export tmp_file="$test_dir/tmp.txt"
+# escape sequences to change the style of echo -e message
+export RED='\033[31;1m' # red
+export GRN='\033[32;1m' # green
+export NRM='\033[0m' # normal: reset the style
+export BLD='\033[1m' # bold
 
-failed=0 # as a temporary variable to store the result of each test
+fail_type=0 # as a temporary variable to store the result of each test
 num_test=0 # count total number of tests
 num_fail=0 # count total number of failed tests
 
-export RED='\033[31;1m'
-export GRN='\033[32;1m'
-export NRM='\033[0m'
-export BLD='\033[1m'
-
-
 # Begin the test
 ######################################################################
-echo -e "${BLD}### Start game testing ###${NRM}"
+echo -e "${BLD}--- Start game testing ---${NRM}"
 
+# check if main program to be tested exists and is executable
 if [[ ! -x $prg ]]; then
-    echo "Main program $prg not executable!"
+    echo -e "${RED}Main program $prg not executable!${NRM}"
     exit 2
 fi
 
-
+# loop all test case (for each prepared input file)
 for input_file in $(ls $input_dir/input_*.txt); do
-    num_test=$(($num_test + 1))
+    # set the name of sample output file and script file for this test case
     sample_output=$(echo $input_file | \
         sed 's+input/+output/+' | sed 's+/input_+/output_+')
     post_script=$(echo $input_file | \
         sed 's+input/+post/+' | sed 's+/input_+/post_+' | sed 's+txt$+sh+')
 
-    . $post_script
-    echo -ne "${BLD}${test_title}${NRM}"
-
+    # check if corresponding sample output file and script file is present
     if [[ ! -f $sample_output || ! -x $post_script ]]; then
-        echo "$sample_output or $post_script not found!"
+        echo -e "${RED}$sample_output or $post_script not found!${NRM}"
         exit 3
     fi
 
-    timeout ${timeout}s $prg < $input_file > $output_file
-    if [[ ! $? -eq 0 ]]; then failed=1; fi
+    # increment number of test run by 1
+    num_test=$(($num_test + 1))
 
-    post_process
-    diff $output_file $sample_output > /dev/null
-    if [[ ! $? -eq 0 ]]; then failed=1; fi
+    # Run script of this test case to define the title and post-process function
+    . $post_script
 
-    if [[ $failed -eq 0 ]]; then
+    # echo the title of this test case
+    echo -ne "${BLD}${test_title}${NRM}"
+
+    # Set a timeout duration and run the program with prepared input
+    timeout ${timeout}s $prg < $input_file > $output_file 2> $tmp_file
+    if [[ ! $? -eq 0 ]]; then fail_type=1; fi
+
+    # post-process and compare outputs, if there wasn't error or timeout
+    if [[ $fail_type -eq 0 ]]; then
+        post_process
+        diff $output_file $sample_output > /dev/null
+        if [[ ! $? -eq 0 ]]; then fail_type=2; fi
+    fi
+
+    # echo test result
+    if [[ $fail_type -eq 0 ]]; then
         echo -ne "[ ${GRN}OK${NRM} ]"
     else
         num_fail=$(($num_fail + 1))
         echo -e "[ ${RED}FAIL${NRM} ]"
-        echo -n "    Input file using: $input_file"
-    fi
 
-    failed=0
+        if [[ $fail_type -eq 1 ]]; then
+            echo "Error during test or timeout. Error message (if any):"
+            test -s $tmp_file && cat $tmp_file
+        elif [[ $fail_type -eq 2 ]]; then
+            echo "Output does not match desired result"
+        fi
+
+        echo -n "Input file of this test: $input_file"
+    fi
     echo
+
+    fail_type=0 # reset fail_type to 0 for next test case
 done
 
 # clean up temporary files
 rm -f $output_file $tmp_file
 
 echo
-echo "$num_fail of $num_test tests have failed."
-test ! $num_fail -eq 0 && exit 1 || exit 0
+if [[ $num_fail -eq 0 ]]; then
+    echo -e "${BLD}Game testing: ${GRN}All tests passed.${NRM}"
+else
+    echo -ne "${BLD}Game testing: "
+    echo -e "${RED}$num_fail of $num_test tests have failed.${NRM}"
+    exit 1
+fi
