@@ -34,7 +34,9 @@
 # Set variables
 ######################################################################
 timeout=0.05 # timeout duration for each test (float with the unit second)
-max_title_len=50 # the maximum length of the title to be printed (don't > 100)
+
+# print at most this number of characters in title (don't exceed 100)
+max_title_len=50
 
 export prg="bin/main" # programe path
 export test_dir="test/game" # game testing directory
@@ -42,13 +44,13 @@ export input_dir="$test_dir/input" # directory storing sample input
 export output_dir="$test_dir/output" # directory storing sample output
 export script_dir="$test_dir/post" # directory storing scripts of each test
 export output_file="$test_dir/output.txt" # to store the output of each test
-export tmp_file="$test_dir/tmp.txt" # tmp file for storing error and processing
+export tmp_file="$test_dir/tmp.txt" # for storing error or post-processing
 
 # escape sequences to change the style of echo -e message
-export RED='\033[31;1m' # red
-export GRN='\033[32;1m' # green
-export NRM='\033[0m' # normal: reset the style
-export BLD='\033[1m' # bold
+RED='\033[31;1m' # red
+GRN='\033[32;1m' # green
+NRM='\033[0m' # normal: reset the style
+BLD='\033[1m' # bold
 HUNDRED_SPACES="                                                                                                    "
 
 fail_type=0 # as a temporary variable to store the result of each test
@@ -68,10 +70,10 @@ fi
 # loop all test case (for each prepared input file)
 for input_file in $(ls $input_dir/input_*.txt); do
     # set the name of sample output file and script file for this test case
-    sample_output=$(echo $input_file | \
-        sed 's+input/+output/+' | sed 's+/input_+/output_+')
-    post_script=$(echo $input_file | \
-        sed 's+input/+post/+' | sed 's+/input_+/post_+' | sed 's+txt$+sh+')
+    sample_output=$(echo $input_file | sed "s+$input_dir/+$output_dir/+" | \
+        sed "s+/input_+/output_+")
+    post_script=$(echo $input_file | sed "s+$input_dir/+$script_dir/+" | \
+        sed "s+/input_+/post_+" | sed 's+txt$+sh+')
 
     # check if corresponding sample output file and script file is present
     if [[ ! -f $sample_output || ! -x $post_script ]]; then
@@ -131,11 +133,12 @@ done
 # clean up temporary files
 rm -f $output_file $tmp_file
 
+# echo the summary
 echo
-if [[ $num_fail -eq 0 ]]; then
-    echo -e "${BLD}Game testing: ${GRN}All tests passed.${NRM}"
-else
+if [[ $num_fail -eq 0 ]]; then # no test failed
+    echo -e "${BLD}Game testing: ${GRN}All $num_test tests passed.${NRM}"
+else # at least 1 test failed
     echo -ne "${BLD}Game testing: "
-    echo -e "${RED}$num_fail of $num_test tests have failed.${NRM}"
+    echo -e "${RED}$num_fail of $num_test tests failed.${NRM}"
     exit 1
 fi
