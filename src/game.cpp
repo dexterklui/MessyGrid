@@ -68,8 +68,22 @@ void RunGame(Grid &grid, int move_count)
   int QuitControlNum = 0; // If QuitControlNum == 1, it means that we should end this while loop.
   while ( !grid.IsInOrder() ) {
     LetUserMovePiece(grid, QuitControlNum);  // TODO: re-write to handle save and quit cmd
-    if (QuitControlNum > 0){
-      if (QuitControlNum == 2){
+    if (QuitControlNum != 0){
+      cout << endl;
+      cout << "You have now successfully quit the game." << endl;
+      cout << endl;
+      cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
+      char SaveOrNot;
+      cin >> SaveOrNot; // User enters "Y" means Save the game, "N" means not Save the game.
+      SaveOrNot = toupper(SaveOrNot);
+      while (SaveOrNot != 'Y' && SaveOrNot != 'N'){
+        ClearScreen(cout);
+        cout << "Invalid input!" << endl;
+        cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
+        cin >> SaveOrNot;
+        SaveOrNot = toupper(SaveOrNot);
+      }
+      if (SaveOrNot == 'Y'){
         SaveToFile(move_count, grid);
       }
       break;
@@ -100,23 +114,6 @@ void LetUserMovePiece(Grid& grid, int& QuitControlNum)
   while(!grid.MovePiece(cmd)) {
     if (cmd == 'B'){
       QuitControlNum = 1;
-      cout << endl;
-      cout << "You have now successfully quit the game." << endl;
-      cout << endl;
-      cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
-      char SaveOrNot;
-      cin >> SaveOrNot; // User enters "Y" means Save the game, "N" means not Save the game.
-      SaveOrNot = toupper(SaveOrNot);
-      while (SaveOrNot != 'Y' && SaveOrNot != 'N'){
-        ClearScreen(cout);
-        cout << "Invalid input!" << endl;
-        cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
-        cin >> SaveOrNot;
-        SaveOrNot = toupper(SaveOrNot);
-      }
-      if (SaveOrNot == 'Y'){
-        QuitControlNum = 2;
-      }
       return;
     }
 
