@@ -28,7 +28,7 @@ void PrintMainMenu()
   cout << "Game options:" << endl;
   cout << "- [N]ew game" << endl;
   cout << "- [L]oad game" << endl;
-  cout << "- [V]iew leaderboard" << endl;
+  //cout << "- [V]iew leaderboard" << endl;
   cout << "- [A]bout MessyGrid" << endl;
   cout << "- [E]xit game" << endl;
   cout << endl;

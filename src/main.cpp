@@ -37,10 +37,10 @@ int main()
         LoadGame();
         ClearScreen(cout);
         break;
-      case 'V':  // TODO: View Leaderboard
-        ClearScreen(cout);
-        cout << "View leaderboard feature coming soon!" << endl << endl;
-        break;
+      //case 'V':  // TODO: View Leaderboard
+        //ClearScreen(cout);
+        //cout << "View leaderboard feature coming soon!" << endl << endl;
+        //break;
       case 'A':  // About MessyGrid
         ClearScreen(cout);
         PrintAbout();

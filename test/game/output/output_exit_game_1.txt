@@ -103,7 +103,6 @@ Welcome to MessyGrid!
 Game options:
 - [N]ew game
 - [L]oad game
-- [V]iew leaderboard
 - [A]bout MessyGrid
 - [E]xit game
 
