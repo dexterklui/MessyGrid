@@ -48,3 +48,4 @@ test/unit/test_main
 test/unit/*.o
 test/game/output.txt
 test/game/tmp.txt
+user_save_progress.txt
