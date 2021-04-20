@@ -23,6 +23,10 @@ struct Dimension
 // Function: Prepare a new grid then call RunGame() to start a game
 void NewGame();
 
+// Function: Prepare a grid based on save progress then call RunGame() to start
+//           a game.
+void LoadGame();
+
 // Function: Prompt user for a grid dimension (from 2x2 to 10x10) and return it
 // Input: istream &ins: The input stream that provides input
 //        ostream &outs: The output stream that prompt message goes

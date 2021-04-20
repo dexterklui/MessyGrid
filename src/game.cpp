@@ -7,6 +7,7 @@
 // Implementing the game.
 
 #include <iostream>
+#include <cstdlib>
 #include <fstream>
 #include <string>
 #include <cctype>
@@ -28,6 +29,40 @@ void NewGame()
 
   RunGame(grid, 0);  // inital move count is 0
 }
+
+
+void LoadGame()
+{
+  ClearScreen(cout);
+  ifstream fin("user_save_progress.txt");
+  if (fin.fail()) {
+    cout << "Could not open save file!" << endl;
+    exit(1);
+  }
+
+  int move_count;
+  int row;
+  int col;
+  int current_piece;
+  fin >> move_count >> row >> col;
+
+  Grid grid(row, col);  // create the grid
+
+  // Set the pieces in the grid to restore the grid position based on the save
+  // file.
+  for (int i = 0; i < row; ++i) {
+    for (int j = 0; j < col; ++j) {
+      fin >> current_piece;
+      Cell c = {i, j};
+      grid.set_piece(c, current_piece);
+    }
+  }
+
+  fin.close();
+
+  RunGame(grid, move_count);
+}
+
 
 Dimension NewGameMenu(istream& ins, ostream& outs)
 {
@@ -67,7 +102,7 @@ void RunGame(Grid &grid, int move_count)
 {
   int QuitControlNum = 0; // If QuitControlNum == 1, it means that we should end this while loop.
   while ( !grid.IsInOrder() ) {
-    LetUserMovePiece(grid, QuitControlNum);  // TODO: re-write to handle save and quit cmd
+    LetUserMovePiece(grid, QuitControlNum);
     if (QuitControlNum != 0){
       cout << endl;
       cout << "You have now successfully quit the game." << endl;
@@ -117,12 +152,12 @@ void LetUserMovePiece(Grid& grid, int& QuitControlNum)
       return;
     }
 
-      ClearScreen(cout);
-      cout << "Invalid move!" << endl << endl;
-      grid.Print(cout);
+    ClearScreen(cout);
+    cout << "Invalid move!" << endl << endl;
+    grid.Print(cout);
 
-      cmd = ReadMoveCommand(cin, cout);
-      cmd = toupper(cmd);
+    cmd = ReadMoveCommand(cin, cout);
+    cmd = toupper(cmd);
   }
 }
 
