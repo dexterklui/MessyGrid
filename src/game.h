@@ -52,6 +52,10 @@ void LetUserMovePiece(Grid& grid, int& QuitControlNum);
 // Output: Return the character read from the user
 char ReadMoveCommand(istream &ins, ostream &outs);
 
+// Function: Show the screen to congratulate the user when the game is finished.
+// Input: TODO
+void CongratulationScreen(int move_count, const Grid& grid);
+
 // Function: Save user current game data into the file "User_Save_Progress.txt".
 // Input:  int step:
 //         const Grid grid:

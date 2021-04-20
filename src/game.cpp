@@ -128,13 +128,7 @@ void RunGame(Grid &grid, int move_count)
 
 
   // TODO: will pass this to a function handling congratulate event
-  ClearScreen(cout);
-  grid.Print(cout);
-  cout << endl << "Congratulation! You reordered the messy grid." << endl;
-  cout << "Total number of moves: " << move_count << endl;
-  cout << endl << "Press <Enter> to return to main menu...";
-  string dummy;
-  getline(cin, dummy);
+  CongratulationScreen(move_count, grid);
 }
 
 
@@ -180,6 +174,23 @@ char ReadMoveCommand(istream &ins, ostream &outs)
   ins.ignore(256, '\n');  // clear remaining garbage value in cin, if any
 
   return input;
+}
+
+
+void CongratulationScreen(int move_count, const Grid& grid)
+{
+  ClearScreen(cout);
+  grid.Print(cout);
+  cout << endl << "Congratulation! You reordered the messy grid." << endl;
+  cout << "Total number of moves: " << move_count << endl;
+
+  // print leaderboard for his size
+  //
+  // if the score is good enough, prompt for an alias to update leaderboard
+
+  cout << endl << "Press <Enter> to return to main menu...";
+  string dummy;
+  getline(cin, dummy);
 }
 
 
