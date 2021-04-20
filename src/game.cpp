@@ -148,22 +148,23 @@ char ReadMoveCommand(istream &ins, ostream &outs)
 }
 
 
-void SaveToFile(int move_count, const Grid grid)
+void SaveToFile(int move_count, const Grid& grid)
 {
   ofstream fout;
-  fout.open("User_Save_Progress.txt");
+  fout.open("user_save_progress.txt");
   if (fout.fail()){
     cout << "Error in file opening!" << endl;
     exit(1);
   }
+  fout << move_count << endl;
   fout << grid.num_row() << endl;
   fout << grid.num_col() << endl;
-  fout << move_count << endl;
   for (int i = 0; i < grid.num_row(); i++){
     for (int j = 0; j < grid.num_col(); j++){
       Cell c = {i, j};
-      fout << grid.get_piece(c) << endl;
+      fout << grid.get_piece(c) << ' ';
     }
+    fout << endl;
   }
 
   fout.close();
