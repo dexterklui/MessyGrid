@@ -34,8 +34,8 @@ int main()
         ClearScreen(cout);
         break;
       case 'L':  // TODO: Load Game
+        LoadGame();
         ClearScreen(cout);
-        cout << "Load game feature coming soon!" << endl << endl;
         break;
       case 'V':  // TODO: View Leaderboard
         ClearScreen(cout);

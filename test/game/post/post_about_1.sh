@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-echo -n "Test About MessyGrid menu option...                         "
+test_title="About MessyGrid menu option"
+
+post_process() { :; }

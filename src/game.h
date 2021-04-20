@@ -23,6 +23,10 @@ struct Dimension
 // Function: Prepare a new grid then call RunGame() to start a game
 void NewGame();
 
+// Function: Prepare a grid based on save progress then call RunGame() to start
+//           a game.
+void LoadGame();
+
 // Function: Prompt user for a grid dimension (from 2x2 to 10x10) and return it
 // Input: istream &ins: The input stream that provides input
 //        ostream &outs: The output stream that prompt message goes
@@ -37,7 +41,7 @@ void RunGame(Grid &grid, int move_count);
 // Function: Handles displaying of the grid and dealing with user input for
 //           moving a piece.
 // Input: Grid& grid: A class Grid storing the grid of the current game.
-void LetUserMovePiece(Grid& grid);
+void LetUserMovePiece(Grid& grid, int& QuitControlNum);
 
 // Function: Prompt user to enter a character as a move command. It does not
 //           check whether it is a valid command but return the input character
@@ -48,4 +52,9 @@ void LetUserMovePiece(Grid& grid);
 // Output: Return the character read from the user
 char ReadMoveCommand(istream &ins, ostream &outs);
 
+// Function: Save user current game data into the file "User_Save_Progress.txt".
+// Input:  int step:
+//         const Grid grid:
+// Output: Add the data into file "User_Save_Progress.txt".
+void SaveToFile(int move_count, const Grid& grid);
 #endif  // ifndef GAME_H
