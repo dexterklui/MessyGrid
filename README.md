@@ -63,3 +63,14 @@ Name: Ye Zhongzheng (UID: 3035782176)
 Type `make` in the terminal to compile the program. The path of the compiled
 program is `bin/main`. Alternatively, you can compile and run the program with a
 single command `make run`.
+
+## Sample Input / Output File:
+
+See `test/game/input` and `test/game/output` for some sample input and sample
+output files. Note that a portion of the sample output files there are not the
+complete output of running the program, but are only a part of the output for
+the purpose of game testing.
+
+For the requirement of the project, there is another prepared sample output file
+`sample_output.txt`, whose content is the complete output of running the game
+with a sample input from `test/game/input/input_play_2x2_1.txt`.
