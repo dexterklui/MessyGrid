@@ -11,15 +11,16 @@
 
 // Function: Enter the main menu and let user choos an option
 // Output: char: The option chose by the user. Possible values are:
-//               N: new game
-//               L: load game
-//               E: exit game
 char InitMainMenu();
 
-// Function: Print main menu and list options on screen
+// Function: Print main menu and list options on screen. Options are:
+//           N: New game
+//           L: Load game
+//           A: Brief description about MessyGrid
+//           E: Exit game
 void PrintMainMenu();
 
 // Function: Print brief description about MessyGrid
 void PrintAbout();
 
-#endif /* ifndef MAINMENU_H */
+#endif  // ifndef MAINMENU_H

@@ -4,7 +4,7 @@
 // Group: 165
 //
 // Description:
-// Implementing the game.
+// Implementing the game execution.
 
 #include <iostream>
 #include <cstdlib>
@@ -19,15 +19,15 @@ using namespace std;
 void NewGame()
 {
   ClearScreen(cout);
-  Dimension dimension = NewGameMenu(cin, cout);
+  Dimension dimension = AskForGridSize(cin, cout);
   unsigned int rng_seed_increment = 0;
 
-  Grid grid(dimension.row, dimension.col);  // Create a grid
+  Grid grid(dimension.row, dimension.col);  // Create a grid of given dimension
   do {
     grid.RandomizeGrid(rng_seed_increment++);
   } while (grid.IsInOrder());
 
-  RunGame(grid, 0);  // inital move count is 0
+  RunGame(grid, 0);  // the inital counter for number of move is 0
 }
 
 
@@ -64,12 +64,12 @@ void LoadGame()
 }
 
 
-Dimension NewGameMenu(istream& ins, ostream& outs)
+Dimension AskForGridSize(istream& ins, ostream& outs)
 {
   Dimension dimension = {0, 0};
 
-  if (!ins)
-    return dimension;  // return immediately if istream is fail or bad
+  if (!ins)  // if fail or bad bit is turned on
+    return dimension;
 
   outs << "Please input the number of rows (2-10):" << endl;
   ins >> dimension.row;
@@ -100,39 +100,42 @@ Dimension NewGameMenu(istream& ins, ostream& outs)
 
 void RunGame(Grid &grid, int move_count)
 {
-  int QuitControlNum = 0; // If QuitControlNum == 1, it means that we should end this while loop.
+  int gonna_quit_game = 0;  // to indicate whether the player chose to quit game
   while ( !grid.IsInOrder() ) {
-    LetUserMovePiece(grid, QuitControlNum);
-    if (QuitControlNum != 0){
+    LetUserMovePiece(grid, gonna_quit_game);
+    if (gonna_quit_game != 0){
+      // to read input that indicates whether to save progress (Y: yes, N: no)
+      char gonna_save;  
+
       cout << endl;
       cout << "You have now successfully quit the game." << endl;
       cout << endl;
       cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
-      char SaveOrNot;
-      cin >> SaveOrNot; // User enters "Y" means Save the game, "N" means not Save the game.
-      SaveOrNot = toupper(SaveOrNot);
-      while (SaveOrNot != 'Y' && SaveOrNot != 'N'){
+      cin >> gonna_save;
+      gonna_save = toupper(gonna_save);
+
+      while (gonna_save != 'Y' && gonna_save != 'N'){
         ClearScreen(cout);
         cout << "Invalid input!" << endl;
         cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
-        cin >> SaveOrNot;
-        SaveOrNot = toupper(SaveOrNot);
+        cin >> gonna_save;
+        gonna_save = toupper(gonna_save);
       }
-      if (SaveOrNot == 'Y'){
+
+      if (gonna_save == 'Y') {
         SaveToFile(move_count, grid);
       }
-      break;
+
+      break;  // break the main game loop to quit game
     }
     ++move_count;
   }
 
-
-  // TODO: will pass this to a function handling congratulate event
   CongratulationScreen(move_count, grid);
 }
 
 
-void LetUserMovePiece(Grid& grid, int& QuitControlNum)
+void LetUserMovePiece(Grid& grid, int& gonna_quit_game)
 {
   ClearScreen(cout);
   grid.Print(cout);
@@ -141,8 +144,8 @@ void LetUserMovePiece(Grid& grid, int& QuitControlNum)
   cmd = toupper(cmd);  // to allow user input command in lower case
 
   while(!grid.MovePiece(cmd)) {
-    if (cmd == 'B'){
-      QuitControlNum = 1;
+    if (cmd == 'B') {
+      gonna_quit_game = 1;
       return;
     }
 
@@ -165,7 +168,7 @@ char ReadMoveCommand(istream &ins, ostream &outs)
   outs << "A: Left" << endl;
   outs << "D: Right" << endl;
   outs << endl;
-  outs << "B: Quit the game" << endl;
+  outs << "B: Quit the game" << endl;  // not Q to prevent unintentional quit
   ins >> input;
   if (cin.eof()) {
     cerr << "Received EOF from cin" << endl;
@@ -183,11 +186,6 @@ void CongratulationScreen(int move_count, const Grid& grid)
   grid.Print(cout);
   cout << endl << "Congratulation! You reordered the messy grid." << endl;
   cout << "Total number of moves: " << move_count << endl;
-
-  // print leaderboard for his size
-  //
-  // if the score is good enough, prompt for an alias to update leaderboard
-
   cout << endl << "Press <Enter> to return to main menu...";
   string dummy;
   getline(cin, dummy);
@@ -198,15 +196,15 @@ void SaveToFile(int move_count, const Grid& grid)
 {
   ofstream fout;
   fout.open("user_save_progress.txt");
-  if (fout.fail()){
+  if (fout.fail()) {
     cout << "Error in file opening!" << endl;
     exit(1);
   }
   fout << move_count << endl;
   fout << grid.num_row() << endl;
   fout << grid.num_col() << endl;
-  for (int i = 0; i < grid.num_row(); i++){
-    for (int j = 0; j < grid.num_col(); j++){
+  for (int i = 0; i < grid.num_row(); i++) {
+    for (int j = 0; j < grid.num_col(); j++) {
       Cell c = {i, j};
       fout << grid.get_piece(c) << ' ';
     }

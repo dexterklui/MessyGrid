@@ -79,9 +79,8 @@ class Grid {
   //               col index set to -1.
   Cell get_cell(int p) const;
 
-  // TODO: the function description is not accurate
   // Function: Starting from current piece arrangement, randomize the pieces
-  //         inside the grid by randomly moving around the pieces.
+  //           inside the grid by randomly moving around the pieces.
   // Input: unsigned int n: An increment to the RNG seed. The purpose is to use
   //                        a different seed without waiting for another second
   //                        when the previous seed failed to randomize a grid

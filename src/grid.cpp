@@ -18,7 +18,7 @@ Grid::Grid(int row, int col) {
   // create zero-size grid when any dimension is less than or equal to zero
   if (row <= 0 || col <= 0) {
     num_row_ = num_col_ = 0;
-    grid_ = 0;
+    grid_ = nullptr;
     return;
   }
 
@@ -54,7 +54,7 @@ Grid::~Grid()
     grid_[i] = 0;
   }
   delete [] grid_;
-  grid_ = 0;
+  grid_ = nullptr;
 
   num_row_ = 0;
   num_col_ = 0;
@@ -170,7 +170,7 @@ void Grid::Print(ostream& outs) const
   for (int i = 0; i < num_row_; i++) {
     if (count2 != 0) {
       outs << "---";
-      for (int c = 0; c < num_col_-1; c++){
+      for (int c = 0; c < num_col_-1; c++) {
         outs << "+----";
       }
       outs << endl;
@@ -179,7 +179,7 @@ void Grid::Print(ostream& outs) const
 
     for (int j = 0; j < num_col_; j++) {
       int a  = grid_[i][j];
-      if (count1 % num_col_ != 0){
+      if (count1 % num_col_ != 0) {
         outs << "| ";
       }
       if (a < 10 && a > 0){
@@ -235,38 +235,36 @@ void Grid::RandomizeGrid(unsigned int n)
   int num = num_row_ * num_col_;
   int MovingTimes = (rand() % (num*num*num - num*num)) + num*num;
   int nowrow = num_row_, nowcol = num_col_;
-  for (int i = 0; i < MovingTimes; i++)
-  {
+
+  for (int i = 0; i < MovingTimes; i++) {
     int MovingNum = (rand() % (4 - 1 + 1)) + 1;
     if (CanBeMoveOrNot(MovingNum, nowrow, nowcol)) continue;
+
     char cmd;
-    if (MovingNum == 1)
-    {
+    if (MovingNum == 1) {
       cmd = 'W';
       nowrow += 1;
     }
-    else if (MovingNum == 2)
-    {
+    else if (MovingNum == 2) {
       cmd = 'S';
       nowrow -= 1;
     }
-    else if (MovingNum == 3)
-    {
+    else if (MovingNum == 3) {
       cmd = 'A';
       nowcol -= 1;
     }
-    else
-    {
+    else {
       cmd = 'D';
       nowcol += 1;
     }
+
     MovePiece(cmd);
   }
 
   int a = 0, b = 0;
-  for  (int i = 0; i < num_row_; i++){
-    for (int j = 0; j < num_col_; j++){
-      if (grid_[i][j] == 0){
+  for  (int i = 0; i < num_row_; i++) {
+    for (int j = 0; j < num_col_; j++) {
+      if (grid_[i][j] == 0) {
         a = i;
         b = j;
         break;
@@ -274,13 +272,11 @@ void Grid::RandomizeGrid(unsigned int n)
     }
   }
 
-  for (int i = 0; i < (num_row_ - a); i++)
-  {
+  for (int i = 0; i < (num_row_ - a); i++) {
     char cmd2 = 'W';
     MovePiece(cmd2);
   }
-  for (int i = 0; i < (num_col_ - b); i++)
-  {
+  for (int i = 0; i < (num_col_ - b); i++) {
     char cmd3 = 'A';
     MovePiece(cmd3);
   }

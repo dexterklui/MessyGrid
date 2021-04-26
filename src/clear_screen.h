@@ -4,13 +4,15 @@
 // Group: 165
 //
 // Description:
-// Function to clear screen
+// Declare a function to clear screen
 
 #ifndef CLEARSCREEN_H
 #define CLEARSCREEN_H value
 
 #include <iostream>
 
+// Function: Clear screen by printing 100 empty lines
+// Input: std::ostream& outs: the output stream where empty lines are printed
 void ClearScreen(std::ostream& outs);
 
-#endif /* ifndef CLEARSCREEN_H */
+#endif  // ifndef CLEARSCREEN_H

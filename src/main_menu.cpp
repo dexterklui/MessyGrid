@@ -28,7 +28,6 @@ void PrintMainMenu()
   cout << "Game options:" << endl;
   cout << "- [N]ew game" << endl;
   cout << "- [L]oad game" << endl;
-  //cout << "- [V]iew leaderboard" << endl;
   cout << "- [A]bout MessyGrid" << endl;
   cout << "- [E]xit game" << endl;
   cout << endl;
@@ -38,7 +37,7 @@ void PrintMainMenu()
 void PrintAbout()
 {
   // Max columns is 80 (i.e. for each line output no more than 80 characters)
-  // This is easier for reading.
+  // This restriction is for better readability.
   cout << "MessyGrid is a puzzle game where a player is given a grid of numbers"
     << " in random" << endl
     << "order except there is one empty cell with no number. The aim is to move"

@@ -19,11 +19,10 @@ int main()
   char option = '1';
   ClearScreen(cout);
   do {
-    switch (option) {  // Only print welcoming message in certain scenarios
-      case '1':
-      case 'N':
-      case 'L':
-      case 'V':
+    switch (option) {  // only print welcoming message in certain scenarios
+      case '1':  // just started the program
+      case 'N':  // exited from a new game
+      case 'L':  // exited from a continued (load) game
         cout << "Welcome to MessyGrid!" << endl << endl;
     }
 
@@ -33,14 +32,10 @@ int main()
         NewGame();
         ClearScreen(cout);
         break;
-      case 'L':  // TODO: Load Game
+      case 'L':  // Load Game
         LoadGame();
         ClearScreen(cout);
         break;
-      //case 'V':  // TODO: View Leaderboard
-        //ClearScreen(cout);
-        //cout << "View leaderboard feature coming soon!" << endl << endl;
-        //break;
       case 'A':  // About MessyGrid
         ClearScreen(cout);
         PrintAbout();

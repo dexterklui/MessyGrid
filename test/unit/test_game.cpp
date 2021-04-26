@@ -5,7 +5,7 @@
 #include "../../src/game.h"
 using namespace std;
 
-void TestNewGameMenu(void)
+void TestAskForGridSize(void)
 {
   struct TestVector
   {
@@ -37,7 +37,7 @@ void TestNewGameMenu(void)
 
     istringstream iss(vec->input);
     ostringstream oss;
-    Dimension output = NewGameMenu(iss, oss);
+    Dimension output = AskForGridSize(iss, oss);
 
     TEST_CHECK(output.row == vec->expected_output.row
         && output.col == vec->expected_output.col);

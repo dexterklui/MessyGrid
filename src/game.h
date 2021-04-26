@@ -31,7 +31,7 @@ void LoadGame();
 // Input: istream &ins: The input stream that provides input
 //        ostream &outs: The output stream that prompt message goes
 // Output: Dimension: The struct that stores the dimension of the grid
-Dimension NewGameMenu(istream& ins, ostream& outs);
+Dimension AskForGridSize(istream& ins, ostream& outs);
 
 // Function: Run the game until quit or game over (when grid is re-ordered)
 // Input: Grid& grid: the grid to start playing with
@@ -53,12 +53,15 @@ void LetUserMovePiece(Grid& grid, int& QuitControlNum);
 char ReadMoveCommand(istream &ins, ostream &outs);
 
 // Function: Show the screen to congratulate the user when the game is finished.
-// Input: TODO
+// Input: int move_count: The total number of moves
+//        const Grid& grid: A class Grid storing the grid of the current game.
 void CongratulationScreen(int move_count, const Grid& grid);
 
-// Function: Save user current game data into the file "User_Save_Progress.txt".
-// Input:  int step:
-//         const Grid grid:
-// Output: Add the data into file "User_Save_Progress.txt".
+// Function: Save game progress into the file "user_save_progress.txt". The save
+//           file will record the number of moves so far, the dimension of the
+//           grid and the number on each cell of the grid.
+// Input: int move_count: The number of moves that have been made so far.
+//        const Grid& grid: A class Grid storing the grid of the current game.
 void SaveToFile(int move_count, const Grid& grid);
+
 #endif  // ifndef GAME_H

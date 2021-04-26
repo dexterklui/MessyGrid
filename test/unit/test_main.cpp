@@ -15,7 +15,7 @@ TEST_LIST = {
   {"grid_print", TestGridPrint},
   {"grid_randomize_grid", TestGridRandomizeGrid},
 
-  {"game_new_game_menu", TestNewGameMenu},
+  {"game_ask_for_grid_size", TestAskForGridSize},
   {"game_read_move_command", TestReadMoveCommand},
   {NULL, NULL}
 };
