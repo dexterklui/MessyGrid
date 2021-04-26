@@ -121,7 +121,7 @@ void AskIfSaveProgress(int move_count, const Grid& grid)
 
   ClearScreen(cout);
   cout << endl;
-  cout << "You are going to quit the game." << endl;
+  cout << "You are going to quit current game." << endl;
   cout << endl;
   cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
   cin >> gonna_save;
@@ -135,9 +135,8 @@ void AskIfSaveProgress(int move_count, const Grid& grid)
     gonna_save = toupper(gonna_save);
   }
 
-  if (gonna_save == 'Y') {
+  if (gonna_save == 'Y')
     SaveToFile(move_count, grid);
-  }
 }
 
 
