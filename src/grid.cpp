@@ -9,7 +9,6 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-#include <stdexcept>
 #include "grid.h"
 using namespace std;
 
