@@ -7,6 +7,7 @@
 // Implementing the game execution.
 
 #include <iostream>
+#include <iomanip>
 #include <cstdlib>
 #include <fstream>
 #include <string>
@@ -209,7 +210,7 @@ void SaveToFile(int move_count, const Grid& grid)
   for (int i = 0; i < grid.num_row(); i++) {
     for (int j = 0; j < grid.num_col(); j++) {
       Cell c = {i, j};
-      fout << grid.get_piece(c) << ' ';
+      fout << setw(3) << grid.get_piece(c);
     }
     fout << endl;
   }
