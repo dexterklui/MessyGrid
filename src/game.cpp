@@ -101,7 +101,7 @@ void RunGame(Grid &grid, int move_count)
 {
   int gonna_quit_game = 0;  // to indicate whether the player chose to quit game
   while (!grid.IsInOrder()) {
-    LetUserMovePiece(grid, gonna_quit_game);
+    LetUserMovePiece(move_count, grid, gonna_quit_game);
 
     if (gonna_quit_game) {
       AskIfSaveProgress(move_count, grid);
@@ -141,12 +141,12 @@ void AskIfSaveProgress(int move_count, const Grid& grid)
 }
 
 
-void LetUserMovePiece(Grid& grid, int& gonna_quit_game)
+void LetUserMovePiece(int move_count, Grid& grid, int& gonna_quit_game)
 {
   ClearScreen(cout);
   grid.Print(cout);
 
-  char cmd = ReadMoveCommand(cin, cout);
+  char cmd = ReadMoveCommand(move_count, cin, cout);
   cmd = toupper(cmd);  // to allow user input command in lower case
 
   while(!grid.MovePiece(cmd)) {
@@ -159,15 +159,18 @@ void LetUserMovePiece(Grid& grid, int& gonna_quit_game)
     cout << "Invalid move!" << endl << endl;
     grid.Print(cout);
 
-    cmd = ReadMoveCommand(cin, cout);
+    cmd = ReadMoveCommand(move_count, cin, cout);
     cmd = toupper(cmd);
   }
 }
 
-char ReadMoveCommand(istream &ins, ostream &outs)
+char ReadMoveCommand(int move_count, istream &ins, ostream &outs)
 {
   char input;
 
+  outs << endl;
+  outs << "Number of moves: " << move_count << endl;
+  outs << endl;
   outs << "Please move a piece:" << endl;
   outs << "W: Up" << endl;
   outs << "S: Down" << endl;

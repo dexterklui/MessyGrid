@@ -36,21 +36,24 @@ Dimension AskForGridSize(istream& ins, ostream& outs);
 // Function: Run the game until quit or game over (when grid is re-ordered)
 // Input: Grid& grid: the grid to start playing with
 //        int move_count: the initial move counter to start playing with
-void RunGame(Grid &grid, int move_count);
+void RunGame(Grid& grid, int move_count);
 
 // Function: Handles displaying of the grid and dealing with user input for
 //           moving a piece.
-// Input: Grid& grid: A class Grid storing the grid of the current game.
-void LetUserMovePiece(Grid& grid, int& QuitControlNum);
+// Input: int move_count: The number of moves made so far.
+//        Grid& grid: A class Grid storing the grid of the current game.
+//        int& gonna_quit_game: Record whether the quit game option is selected
+void LetUserMovePiece(int move_count, Grid& grid, int& gonna_quit_game);
 
 // Function: Prompt user to enter a character as a move command. It does not
 //           check whether it is a valid command but return the input character
 //           faithfully.
-// Input: istream &ins: the input stream from which the input is extracted
-//        ostream &outs: the output stream to which the prompt message is
+// Input: int move_count: The number of moves made so far.
+//        istream &ins: The input stream from which the input is extracted
+//        ostream &outs: The output stream to which the prompt message is
 //                       printed
 // Output: Return the character read from the user
-char ReadMoveCommand(istream &ins, ostream &outs);
+char ReadMoveCommand(int move_count, istream& ins, ostream& outs);
 
 // Function: Show the screen to congratulate the user when the game is finished.
 // Input: int move_count: The total number of moves

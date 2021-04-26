@@ -81,7 +81,7 @@ void TestReadMoveCommand(void)
     istringstream iss(vec->input);
     ostringstream oss;
 
-    char output = ReadMoveCommand(iss, oss);
+    char output = ReadMoveCommand(0, iss, oss);
     TEST_CHECK_(output == vec->expected_output, "Returned: %c", output);
   }
 }
