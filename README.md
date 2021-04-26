@@ -57,3 +57,9 @@ Name: Ye Zhongzheng (UID: 3035782176)
    dedicated to the class Grid; a main source file is dedicated to a simple main
    function which is the entry point of the program; and etc.
    * Fulfills requirement 5: Program codes in multiple files
+
+## Compilation Instruction:
+
+Type `make` in the terminal to compile the program. The path of the compiled
+program is `bin/main`. Alternatively, you can compile and run the program with a
+single command `make run`.
