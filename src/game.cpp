@@ -16,7 +16,7 @@
 #include "clear_screen.h"
 using namespace std;
 
-const string kSaveFilePath = "user_save_progress.txt";
+const char kSaveFilePath[] = "user_save_progress.txt";
 
 void NewGame()
 {
@@ -218,10 +218,10 @@ void SaveToFile(int move_count, const Grid& grid)
 }
 
 
-ifstream OpenReadFile(string file_path)
+ifstream OpenReadFile(const char file_path[])
 {
   ifstream fin;
-  fin.open(file_path.c_str());
+  fin.open(file_path);
   if (fin.fail()) {
     cout << "Could not open save file!" << endl;
     exit(1);
@@ -230,10 +230,10 @@ ifstream OpenReadFile(string file_path)
 }
 
 
-ofstream OpenWriteFile(string file_path)
+ofstream OpenWriteFile(const char file_path[])
 {
   ofstream fout;
-  fout.open(file_path.c_str());
+  fout.open(file_path);
   if (fout.fail()) {
     cout << "Cannot open write file!" << endl;
     exit(1);

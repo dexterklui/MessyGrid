@@ -63,14 +63,14 @@ void CongratulationScreen(int move_count, const Grid& grid);
 void AskIfSaveProgress(int move_count, const Grid& grid);
 
 // Function: Open a file as an input file stream and return this stream
-// Input: string file_path: The path to the file
+// Input: const char file_path[]: The path to the file
 // Output: ifstream: The input file stream linked with the opened file
-ifstream OpenReadFile(string file_path);
+ifstream OpenReadFile(const char file_path[]);
 
 // Function: Open a file as an output file stream and return this stream
-// Input: string file_path: The path to the file
+// Input: const char file_path[]: The path to the file
 // Output: ifstream: The output file stream linked with the opened file
-ofstream OpenWriteFile(string file_path);
+ofstream OpenWriteFile(const char file_path[]);
 
 // Function: Save game progress into the file "user_save_progress.txt". The save
 //           file will record the number of moves so far, the dimension of the
