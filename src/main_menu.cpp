@@ -13,7 +13,7 @@ using namespace std;
 
 char InitMainMenu()
 {
-  char option;  // to store the option chose by the user
+  char option;  // to store the option chosen by the user
 
   PrintMainMenu();
 

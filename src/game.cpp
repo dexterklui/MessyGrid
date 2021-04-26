@@ -16,6 +16,8 @@
 #include "clear_screen.h"
 using namespace std;
 
+const string kSaveFilePath = "user_save_progress.txt";
+
 void NewGame()
 {
   ClearScreen(cout);
@@ -34,22 +36,18 @@ void NewGame()
 void LoadGame()
 {
   ClearScreen(cout);
-  ifstream fin("user_save_progress.txt");
-  if (fin.fail()) {
-    cout << "Could not open save file!" << endl;
-    exit(1);
-  }
+  ifstream fin = OpenReadFile(kSaveFilePath);
 
   int move_count;
   int row;
   int col;
   int current_piece;
+
   fin >> move_count >> row >> col;
 
   Grid grid(row, col);  // create the grid
 
-  // Set the pieces in the grid to restore the grid position based on the save
-  // file.
+  // set the pieces in the grid to restore the arrangement of previous progress
   for (int i = 0; i < row; ++i) {
     for (int j = 0; j < col; ++j) {
       fin >> current_piece;
@@ -101,37 +99,45 @@ Dimension AskForGridSize(istream& ins, ostream& outs)
 void RunGame(Grid &grid, int move_count)
 {
   int gonna_quit_game = 0;  // to indicate whether the player chose to quit game
-  while ( !grid.IsInOrder() ) {
+  while (!grid.IsInOrder()) {
     LetUserMovePiece(grid, gonna_quit_game);
-    if (gonna_quit_game != 0){
-      // to read input that indicates whether to save progress (Y: yes, N: no)
-      char gonna_save;  
 
-      cout << endl;
-      cout << "You have now successfully quit the game." << endl;
-      cout << endl;
-      cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
-      cin >> gonna_save;
-      gonna_save = toupper(gonna_save);
-
-      while (gonna_save != 'Y' && gonna_save != 'N'){
-        ClearScreen(cout);
-        cout << "Invalid input!" << endl;
-        cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
-        cin >> gonna_save;
-        gonna_save = toupper(gonna_save);
-      }
-
-      if (gonna_save == 'Y') {
-        SaveToFile(move_count, grid);
-      }
-
-      break;  // break the main game loop to quit game
+    if (gonna_quit_game) {
+      AskIfSaveProgress(move_count, grid);
+      return;
     }
+
     ++move_count;
   }
 
   CongratulationScreen(move_count, grid);
+}
+
+
+void AskIfSaveProgress(int move_count, const Grid& grid)
+{
+  // to read input that indicates whether to save progress (Y: yes, N: no)
+  char gonna_save;  
+
+  ClearScreen(cout);
+  cout << endl;
+  cout << "You are going to quit the game." << endl;
+  cout << endl;
+  cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
+  cin >> gonna_save;
+  gonna_save = toupper(gonna_save);
+
+  while (gonna_save != 'Y' && gonna_save != 'N'){
+    ClearScreen(cout);
+    cout << "Invalid input!" << endl;
+    cout << "Do you want to save your progress? ([Y]es. [N]o.): ";
+    cin >> gonna_save;
+    gonna_save = toupper(gonna_save);
+  }
+
+  if (gonna_save == 'Y') {
+    SaveToFile(move_count, grid);
+  }
 }
 
 
@@ -194,15 +200,13 @@ void CongratulationScreen(int move_count, const Grid& grid)
 
 void SaveToFile(int move_count, const Grid& grid)
 {
-  ofstream fout;
-  fout.open("user_save_progress.txt");
-  if (fout.fail()) {
-    cout << "Error in file opening!" << endl;
-    exit(1);
-  }
+  ofstream fout = OpenWriteFile(kSaveFilePath);
+
   fout << move_count << endl;
   fout << grid.num_row() << endl;
   fout << grid.num_col() << endl;
+
+  // write the piece arrangement into save file
   for (int i = 0; i < grid.num_row(); i++) {
     for (int j = 0; j < grid.num_col(); j++) {
       Cell c = {i, j};
@@ -212,4 +216,28 @@ void SaveToFile(int move_count, const Grid& grid)
   }
 
   fout.close();
+}
+
+
+ifstream OpenReadFile(string file_path)
+{
+  ifstream fin;
+  fin.open(file_path.c_str());
+  if (fin.fail()) {
+    cout << "Could not open save file!" << endl;
+    exit(1);
+  }
+  return fin;
+}
+
+
+ofstream OpenWriteFile(string file_path)
+{
+  ofstream fout;
+  fout.open(file_path.c_str());
+  if (fout.fail()) {
+    cout << "Cannot open write file!" << endl;
+    exit(1);
+  }
+  return fout;
 }

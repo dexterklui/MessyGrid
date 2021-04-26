@@ -57,6 +57,21 @@ char ReadMoveCommand(istream &ins, ostream &outs);
 //        const Grid& grid: A class Grid storing the grid of the current game.
 void CongratulationScreen(int move_count, const Grid& grid);
 
+// Function: Ask the user whether to save progress before quitting the game
+// Input: int move_count: The number of moves so far
+//        const Grid& grid: A class Grid storing the grid of the current game.
+void AskIfSaveProgress(int move_count, const Grid& grid);
+
+// Function: Open a file as an input file stream and return this stream
+// Input: string file_path: The path to the file
+// Output: ifstream: The input file stream linked with the opened file
+ifstream OpenReadFile(string file_path);
+
+// Function: Open a file as an output file stream and return this stream
+// Input: string file_path: The path to the file
+// Output: ifstream: The output file stream linked with the opened file
+ofstream OpenWriteFile(string file_path);
+
 // Function: Save game progress into the file "user_save_progress.txt". The save
 //           file will record the number of moves so far, the dimension of the
 //           grid and the number on each cell of the grid.

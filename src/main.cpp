@@ -16,7 +16,7 @@ using namespace std;
 
 int main()
 {
-  char option = '1';
+  char option = '1';  // to store the main menu option chosen by the user
   ClearScreen(cout);
   do {
     switch (option) {  // only print welcoming message in certain scenarios
