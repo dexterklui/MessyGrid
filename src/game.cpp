@@ -38,6 +38,15 @@ void LoadGame()
 {
   ClearScreen(cout);
   ifstream fin = OpenReadFile(kSaveFilePath);
+  // if cannot open the save file, e.g. no save file yet, tell the user and exit
+  if (fin.fail()) {
+    cout << "Cannot open save file: \"" << kSaveFilePath << "\"" << endl;
+    cout << "Please make sure there is a save file and it is readable.";
+    cout << endl << endl << "Press <Enter> to return to main menu...";
+    string dummy;
+    getline(cin, dummy);
+    return;
+  }
 
   int move_count;
   int row;
@@ -226,10 +235,8 @@ ifstream OpenReadFile(const char file_path[])
 {
   ifstream fin;
   fin.open(file_path);
-  if (fin.fail()) {
-    cout << "Could not open save file!" << endl;
-    exit(1);
-  }
+  // doesn't handle fout.fail() here. For it could only means a save file
+  // missing
   return fin;
 }
 
@@ -239,7 +246,7 @@ ofstream OpenWriteFile(const char file_path[])
   ofstream fout;
   fout.open(file_path);
   if (fout.fail()) {
-    cout << "Cannot open write file!" << endl;
+    cout << "Could not open save file to write progress!" << endl;
     exit(1);
   }
   return fout;
