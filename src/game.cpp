@@ -38,7 +38,9 @@ void LoadGame()
 {
   ClearScreen(cout);
   ifstream fin = OpenReadFile(kSaveFilePath);
-  // if cannot open the save file, e.g. no save file yet, tell the user and exit
+
+  // if cannot open the save file, e.g. no save file yet, tell the user and
+  // return to main menu
   if (fin.fail()) {
     cout << "Cannot open save file: \"" << kSaveFilePath << "\"" << endl;
     cout << "Please make sure there is a save file and it is readable.";
